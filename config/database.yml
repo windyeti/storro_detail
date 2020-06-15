@@ -57,5 +57,5 @@ production:
   database: c44kz_production
   pool:     5
   username: c44kz
-  password:
+  password: <%= ENV['C44KZ_DATABASE_PASSWORD'] %>
   template: template0
