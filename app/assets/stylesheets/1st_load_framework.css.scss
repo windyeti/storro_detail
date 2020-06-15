@@ -54,8 +54,8 @@ section {
 }
 .authform form {
   @extend .card;
-  @extend .col-md-9;
-  padding-bottom: 40px;
+  @extend .col-md-12;
+  padding: 40px;
   @extend .bg-light;
   @extend .small;
 }
@@ -80,4 +80,10 @@ section {
   @extend .btn;
   @extend .btn-primary;
   @extend .btn-sm;
+}
+.alert {
+  position: absolute;
+  min-width: 320px;
+  top: 50px;
+  right: 20px;
 }
