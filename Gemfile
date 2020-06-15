@@ -24,6 +24,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bootstrap', '~> 4.0.0'
 gem 'devise'
 gem 'high_voltage'
+gem 'whenever', require: false
 gem 'pg', '~> 0.18'
 group :development do
   gem 'better_errors'
