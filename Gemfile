@@ -23,8 +23,18 @@ end
 gem 'bootstrap', '~> 4.0.0'
 gem 'devise'
 gem 'high_voltage'
+gem 'simple_form'
+gem 'rest-client'
+gem 'nokogiri'
+gem 'cocoon'
+gem 'will_paginate', '~> 3.0.6'
+gem 'ransack'
+gem 'roo'
+gem 'roo-xls'
 gem 'whenever', require: false
+gem 'figaro'
 gem 'pg', '~> 0.18'
+
 group :development do
   gem 'better_errors'
   gem 'capistrano'#, '~> 3.0.1'
