@@ -1,0 +1,83 @@
+<div class="row mb-3">
+  <div class="col-3">
+    <h1>Товары</h1><small>Всего: <%=Product.all.size%></small>
+    <small>Отфильтровано: <%=@products.count%></small>
+  </div>
+  <div class="col-3">
+    <div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Действия
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <%= link_to 'Загрузить остатки', get_file_products_path, class: 'dropdown-item'%>
+    <%= link_to "Редактировать", edit_multiple_products_path, class: 'dropdown-item', id: 'edit_multiple', 'data-toggle' =>  "modal", 'data-target' => '#modal' %>
+    <%= link_to 'Массовое удаление', delete_selected_products_path, class: 'dropdown-item', id: 'deleteAll'%>
+  </div>
+</div>
+  </div>
+  <%= search_form_for @search, html: {class: 'form-inline col-6'}  do |f|%>
+    <div class="form-group">
+      <%= f.search_field :sku_or_title_cont, placeholder: 'Артикул, Название', class: "form-control input-sm"%>
+      <%= f.collection_select :brand_eq, Product.select(:brand).uniq.order('brand ASC'), "brand", "brand", {include_blank: false, prompt: 'Производитель'} , class: "form-control input-sm"  %>
+      <%= f.submit 'Поиск', class: 'btn btn-info' %>
+      <%= link_to 'Сбросить',products_path, class: 'btn btn-link' %>
+    </div>
+  <% end %>
+</div>
+<div class="table-responsive">
+<table class="table table-hover table-condensed table-sm">
+  <thead class="thead-light">
+    <tr>
+      <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
+      <th>Артикул</th>
+      <th>Skubrand</th>
+      <th>Barcode</th>
+      <th>Производитель</th>
+      <th>Наименование</th>
+      <th>КрОписание</th>
+      <th>Описание</th>
+      <th>Кат</th>
+      <th>КатИнсалес</th>
+      <th>ЗакЦена</th>
+      <th>Цена</th>
+      <th>Ост</th>
+      <th>Карт</th>
+      <th>Вес</th>
+      <th>Url</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody id="products_table">
+    <% @products.each do |product| %>
+      <tr>
+        <td><%=check_box_tag "product_ids[]", product.id%></td>
+        <td><%= product.sku %></td>
+        <td><%= product.skubrand %></td>
+        <td><%= product.barcode %></td>
+        <td><%= product.brand %></td>
+        <td><%= product.title %></td>
+        <td><%= product.sdesc %></td>
+        <td><%= product.desc %></td>
+        <td><%= product.cat %></td>
+        <td><%= product.catins %></td>
+        <td><%= product.costprice %></td>
+        <td><%= product.price %></td>
+        <td><%= product.quantity %></td>
+        <td><%= product.image %></td>
+        <td><%= product.weight %></td>
+        <td><%= product.url %></td>
+        <td><%= link_to 'Show', product %></td>
+        <td><%= link_to 'Edit', edit_product_path(product) %></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<div class="digg_pagination mt-4 mb-4">
+  <%= will_paginate @products %>
+</div>
+<div class="modal fade"  id="modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel"></div>
