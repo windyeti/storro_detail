@@ -1,7 +1,9 @@
 <div class="row mb-3">
   <div class="col-3">
-    <h1>Товары</h1><small>Всего: <%=Product.all.size%></small>
+    <h1>Товары</h1>
+    <small>Всего: <%=Product.all.size%></small>
     <small>Отфильтровано: <%=@products.count%></small>
+    <small>Больше 0: <%=Product.where('quantity > ?', 0).count%></small>
   </div>
   <div class="col-3">
     <div class="dropdown">

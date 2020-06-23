@@ -41,7 +41,7 @@ class Product < ApplicationRecord
   			sdesc = row["Полное наименование"]
   			costprice = row["Цена дил."]
   			price = row["Цена роз."]
-        quantity = row["Остаток"]
+        quantity = row["Остаток"].to_s.gsub('>','') if row["Остаток"] != nil
         if title.present?
     			product = Product.find_by_sku(sku)
     			if product.present?

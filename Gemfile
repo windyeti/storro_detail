@@ -11,15 +11,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
-group :development, :test do
-  gem 'byebug', platform: :mri
-end
-group :development do
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.0.5'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-end
 gem 'bootstrap', '~> 4.0.0'
 gem 'devise'
 gem 'high_voltage'
@@ -35,8 +26,17 @@ gem 'whenever', require: false
 gem 'figaro'
 gem 'mechanize'
 gem 'pg', '~> 0.18'
+gem 'delayed_job_active_record'
+gem 'daemons'
 
+group :development, :test do
+  gem 'byebug', platform: :mri
+end
 group :development do
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '~> 3.0.5'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
   gem 'capistrano'#, '~> 3.0.1'
   gem 'capistrano-bundler'
@@ -44,6 +44,7 @@ group :development do
   gem 'capistrano-rails-console'
   gem 'capistrano-rvm'#, '~> 0.1.1'
   gem 'capistrano3-unicorn'
+  gem 'capistrano3-delayed-job', '~> 1.0'
   gem 'hub', :require=>nil
   gem 'rails_layout'
 end

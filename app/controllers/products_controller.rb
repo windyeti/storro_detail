@@ -65,8 +65,12 @@ class ProductsController < ApplicationController
   end
 
   def get_file
-    Product.get_file
-    flash[:notice] = 'Остатки из файла обновлены'
+    if Rails.env.development?
+      Product.get_file
+    else
+      Product.delay.get_file
+    end
+    flash[:notice] = 'Задача обновления остатков запущена'
     redirect_to products_path
   end
 
