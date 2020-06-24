@@ -12,7 +12,7 @@ $(document).ready(function() {
   });
 
   $("#edit_multiple").click(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     var checked_pr_array = [];
     $('#products_table :checked').each(function() {
       checked_pr_array.push($(this).val());
@@ -32,7 +32,7 @@ $(document).ready(function() {
   });
 
   $('#deleteAll').click(function() {
-    event.preventDefault();
+    // event.preventDefault();
     var array = [];
     $('#products_table :checked').each(function() {
       array.push($(this).val());
@@ -48,7 +48,6 @@ $(document).ready(function() {
         return confirm("Вы уверенны?");
       },
       success: function(data, textStatus, jqXHR) {
-        //console.log(data);
         if (data.status === 'ok') {
           //alert(data.message);
           location.reload();

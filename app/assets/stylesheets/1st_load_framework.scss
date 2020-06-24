@@ -1,11 +1,7 @@
-// import the CSS framework
-// Do not use *= require in Sass or your other stylesheets will not be able to access the Bootstrap mixins and variables.
-@import "bootstrap";
-@import "styles";
 
 // make all images responsive by default
 img {
-  @extend .img-fluid;
+  @extend .img-fluid !optional;
   margin: 0 auto;
 }
 // override for the 'Home' navigation link
@@ -17,20 +13,20 @@ img {
 // create your own classes
 // to make views framework-neutral
 .column {
-  @extend .col-md-6;
+  @extend .col-md-6 !optional;
   text-align: center;
 }
 .form {
-  @extend .col-md-6;
+  @extend .col-md-6 !optional;
 }
 .form-centered {
-  @extend .col-md-6;
+  @extend .col-md-6 !optional;
   text-align: center;
 }
 .submit {
-  @extend .btn;
-  @extend .btn-primary;
-  @extend .btn-lg;
+  @extend .btn !optional;
+  @extend .btn-primary !optional;
+  @extend .btn-lg !optional;
 }
 
 // apply styles to HTML elements
@@ -41,7 +37,7 @@ main {
 }
 
 section {
-  @extend .row;
+  @extend .row !optional;
   margin-top: 20px;
 }
 
@@ -54,33 +50,33 @@ section {
   margin: 0 auto;
 }
 .authform form {
-  @extend .card;
-  @extend .col-md-12;
+  @extend .card !optional;
+  @extend .col-md-12 !optional;
   padding: 40px;
-  @extend .bg-light;
-  @extend .small;
+  @extend .bg-light !optional;
+  @extend .small !optional;
 }
 .authform .right {
   float: right !important;
 }
 .authform .button {
-  @extend .btn;
-  @extend .btn-primary;
+  @extend .btn !optional;
+  @extend .btn-primary !optional;
 }
 .authform fieldset {
-  @extend .card;
+  @extend .card !optional;
 }
 #error_explanation:not(:empty) {
-  @extend .alert;
-  @extend .alert-danger;
+  @extend .alert !optional;
+  @extend .alert-danger !optional;
 }
 #error_explanation h2 {
   font-size: 16px;
 }
 .button-xs {
-  @extend .btn;
-  @extend .btn-primary;
-  @extend .btn-sm;
+  @extend .btn !optional;
+  @extend .btn-primary !optional;
+  @extend .btn-sm !optional;
 }
 .alert {
   position: absolute;

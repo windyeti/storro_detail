@@ -9,7 +9,7 @@
     <%= csrf_meta_tags %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" crossorigin="anonymous" />
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <header>
     <% if user_signed_in? %>
       <%= render 'layouts/navigation' %>
@@ -19,7 +19,8 @@
        <%= render 'layouts/messages' %>
        <%= yield %>
     </main>
-    <footer class="text-muted bg-light pt-3 pb-3">
+    <% if user_signed_in? %>
+    <footer class="text-muted bg-light pt-3 pb-3 mt-auto">
       <div class="container">
         <p class="float-right">
           <a href="#">Back to top</a>
@@ -27,5 +28,6 @@
         <p>c44kz <a href="http://c44.kz" target="_blank">Visit us</a></p>
       </div>
     </footer>
+    <% end %>
   </body>
 </html>

@@ -5,9 +5,28 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @search = Product.ransack(params[:q])
+    if params[:q].present?
+      new_q = {}
+      params[:q].each do |k,v|
+        if k == 'quantity_in'
+          # 			    puts v
+          if v == "0"
+            value = v
+          else
+            value = Array(1..200)
+          end
+            new_q[k] = value
+        else
+        new_q[k] = v
+        end
+      end
+      # puts new_q
+    end
+
+    @search = Product.ransack(new_q)
     @search.sorts = 'id desc' if @search.sorts.empty?
     @products = @search.result.paginate(page: params[:page], per_page: 100)
+
   end
 
   # GET /products/1

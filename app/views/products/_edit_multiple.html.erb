@@ -10,22 +10,22 @@
 
 		<div class="modal-body">
 			<%@products.each do |pr|%>
-				<%= hidden_field_tag "product_ids[]", pr.id %>
+				<%= hidden_field_tag "product_ids[]", pr.id , id: "product_id_"+pr.id.to_s%>
 			<% end %>
 
-		<%= fields_for :product_attr do |f| %>
-		       <div class="form-group">
-		      <%= f.label :catins, 'Категория Инсалес' %><br />
-		      <%= f.select :catins, Product.order('id asc').map { |r| [r.catins] }, {:include_blank => true}, {class: "form-control"} %>
-		      </div>
-
-		<% end %>
+			<%= fields_for :product_attr do |f| %>
+			     <div class="form-group">
+			    <%= f.label :catins, 'Категория Инсалес' %><br />
+			    <%= f.select :catins, Product.order('id asc').map { |r| [r.catins] }, {:include_blank => true}, {class: "form-control"} %>
+			    </div>
+			<% end %>
 
 		</div>
 		<div class="modal-footer">
 			<%= submit_tag "Обновить", class: "btn btn-primary" %>
 			<button type="button" class="btn btn-default" data-dismiss="modal">Отменить</button>
 		</div>
+
 	</div>
 </div>
-		<% end %>
+<% end %>

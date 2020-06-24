@@ -10,11 +10,10 @@
   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Действия
   </a>
-
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <%= link_to 'Загрузить остатки', get_file_products_path, class: 'dropdown-item'%>
-    <%= link_to "Редактировать", edit_multiple_products_path, class: 'dropdown-item', id: 'edit_multiple', 'data-toggle' =>  "modal", 'data-target' => '#modal' %>
-    <%= link_to 'Массовое удаление', delete_selected_products_path, class: 'dropdown-item', id: 'deleteAll'%>
+    <%= link_to "Редактировать", edit_multiple_products_path, class: 'dropdown-item', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal' } %>
+    <%= link_to 'Массовое удаление', delete_selected_products_path, class: 'dropdown-item', id: 'deleteAll', remote: true%>
   </div>
 </div>
   </div>
@@ -22,6 +21,7 @@
     <div class="form-group">
       <%= f.search_field :sku_or_title_cont, placeholder: 'Артикул, Название', class: "form-control input-sm"%>
       <%= f.collection_select :brand_eq, Product.select(:brand).uniq.order('brand ASC'), "brand", "brand", {include_blank: false, prompt: 'Производитель'} , class: "form-control input-sm"  %>
+      <%= f.select :quantity_in, [['Равно 0', 0],['Больше 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
       <%= f.submit 'Поиск', class: 'btn btn-info' %>
       <%= link_to 'Сбросить',products_path, class: 'btn btn-link' %>
     </div>
@@ -81,4 +81,4 @@
 <div class="digg_pagination mt-4 mb-4">
   <%= will_paginate @products %>
 </div>
-<div class="modal fade"  id="modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel"></div>
+<div class="modal fade"  id="modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"></div>
