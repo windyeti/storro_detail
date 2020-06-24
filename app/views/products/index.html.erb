@@ -80,9 +80,6 @@
 
 <div class="digg_pagination mt-4 mb-4 row">
   <div class="col-12">
-<% if @products.previous_page %><%= link_to "< Предыдущая", params.merge(page: @products.previous_page).permit(:page)  %><% end %>
-<% if @products.next_page %><%= link_to "Следующая >", params.merge(page: @products.next_page).permit(:page) %><% end %>
-</div>
- <div class="col-12">Страница <%= @products.current_page %> из <%= @products.total_pages %></div>
-</div>
+    <%= will_paginate @products %>
+  </div>
 <div class="modal fade"  id="modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"></div>
