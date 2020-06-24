@@ -12,9 +12,10 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <%= link_to 'Загрузить остатки', get_file_products_path, class: 'dropdown-item'%>
-    <%= link_to "Редактировать", edit_multiple_products_path, class: 'dropdown-item', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal' } %>
+    <%= link_to "Редактировать", edit_multiple_products_path, class: 'dropdown-item', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
     <%= link_to 'Массовое удаление', delete_selected_products_path, class: 'dropdown-item', id: 'deleteAll', remote: true%>
   </div>
+
 </div>
   </div>
   <%= search_form_for @search, html: {class: 'form-inline col-6'}  do |f|%>
@@ -23,7 +24,7 @@
       <%= f.collection_select :brand_eq, Product.select(:brand).uniq.order('brand ASC'), "brand", "brand", {include_blank: false, prompt: 'Производитель'} , class: "form-control input-sm"  %>
       <%= f.select :quantity_in, [['Равно 0', 0],['Больше 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
       <%= f.submit 'Поиск', class: 'btn btn-info' %>
-      <%= link_to 'Сбросить',products_path, class: 'btn btn-link' %>
+      <%= link_to 'Сбросить',products_path, class: 'btn btn-outline-dark' %>
     </div>
   <% end %>
 </div>
@@ -78,8 +79,6 @@
 </table>
 </div>
 
-<div class="digg_pagination mt-4 mb-4 row">
-  <div class="col-12">
+<div class="digg_pagination mt-4 mb-4">
     <%= will_paginate @products %>
-  </div>
-<div class="modal fade"  id="modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"></div>
+</div>

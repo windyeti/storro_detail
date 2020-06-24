@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
 
     @search = Product.ransack(new_q)
     @search.sorts = 'id desc' if @search.sorts.empty?
-    @products = @search.result.paginate(page: params[:page], per_page: 10)
+    @products = @search.result.paginate(page: params[:page], per_page: 100)
 
   end
 

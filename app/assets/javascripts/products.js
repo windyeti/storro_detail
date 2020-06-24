@@ -30,6 +30,14 @@ $(document).ready(function() {
       error: function(xhr, textStatus, errorThrown) {}
     });
   });
+  // $("#edit_multiple_form_submit").click(function(event) {
+  //   console.log('click');
+  //   event.preventDefault();
+  //   //console.log('click');
+  //   $("#form_edit_multi").submit();
+  //   $('#modal-edit').modal('hide');
+  //   location.reload();
+  // });
 
   $('#deleteAll').click(function() {
     // event.preventDefault();

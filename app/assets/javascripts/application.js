@@ -10,10 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require popper
-//= require bootstrap
+// = require jquery
+// = require jquery_ujs
+// = require popper
+// = require bootstrap
 //= require_tree .
 
 
@@ -24,8 +24,11 @@ $(document).ready(function() {
     $(this).alert('close');
   });
 
-
-
+  $('#edit_multiple').click(function() {
+    //console.log('click');
+    $('.modal').modal('hide');
+    $('#modal-edit').modal('show');
+  });
 
 
 
