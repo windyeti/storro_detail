@@ -35,6 +35,6 @@ every 1.hours do
   runner "Product.get_file"
 end
 
-every 1.day, :at => '12:35' do
+every 1.day, :at => '13:50' do
   runner "Product.load_by_api"
 end

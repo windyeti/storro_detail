@@ -23,9 +23,9 @@
   <%= search_form_for @search, html: {class: 'form-inline col-7'}  do |f|%>
     <div class="form-group">
       <%= f.search_field :sku_or_title_cont, placeholder: 'Артикул, Название', class: "form-control input-sm"%>
-      <%= f.collection_select :brand_eq, Product.select(:brand).uniq.order('brand ASC'), "brand", "brand", {include_blank: false, prompt: 'Производитель'} , class: "form-control input-sm"  %>
+      <%= f.collection_select :brand_eq, Product.select(:brand).uniq.order('brand ASC'), "brand", "brand", {include_blank: false, prompt: 'Брэнд'} , class: "form-control input-sm"  %>
       <%= f.select :barcode_present, [['Есть', 'true'],['Нет', 'false' ]], { include_blank: false, prompt: 'ШтрК'}, class: "form-control input-sm"  %>
-      <%= f.select :quantity_in, [['Равно 0', 0],['Больше 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
+      <%= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
     </div>
     <div class="form-group ml-2">
       <%= f.submit 'Поиск', class: 'btn btn-info' %>
