@@ -139,6 +139,23 @@ class ProductsController < ApplicationController
 		end
   end
 
+  def load_by_api
+    if Rails.env.development?
+      Product.load_by_api
+    else
+      Product.delay.load_by_api
+    end
+    flash[:notice] = 'Задача обновления по api запущена'
+    redirect_to products_path
+  end
+
+  def csv_param
+    Product.csv_param
+    flash[:notice] = "Запустили"
+    redirect_to products_path
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
@@ -147,6 +164,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:page, :per_page, :sku, :skubrand, :barcode, :brand, :title, :sdesc, :desc, :cat, :catins, :costprice, :price, :quantity, :image, :weight, :url)
+      params.require(:product).permit(:sku, :skubrand, :barcode, :brand, :title, :sdesc, :desc, :cat, :charact, :costprice, :price, :quantity, :image, :weight, :url)
     end
 end

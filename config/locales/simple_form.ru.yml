@@ -1,9 +1,10 @@
 ru:
+  helpers:
+    submit:
+      product:
+        create: "Add %{model}"
+        update: 'Обновить'
   simple_form:
-    helpers:
-      submit:
-        product:
-          update: 'Обновить товар'
     "yes": 'Да'
     "no": 'Нет'
     required:

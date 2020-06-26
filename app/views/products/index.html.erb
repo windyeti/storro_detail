@@ -12,6 +12,8 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <%= link_to 'Загрузить остатки', get_file_products_path, class: 'dropdown-item'%>
+    <%= link_to 'Обновление по api', load_by_api_products_path, class: 'dropdown-item'%>
+    <%= link_to 'Сформировать файл', csv_param_products_path, class: 'dropdown-item'%>
     <%= link_to "Редактировать", edit_multiple_products_path, class: 'dropdown-item', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
     <%= link_to 'Массовое удаление', delete_selected_products_path, class: 'dropdown-item', id: 'deleteAll', remote: true%>
   </div>
@@ -41,7 +43,7 @@
       <th>КрОписание</th>
       <th>Описание</th>
       <th>Кат</th>
-      <th>КатИнсалес</th>
+      <th>Параметры</th>
       <th>ЗакЦена</th>
       <th>Цена</th>
       <th>Ост</th>
@@ -61,16 +63,16 @@
         <td><%= product.barcode %></td>
         <td><%= product.brand %></td>
         <td><%= product.title %></td>
-        <td><%= product.sdesc %></td>
-        <td><%= product.desc %></td>
+        <td><%= product.sdesc.truncate(25) if product.sdesc != nil %></td>
+        <td><%= product.desc.truncate(25) if product.desc != nil%></td>
         <td><%= product.cat %></td>
-        <td><%= product.catins %></td>
+        <td><%= product.charact.truncate(25) if product.charact != nil %></td>
         <td><%= product.costprice %></td>
         <td><%= product.price %></td>
         <td><%= product.quantity %></td>
-        <td><%= product.image %></td>
+        <td><%= product.image.truncate(25) if product.image != nil %></td>
         <td><%= product.weight %></td>
-        <td><%= product.url %></td>
+        <td><%= link_to 'Товар у поставщика', product.url , target: 'blank' %></td>
         <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
         <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
       </tr>
