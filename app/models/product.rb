@@ -75,7 +75,7 @@ class Product < ApplicationRecord
     count = Product.where(barcode: [nil, '']).order(:id).size
     offset = 0
     while count > 0
-      puts offset
+      puts "offset - "+offset.to_s
       products = Product.where(barcode: [nil, '']).order(:id).limit(50).offset("#{offset}")
       articles = products.pluck(:sku).join(',')
       # puts articles
@@ -120,7 +120,6 @@ class Product < ApplicationRecord
     # data = JSON.parse(pr_info)
     product = Product.find_by_sku(data['article'])
     characts_array = []
-    puts data['properties']
     data['properties'].each do |k,v|
       if k != 'Код' and k != 'Базовая единица' and k != 'Короткое наименование' and k != 'Бренд' and k != 'Полное наименование' and k != 'Вес' and k != 'Артикул-PartNumber' and k != 'Анонс'
         characts_array.push(k+' : '+v.to_s)
