@@ -18,3 +18,23 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+# очистить cron -> crontab -r
+# просмотр cron -> crontab -l
+# сохранение и запуск cron в режиме девелопмент (писать в терминале) ->  whenever --set environment='development' --write-crontab или
+# RAILS_ENV=development whenever --write-crontab
+# RAILS_ENV=production whenever --write-crontab
+# очистить cron - bundle exec whenever --clear-crontab
+# сервер минус 3 часов (лето) и минус 4 (зима)
+
+env :PATH, ENV['PATH']
+env "GEM_HOME", ENV["GEM_HOME"]
+set :output, "#{path}/log/cron.log"
+set :chronic_options, :hours24 => true
+
+every 1.hours do
+  runner "Product.get_file"
+end
+
+every 1.day, :at => '12:35' do
+  runner "Product.load_by_api"
+end
