@@ -252,9 +252,5 @@ class Product < ApplicationRecord
 	# CaseMailer.notifier_process(current_process).deliver_now
 	end
 
-  def self.file_info
-    # @file_qt_update =
-    Rails.cache.read('file_qt_update')
-  end
 
 end

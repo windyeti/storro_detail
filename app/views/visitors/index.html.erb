@@ -15,5 +15,8 @@
 <p><a href="<%= file%>">Скачать файл</a> </p>
 <%end%>
 
+<% if Rails.cache.read('file_qt_update') != nil %>
+<p>Остатки обновлялись в - <%= File.ctime(Rails.cache.read('file_qt_update')).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
 <% end %>
-<p>Остатки обновлялись в - <%= File.ctime(Product.file_info).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
+
+<% end %>

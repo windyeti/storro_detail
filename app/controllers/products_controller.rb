@@ -11,13 +11,10 @@ class ProductsController < ApplicationController
         if k == 'quantity_in'
           			    puts v
           if v == "0"
-            value = Array(0..0)
+            value = 0
           end
           if v == "1"
             value = Array(1..200)
-          end
-          if v == "2"
-            value = Array(0..200)
           end
             new_q[k] = value
         else
