@@ -1,5 +1,8 @@
 class Product < ApplicationRecord
   require 'open-uri'
+  scope :product_all_size, -> { order(:id).size }
+  scope :product_qt_not_null, -> { where('quantity > 0') }
+  scope :product_qt_not_null_size, -> { where('quantity > 0').size }
   validates :sku, uniqueness: true
 
   def self.get_file
@@ -14,13 +17,16 @@ class Product < ApplicationRecord
 		link = page.link_with(:dom_class => "btn btn-default btn-xs btn-info")
 		url = "https://order.al-style.kz"+link.href
 		filename = url.split('/').last
-		puts filename
+		# puts filename
 		download_path = "#{Rails.public_path}"+"/"+filename
 		download = open(url)
 		IO.copy_stream(download, download_path)
     puts 'закончили загружаем файла с остатками - '+Time.now.to_s
 
     Product.open_file(download_path)
+    # @file_qt_update = download_path
+    # Rails.cache.clear('file_qt_update')
+    Rails.cache.write('file_qt_update', download_path)
   end
 
   def self.open_file(file)
@@ -53,6 +59,7 @@ class Product < ApplicationRecord
       end
 
 		puts 'конец обновляем из файла - '+Time.now.to_s
+
   end
 
   def self.open_spreadsheet(file)
@@ -244,5 +251,10 @@ class Product < ApplicationRecord
 	# current_process = "создаём файл csv_param"
 	# CaseMailer.notifier_process(current_process).deliver_now
 	end
+
+  def self.file_info
+    # @file_qt_update =
+    Rails.cache.read('file_qt_update')
+  end
 
 end

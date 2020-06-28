@@ -1,7 +1,19 @@
+<% if !user_signed_in? %>
 <h3>Welcome</h3>
 <p>This is our app</p>
-<% if !user_signed_in? %>
 <ul class="form-sign-help">
 <%= render "layouts/nav_links_for_auth" %>
 </ul>
 <% end %>
+<% if user_signed_in? %>
+<p>Всего товаров: <%=Product.product_all_size %></p>
+<p>Больше 0: <%= Product.product_qt_not_null_size %></p>
+<% file = "#{Rails.public_path}"+'/ins_c44kz.csv'%>
+<%if file.present?%><%size = File.size(file) %>
+<p>Файл инсалес:
+<p>размер - <%= number_to_human_size(size)%>; дата - <%=File.ctime(file).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
+<p><a href="<%= file%>">Скачать файл</a> </p>
+<%end%>
+
+<% end %>
+<p>Остатки обновлялись в - <%= File.ctime(Product.file_info).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
