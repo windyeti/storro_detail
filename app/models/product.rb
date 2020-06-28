@@ -138,7 +138,7 @@ class Product < ApplicationRecord
   end
 
   def self.csv_param
-	  puts "Файл инсалес c параметрами на лету"
+	  puts "Файл инсалес c параметрами на лету - "+Time.now.to_s
 		file = "#{Rails.public_path}"+'/c44kz.csv'
 		check = File.file?(file)
 		if check.present?
@@ -231,7 +231,7 @@ class Product < ApplicationRecord
 			csv_out << column_names
 			CSV.foreach(file, headers: true ) do |row|
 			fid = row[0]
-      puts fid
+      # puts fid
 			vel = Product.find_by_id(fid)
 				if vel != nil
 # 				puts vel.id
@@ -246,7 +246,7 @@ class Product < ApplicationRecord
 			csv_out << row
 			end
 		end
-	puts "Finish Файл инсалес с параметрами на лету"
+	puts "Finish Файл инсалес с параметрами на лету - "+Time.now.to_s
 
 	# current_process = "создаём файл csv_param"
 	# CaseMailer.notifier_process(current_process).deliver_now
