@@ -34,6 +34,10 @@ set :chronic_options, :hours24 => true
 every 1.hours do
   runner "Product.get_file"
 end
+every 1.hours do
+  runner "Product.csv_param"
+end
+
 
 every 1.day, :at => '13:50' do
   runner "Product.load_by_api"
