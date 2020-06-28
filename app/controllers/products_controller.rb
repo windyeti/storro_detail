@@ -151,7 +151,11 @@ class ProductsController < ApplicationController
   end
 
   def csv_param
-    Product.csv_param
+    if Rails.env.development?
+      Product.csv_param
+    else
+      Product.delay.csv_param
+    end
     flash[:notice] = "Запустили"
     redirect_to products_path
   end
