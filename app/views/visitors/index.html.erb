@@ -13,7 +13,7 @@
 <% size = File.size(file) %>
 <p>Файл инсалес:
 <p>размер - <%= number_to_human_size(size)%>; дата - <%=File.ctime(file).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
-<p><a href="<%= file%>">Скачать файл</a> </p>
+<p><a href="/ins_c44kz.csv">Скачать файл</a> </p>
 <%end%>
 
 <% if Rails.cache.read('file_qt_update') != nil %>
