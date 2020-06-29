@@ -6,7 +6,7 @@ class Product < ApplicationRecord
   validates :sku, uniqueness: true
 
   def self.get_file
-    puts 'загружаем файла с остатками - '+Time.now.to_s
+    puts 'загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
     a = Mechanize.new
 		a.get("https://order.al-style.kz/site/login")
 		form = a.page.forms.first
@@ -21,7 +21,7 @@ class Product < ApplicationRecord
 		download_path = "#{Rails.public_path}"+"/"+filename
 		download = open(url)
 		IO.copy_stream(download, download_path)
-    puts 'закончили загружаем файла с остатками - '+Time.now.to_s
+    puts 'закончили загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
 
     Product.open_file(download_path)
     # @file_qt_update = download_path
@@ -30,7 +30,7 @@ class Product < ApplicationRecord
   end
 
   def self.open_file(file)
-    puts 'обновляем из файла - '+Time.now.to_s
+    puts 'обновляем из файла - '+Time.now.in_time_zone('Moscow').to_s
 		spreadsheet = open_spreadsheet(file)
 		header = spreadsheet.row(1)
     if Rails.env.development?
@@ -58,7 +58,7 @@ class Product < ApplicationRecord
         end
       end
 
-		puts 'конец обновляем из файла - '+Time.now.to_s
+		puts 'конец обновляем из файла - '+Time.now.in_time_zone('Moscow').to_s
 
   end
 
@@ -77,7 +77,7 @@ class Product < ApplicationRecord
 	end
 
   def self.load_by_api
-    puts 'загружаем данные api - '+Time.now.to_s
+    puts 'загружаем данные api - '+Time.now.in_time_zone('Moscow').to_s
 
     count = Product.where(barcode: [nil, '']).order(:id).size
     offset = 0
@@ -120,7 +120,7 @@ class Product < ApplicationRecord
       end
 		end
 
-    puts 'закончили загружаем данные api - '+Time.now.to_s
+    puts 'закончили загружаем данные api - '+Time.now.in_time_zone('Moscow').to_s
   end
 
   def self.api_update_product(data)
@@ -138,7 +138,7 @@ class Product < ApplicationRecord
   end
 
   def self.csv_param
-	  puts "Файл инсалес c параметрами на лету - "+Time.now.to_s
+	  puts "Файл инсалес c параметрами на лету - "+Time.now.in_time_zone('Moscow').to_s
 		file = "#{Rails.public_path}"+'/c44kz.csv'
 		check = File.file?(file)
 		if check.present?
@@ -246,7 +246,7 @@ class Product < ApplicationRecord
 			csv_out << row
 			end
 		end
-	puts "Finish Файл инсалес с параметрами на лету - "+Time.now.to_s
+	puts "Finish Файл инсалес с параметрами на лету - "+Time.now.in_time_zone('Moscow').to_s
 
 	# current_process = "создаём файл csv_param"
 	# CaseMailer.notifier_process(current_process).deliver_now
