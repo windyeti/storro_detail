@@ -25,7 +25,7 @@ class Product < ApplicationRecord
 
     Product.open_file(download_path)
     # @file_qt_update = download_path
-    # Rails.cache.clear('file_qt_update')
+    Rails.cache.clear('file_qt_update')
     Rails.cache.write('file_qt_update', download_path)
   end
 
