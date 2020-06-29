@@ -59,7 +59,7 @@ class Product < ApplicationRecord
       end
 
 		puts 'конец обновляем из файла - '+Time.now.in_time_zone('Moscow').to_s
-
+    Product.price_updates
   end
 
   def self.open_spreadsheet(file)
@@ -121,6 +121,7 @@ class Product < ApplicationRecord
 		end
 
     puts 'закончили загружаем данные api - '+Time.now.in_time_zone('Moscow').to_s
+    Product.set_cattitle
   end
 
   def self.api_update_product(data)
@@ -170,10 +171,10 @@ class Product < ApplicationRecord
 				image = pr.image
         brand = pr.brand
         skubrand = pr.skubrand
-				cat = '' #pr.cat
-				cat1 = '' #pr.cat1
-				cat2 = '' #pr.cat2
-				cat3 = '' #pr.cat3
+				cat = pr.cattitle.split('/')[0] || '' if pr.cattitle != nil
+				cat1 = pr.cattitle.split('/')[1] || '' if pr.cattitle != nil
+				cat2 = pr.cattitle.split('/')[2] || '' if pr.cattitle != nil
+				cat3 = pr.cattitle.split('/')[3] || '' if pr.cattitle != nil
         weight = pr.weight
 				writer << [fid, sku, barcode, title, sdesc, desc, price, quantity, image, brand, skubrand, cat, cat1, cat2, cat3, weight ]
 				end
@@ -252,5 +253,68 @@ class Product < ApplicationRecord
 	# CaseMailer.notifier_process(current_process).deliver_now
 	end
 
+  def self.set_cattitle
+    puts 'проставляем названия категорий - '+Time.now.in_time_zone('Moscow').to_s
+    url = "https://order.al-style.kz/api/categories?access-token=Py8UvH0yDeHgN0KQ3KTLP2jDEtCR5ijm"
+		resp = RestClient.get(url, :accept => :json, :content_type => "application/json")
+		cats = JSON.parse(resp)
+		c_a_o_h = []
+		cats.each do |cat|
+			c_a_o_h.push(cat)
+		end
+# 		puts c_a_o_h
+		products = Product.where(cattitle: [nil, ''])
+    products.each do |product|
+      @cat_id = product.cat.to_i
+      puts @cat_id
+      if @cat_id != 0
+  		  search_cat = c_a_o_h.select{|k,v| k["id"] == @cat_id }
+  		   # puts search_cat.to_s
+    		new_name = []
+    		if search_cat[0]['level'] - 1 > 0
+          new_name.unshift(search_cat[0]['name'])
+    		  @level = search_cat[0]['level'] - 1
+    		  @left = search_cat[0]["left"]
+    			while @left > 0 && @level > 0
+    				# puts "left - "+@left.to_s
+    				a = c_a_o_h.select{|k,v| k["level"] == @level && k['left'] == @left }
+    				if a.present?
+    					# puts a.to_s
+    					new_name.unshift(a[0]['name'])
+    				# добавляем название вышестоящей категории к названию этой категории
+      				if a[0]['level'] == 1
+      					break
+      				else
+      					@level = @level - 1
+      					@left = a[0]['left'] - 1
+      				end
+    				else
+    					@left = @left - 1
+    				end
+    			end
+    		end
+    		# puts new_name.join('/')
+        product.update_attributes(cattitle: new_name.join('/'))
+      end
+    end
+    puts 'конец проставляем названия категорий - '+Time.now.in_time_zone('Moscow').to_s
+  end
+
+  def self.price_updates
+    puts 'обновляем цены по процентам в категориях - '+Time.now.in_time_zone('Moscow').to_s
+    products = Product.all.order(:id)
+    products.each do |product|
+      Product.update_pricepr(product.id)
+    end
+    puts 'конец обновляем цены по процентам в категориях - '+Time.now.in_time_zone('Moscow').to_s
+  end
+
+  def self.update_pricepr(pr_id)
+    product = Product.find_by_id(pr_id)
+    if product.pricepr.present?
+      new_price = (product.costprice + product.pricepr.to_f/100*product.costprice).round(0)
+      product.update_attributes(price: new_price)
+    end
+  end
 
 end

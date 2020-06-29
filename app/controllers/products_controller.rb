@@ -121,6 +121,9 @@ class ProductsController < ApplicationController
 				if key.to_s != 'picture'
 					if !value.blank?
 					pr.update_attributes(key => value)
+            if key.to_s == 'pricepr'
+              Product.update_pricepr(pr.id)
+            end
 					end
 				end
 			end
@@ -160,6 +163,16 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def set_cattitle
+    if Rails.env.development?
+      Product.set_cattitle
+    else
+      Product.delay.set_cattitle
+    end
+    flash[:notice] = "Запустили"
+    redirect_to products_path
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -169,6 +182,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:sku, :skubrand, :barcode, :brand, :title, :sdesc, :desc, :cat, :charact, :costprice, :price, :quantity, :image, :weight, :url)
+      params.require(:product).permit(:sku, :skubrand, :barcode, :brand, :title, :sdesc, :desc, :cat, :charact, :costprice, :price, :quantity, :image, :weight, :url, :cattitle, :pricepr)
     end
 end
