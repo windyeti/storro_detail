@@ -16,8 +16,12 @@
 <p><a href="/ins_c44kz.csv">Скачать файл</a> </p>
 <%end%>
 
-<% if Rails.cache.read('file_qt_update') != nil %>
-<p>Остатки обновлялись в - <%= File.ctime(Rails.cache.read('file_qt_update')).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
+<%# if Rails.cache.read('file_qt_update') != nil %>
+<%# end %>
+
+<% file_ost = "#{Rails.public_path}"+'/ost_'+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'%>
+<% if File.file?(file_ost) %>
+<p>Остатки обновлялись в - <%= File.ctime(file_ost).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
 <% end %>
 
 <% end %>

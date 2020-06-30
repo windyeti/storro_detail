@@ -16,17 +16,18 @@ class Product < ApplicationRecord
 		page = a.get("https://order.al-style.kz")
 		link = page.link_with(:dom_class => "btn btn-default btn-xs btn-info")
 		url = "https://order.al-style.kz"+link.href
-		filename = url.split('/').last
+		# filename = url.split('/').last
+    # download_path = "#{Rails.public_path}"+"/"+filename
 		# puts filename
-		download_path = "#{Rails.public_path}"+"/"+filename
+    download_path = "#{Rails.public_path}"+'/ost_'+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
 		download = open(url)
 		IO.copy_stream(download, download_path)
     puts 'закончили загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
 
     Product.open_file(download_path)
     # @file_qt_update = download_path
-    Rails.cache.clear('file_qt_update')
-    Rails.cache.write('file_qt_update', download_path)
+    # Rails.cache.clear('file_qt_update')
+    # Rails.cache.write('file_qt_update', download_path)
   end
 
   def self.open_file(file)
