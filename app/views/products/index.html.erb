@@ -44,7 +44,6 @@
     <tr>
       <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
       <th>Артикул</th>
-      <th>Skubrand</th>
       <th>Barcode</th>
       <th>Производитель</th>
       <th>Наименование</th>
@@ -59,6 +58,7 @@
       <th>Ост</th>
       <th>Карт</th>
       <th>Вес</th>
+      <th>Skubrand</th>
       <th>Url</th>
       <th colspan="2"></th>
     </tr>
@@ -69,7 +69,6 @@
       <tr>
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= link_to product.sku, edit_product_path(product) %></td>
-        <td><%= product.skubrand %></td>
         <td><%= product.barcode %></td>
         <td><%= product.brand %></td>
         <td><%= product.title %></td>
@@ -84,6 +83,7 @@
         <td><%= product.quantity %></td>
         <td><%= product.image.truncate(25) if product.image != nil %></td>
         <td><%= product.weight %></td>
+        <td><%= product.skubrand %></td>
         <td><% if product.url.present? %><%= link_to 'Товар у поставщика', product.url , target: 'blank' %><%end%></td>
         <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
         <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
