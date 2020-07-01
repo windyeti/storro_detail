@@ -267,7 +267,7 @@ class Product < ApplicationRecord
 		products = Product.where(cattitle: [nil, ''])
     products.each do |product|
       @cat_id = product.cat.to_i
-      puts @cat_id
+      # puts @cat_id
       if @cat_id != 0
   		  search_cat = c_a_o_h.select{|k,v| k["id"] == @cat_id }
   		   # puts search_cat.to_s
