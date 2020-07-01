@@ -10,13 +10,13 @@ class Product < ApplicationRecord
 
   def self.get_file
     puts 'загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
-    # a = Mechanize.new
-		# a.get("https://order.al-style.kz/site/login")
-		# form = a.page.forms.first
-		# form['LoginForm[username]'] = "info@c44.kz"
-		# form['LoginForm[password]'] = "12345Test"
-		# form.submit
-		# page = a.get("https://order.al-style.kz")
+    a = Mechanize.new
+		a.get("https://order.al-style.kz/site/login")
+		form = a.page.forms.first
+		form['LoginForm[username]'] = "info@c44.kz"
+		form['LoginForm[password]'] = "12345Test"
+		form.submit
+		page = a.get("https://order.al-style.kz")
 		# link = page.link_with(:dom_class => "btn btn-default btn-xs btn-info")
 		# url = "https://order.al-style.kz"+link.href
     #
