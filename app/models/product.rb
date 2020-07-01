@@ -3,23 +3,30 @@ class Product < ApplicationRecord
   scope :product_all_size, -> { order(:id).size }
   scope :product_qt_not_null, -> { where('quantity > 0') }
   scope :product_qt_not_null_size, -> { where('quantity > 0').size }
+  scope :product_cat, -> { order('cattitle ASC').select(:cattitle).uniq }
   validates :sku, uniqueness: true
+
+  #Product.select(:cattitle).uniq.order('cattitle ASC')
 
   def self.get_file
     puts 'загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
-    a = Mechanize.new
-		a.get("https://order.al-style.kz/site/login")
-		form = a.page.forms.first
-		form['LoginForm[username]'] = "info@c44.kz"
-		form['LoginForm[password]'] = "12345Test"
-		form.submit
-		page = a.get("https://order.al-style.kz")
-		link = page.link_with(:dom_class => "btn btn-default btn-xs btn-info")
-		url = "https://order.al-style.kz"+link.href
-		# filename = url.split('/').last
-    # download_path = "#{Rails.public_path}"+"/"+filename
-		# puts filename
-    download_path = "#{Rails.public_path}"+'/ost_'+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
+    # a = Mechanize.new
+		# a.get("https://order.al-style.kz/site/login")
+		# form = a.page.forms.first
+		# form['LoginForm[username]'] = "info@c44.kz"
+		# form['LoginForm[password]'] = "12345Test"
+		# form.submit
+		# page = a.get("https://order.al-style.kz")
+		# link = page.link_with(:dom_class => "btn btn-default btn-xs btn-info")
+		# url = "https://order.al-style.kz"+link.href
+    #
+		# # filename = url.split('/').last
+    # # download_path = "#{Rails.public_path}"+"/"+filename
+		# # puts filename
+
+    url = "https://order.al-style.kz/export/Al-Style_price.xlsx"
+
+    download_path = "#{Rails.public_path}"+'/ost.xlsx' #+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
 		download = open(url)
 		IO.copy_stream(download, download_path)
     puts 'закончили загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
