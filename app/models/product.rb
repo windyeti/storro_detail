@@ -26,15 +26,19 @@ class Product < ApplicationRecord
 
     url = "https://order.al-style.kz/export/Al-Style_price.xlsx"
 
-    download_path = "#{Rails.public_path}"+'/ost.xlsx' #+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
-		download = open(url)
-		IO.copy_stream(download, download_path)
-    puts 'закончили загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
+    check = RestClient.get(url)
+    unless check.code == 200
+      sleep 0.5
+      puts 'sleep 0.5'
+    else
+      download_path = "#{Rails.public_path}"+'/ost.xlsx' #+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
+  		download = RestClient::Request.execute(method: :get, url: url, raw_response: true)#open(url)
+  		IO.copy_stream(download.file.path, download_path)
+      puts 'закончили загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
 
-    Product.open_file(download_path)
-    # @file_qt_update = download_path
-    # Rails.cache.clear('file_qt_update')
-    # Rails.cache.write('file_qt_update', download_path)
+      Product.open_file(download_path)
+    end
+
   end
 
   def self.open_file(file)
