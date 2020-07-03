@@ -10,35 +10,68 @@ class Product < ApplicationRecord
 
   def self.get_file
     puts 'загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
-    a = Mechanize.new
-		a.get("https://order.al-style.kz/site/login")
-		form = a.page.forms.first
-		form['LoginForm[username]'] = "info@c44.kz"
-		form['LoginForm[password]'] = "12345Test"
-		form.submit
-		page = a.get("https://order.al-style.kz")
-		# link = page.link_with(:dom_class => "btn btn-default btn-xs btn-info")
-		# url = "https://order.al-style.kz"+link.href
-    #
-		# # filename = url.split('/').last
-    # # download_path = "#{Rails.public_path}"+"/"+filename
-		# # puts filename
+    # 	    a = Mechanize.new
+    # 		a.get("https://order.al-style.kz/site/login")
+    # 		form = a.page.forms.first
+    # 		form['LoginForm[username]'] = "info@c44.kz"
+    # 		form['LoginForm[password]'] = "12345Test"
+    # 		form.submit
+    # 		page = a.get("https://order.al-style.kz")
+    		# link = page.link_with(:dom_class => "btn btn-default btn-xs btn-info")
+    		# url = "https://order.al-style.kz"+link.href
+    	    #
+    			# # filename = url.split('/').last
+    	    # # download_path = "#{Rails.public_path}"+"/"+filename
+    			# # puts filename
 
-    url = "https://order.al-style.kz/export/Al-Style_price.xlsx"
+    	    url = "https://order.al-style.kz/export/Al-Style_price.xlsx"
 
-    check = RestClient.get(url)
-    unless check.code == 200
-      sleep 0.5
-      puts 'sleep 0.5'
-    else
-      download_path = "#{Rails.public_path}"+'/ost.xlsx' #+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
-  		download = RestClient::Request.execute(method: :get, url: url, raw_response: true)#open(url)
-  		IO.copy_stream(download.file.path, download_path)
-      puts 'закончили загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
+    	    download = RestClient::Request.execute(method: :get, url: url, raw_response: true)
+    	    unless download.code == 200
+    	      sleep 0.5
+    	      puts 'sleep 0.5'
+    	    else
+    	      download_path = "#{Rails.public_path}"+'/ost.xlsx' #+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
+    		  IO.copy_stream(download.file.path, download_path)
+    	      Product.open_file(download_path)
+    	    end
 
-      Product.open_file(download_path)
-    end
+      # begin
+      # RestClient.get( url, raw_response: true) { |response, request, result, &block|
+      #   case response.code
+      #   when 200
+      #     puts 'code 200 - ok - обновили содержание'
+      #     puts response.file.size
+      #   when 422
+      #     puts response
+      #     break #raise SomeCustomExceptionIfYouWant
+      #   when 404
+      #     puts ' error 404'
+      #     puts 'sleep 0.5'
+      #     sleep 0.5
+      #     redo
+      #   else
+      #     response.return!(&block)
+      #   end
+      #   }
+      #
+      # end
 
+      # loop do
+      #   download = RestClient::Request.execute(method: :get, url: url, raw_response: true)
+      #   if download.code == 200
+      #     download_path = "#{Rails.public_path}"+'/ost.xlsx' #+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'
+  		#     IO.copy_stream(download.file.path, download_path)
+  	  #     Product.open_file(download_path)
+      #     break       # this will cause execution to exit the loop
+      #   end
+      #   if download.code == 404
+      #     sleep 0.5
+  	  #     puts 'sleep 0.5'
+      #   end
+      # end
+
+    puts 'закончили загружаем файл с остатками - '+Time.now.in_time_zone('Moscow').to_s
   end
 
   def self.open_file(file)
