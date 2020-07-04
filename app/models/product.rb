@@ -307,39 +307,42 @@ class Product < ApplicationRecord
 		cats.each do |cat|
 			c_a_o_h.push(cat)
 		end
-# 		puts c_a_o_h
+		puts c_a_o_h.to_s
 		products = Product.where(cattitle: [nil, ''])
     products.each do |product|
       @cat_id = product.cat.to_i
-      # puts @cat_id
-      if @cat_id != 0
-  		  search_cat = c_a_o_h.select{|k,v| k["id"] == @cat_id }
-  		   # puts search_cat.to_s
-    		new_name = []
-    		if search_cat[0]['level'] - 1 > 0
-          new_name.unshift(search_cat[0]['name'])
-    		  @level = search_cat[0]['level'] - 1
-    		  @left = search_cat[0]["left"]
-    			while @left > 0 && @level > 0
-    				# puts "left - "+@left.to_s
-    				a = c_a_o_h.select{|k,v| k["level"] == @level && k['left'] == @left }
-    				if a.present?
-    					# puts a.to_s
-    					new_name.unshift(a[0]['name'])
-    				# добавляем название вышестоящей категории к названию этой категории
+      puts '@cat_id - '+@cat_id.to_s
+      puts @cat_id.nil?
+      if @cat_id != 0 and @cat_id != nil
+  		search_cat = c_a_o_h.select{|k,v| k["id"] == @cat_id }
+  		puts search_cat.to_s
+    		if search_cat.present?
+      		new_name = []
+      		if search_cat[0]['level'] - 1 > 0
+      		new_name.unshift(search_cat[0]['name'])
+      		@level = search_cat[0]['level'] - 1
+      		@left = search_cat[0]["left"]
+      		while @left > 0 && @level > 0
+      			# puts "left - "+@left.to_s
+      			a = c_a_o_h.select{|k,v| k["level"] == @level && k['left'] == @left }
+      			if a.present?
+      				# puts a.to_s
+      				new_name.unshift(a[0]['name'])
+      			# добавляем название вышестоящей категории к названию этой категории
       				if a[0]['level'] == 1
       					break
       				else
       					@level = @level - 1
       					@left = a[0]['left'] - 1
       				end
-    				else
-    					@left = @left - 1
-    				end
-    			end
+      			else
+      				@left = @left - 1
+      			end
+      		end
+      		end
+      		# puts new_name.join('/')
+      		product.update_attributes(cattitle: new_name.join('/'))
     		end
-    		# puts new_name.join('/')
-        product.update_attributes(cattitle: new_name.join('/'))
       end
     end
     puts 'конец проставляем названия категорий - '+Time.now.in_time_zone('Moscow').to_s
