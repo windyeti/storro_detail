@@ -174,7 +174,7 @@ class Product < ApplicationRecord
     product = Product.find_by_sku(data['article'])
     characts_array = []
     data['properties'].each do |k,v|
-      if k != 'Не включать в прайс-лист' and k != 'Дата последнего прихода' and k != 'Штрихкод' k != 'Код' and k != 'Базовая единица' and k != 'Короткое наименование' and k != 'Бренд' and k != 'Полное наименование' and k != 'Вес' and k != 'Артикул-PartNumber' and k != 'Анонс'
+      if k != 'Не включать в прайс-лист' and k != 'Дата последнего прихода' and k != 'Штрихкод' and k != 'Код' and k != 'Базовая единица' and k != 'Короткое наименование' and k != 'Бренд' and k != 'Полное наименование' and k != 'Вес' and k != 'Артикул-PartNumber' and k != 'Анонс'
         characts_array.push(k+' : '+v.to_s)
       end
     end
