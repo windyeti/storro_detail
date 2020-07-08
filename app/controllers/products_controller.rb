@@ -27,6 +27,12 @@ class ProductsController < ApplicationController
     @search = Product.ransack(new_q)
     @search.sorts = 'id desc' if @search.sorts.empty?
     @products = @search.result.paginate(page: params[:page], per_page: 100)
+    puts @products.count
+    if params['otchet_type'] == 'selected'
+      Product.csv_param_selected( params['selected_products'])
+      new_file = "#{Rails.public_path}"+'/ins_c44kz_selected.csv'
+      send_file new_file, :disposition => 'attachment'
+    end
 
   end
 
@@ -182,6 +188,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:sku, :skubrand, :barcode, :brand, :title, :sdesc, :desc, :cat, :charact, :costprice, :price, :quantity, :image, :weight, :url, :cattitle, :pricepr)
+      params.require(:product).permit(:sku, :skubrand, :barcode, :brand, :title, :sdesc, :desc, :cat, :charact, :costprice, :price, :quantity, :image, :weight, :url, :cattitle, :pricepr, :otchet_type)
     end
 end

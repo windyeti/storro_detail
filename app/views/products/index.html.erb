@@ -35,6 +35,7 @@
     <div class="form-group ml-2">
       <%= f.submit 'Поиск', class: 'btn btn-info' %>
       <%= link_to 'Сбросить',products_path, class: 'btn btn-outline-dark' %>
+      <%= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(params.permit(:products).merge(selected_products: @products.pluck(:id), otchet_type: 'selected')), title: "Создать файл с выбранными товарами", class: 'btn btn-outline-dark'%>
     </div>
   <% end %>
 </div>
