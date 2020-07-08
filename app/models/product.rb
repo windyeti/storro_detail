@@ -174,12 +174,12 @@ class Product < ApplicationRecord
     product = Product.find_by_sku(data['article'])
     characts_array = []
     data['properties'].each do |k,v|
-      if k != 'Код' and k != 'Базовая единица' and k != 'Короткое наименование' and k != 'Бренд' and k != 'Полное наименование' and k != 'Вес' and k != 'Артикул-PartNumber' and k != 'Анонс'
+      if k != 'Не включать в прайс-лист' k != 'Дата последнего прихода' k != 'Штрихкод' k != 'Код' and k != 'Базовая единица' and k != 'Короткое наименование' and k != 'Бренд' and k != 'Полное наименование' and k != 'Вес' and k != 'Артикул-PartNumber' and k != 'Анонс'
         characts_array.push(k+' : '+v.to_s)
       end
     end
     characts = characts_array.join('---')
-    images = data['images'].join(',')
+    images = data['images'].join(' ')
     product.update_attributes(skubrand: data['article_pn'], barcode: data['barcode'], brand: data['brand'], desc: data['detailtext'], cat: data['category'], charact: characts, image: images, weight: data['weight'], url: data['url'])
   end
 
@@ -200,7 +200,7 @@ class Product < ApplicationRecord
 		@tovs = Product.order(:id)#.limit(10) #where('title like ?', '%Bellelli B-bip%')
 		file = "#{Rails.root}/public/c44kz.csv"
 		CSV.open( file, 'w') do |writer|
-		headers = ['fid','Артикул', 'Штрихкод', 'Название товара', 'Краткое описание', 'Полное описание', 'Цена продажи', 'Остаток', 'Изображения', 'Параметр: Брэнд', 'Параметр: Артикул Производителя', 'Подкатегория 1', 'Подкатегория 2', 'Подкатегория 3', 'Подкатегория 4', 'Вес' ]
+		headers = ['fid','Артикул', 'Штрих-код', 'Название товара', 'Краткое описание', 'Полное описание', 'Цена продажи', 'Остаток', 'Изображения', 'Параметр: Брэнд', 'Параметр: Артикул Производителя', 'Подкатегория 1', 'Подкатегория 2', 'Подкатегория 3', 'Подкатегория 4', 'Вес' ]
 
 		writer << headers
 		@tovs.each do |pr|
