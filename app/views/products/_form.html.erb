@@ -10,7 +10,8 @@
     <%= f.input :barcode , wrapper_html: { class: "col-md-2" } %>
     <%= f.input :sdesc , wrapper_html: { class: "col-md-12" } %>
     <%= f.input :desc , wrapper_html: { class: "col-md-12" } %>
-    <%= f.input :cat , wrapper_html: { class: "col-md-12" } %>
+    <%= f.input :cat , wrapper_html: { class: "col-md-3" } %>
+    <%= f.input :cattitle, collection: Product.product_cat.map { |r| r.cattitle }, wrapper_html: { class: "col-md-9" } %>
     <%= f.input :charact , wrapper_html: { class: "col-md-12" } %>
     <%= f.input :costprice , wrapper_html: { class: "col-md-3" } %>
     <%= f.input :price , wrapper_html: { class: "col-md-3" } %>

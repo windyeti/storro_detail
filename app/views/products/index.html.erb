@@ -50,7 +50,6 @@
       <th>Наименование</th>
       <th>КрОписание</th>
       <th>Описание</th>
-      <th>КатПост</th>
       <th>Кат Назв</th>
       <th>Параметры</th>
       <th>ЗакЦена</th>
@@ -75,8 +74,7 @@
         <td><%= product.title %></td>
         <td><%= product.sdesc.truncate(25) if product.sdesc != nil %></td>
         <td><%= product.desc.truncate(25) if product.desc != nil%></td>
-        <td><%= product.cat %></td>
-        <td><%= product.cattitle %></td>
+        <td>(<%= product.cat %>) <%= product.cattitle %></td>
         <td><%= product.charact.truncate(25) if product.charact != nil %></td>
         <td><%= product.costprice %></td>
         <td><%= product.pricepr %></td>
