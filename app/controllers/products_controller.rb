@@ -118,11 +118,11 @@ class ProductsController < ApplicationController
 			attr = params[:product_attr]
 			attr.each do |key,value|
 				if key.to_s == 'picture'
-					if value.to_i == 1
-					product_id = pr.id
+					# if value.to_i == 1
+					# product_id = pr.id
 					#puts product_id
-					Product.productimage(product_id)
-					end
+					# Product.productimage(product_id)
+					# end
 				end
 				if key.to_s != 'picture'
 					if !value.blank?

@@ -461,18 +461,23 @@ class Product < ApplicationRecord
   end
 
   def self.price_updates
-    puts 'обновляем цены по процентам в категориях - '+Time.now.in_time_zone('Moscow').to_s
+    puts 'обновляем цены по процентам по категориям - '+Time.now.in_time_zone('Moscow').to_s
     products = Product.all.order(:id)
     products.each do |product|
       Product.update_pricepr(product.id)
     end
-    puts 'конец обновляем цены по процентам в категориях - '+Time.now.in_time_zone('Moscow').to_s
+    puts 'конец обновляем цены по процентам по категориям - '+Time.now.in_time_zone('Moscow').to_s
   end
 
   def self.update_pricepr(pr_id)
     product = Product.find_by_id(pr_id)
     if product.pricepr.present?
       new_price = (product.costprice + product.pricepr.to_f/100*product.costprice).round(0)
+      product.update_attributes(price: new_price)
+    else
+      search_product = Product.where(cattitle: product.cattitle).where.not(pricepr: [nil, '']).first
+      product.update_attributes(pricepr: search_product.pricepr)
+      new_price = (product.costprice + search_product.pricepr.to_f/100*product.costprice).round(0)
       product.update_attributes(price: new_price)
     end
   end
