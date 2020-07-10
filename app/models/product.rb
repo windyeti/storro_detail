@@ -475,10 +475,14 @@ class Product < ApplicationRecord
       new_price = (product.costprice + product.pricepr.to_f/100*product.costprice).round(0)
       product.update_attributes(price: new_price)
     else
-      search_product = Product.where(cattitle: product.cattitle).where.not(pricepr: [nil]).first
-      product.update_attributes(pricepr: search_product.pricepr)
-      new_price = (product.costprice + search_product.pricepr.to_f/100*product.costprice).round(0)
-      product.update_attributes(price: new_price)
+      if product.cattitle.present?
+        search_product = Product.where(cattitle: product.cattitle).where.not(pricepr: [nil]).first
+        if search_product.present?
+          product.update_attributes(pricepr: search_product.pricepr)
+          new_price = (product.costprice + search_product.pricepr.to_f/100*product.costprice).round(0)
+          product.update_attributes(price: new_price)
+        end
+      end
     end
   end
 
