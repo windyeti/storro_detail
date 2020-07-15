@@ -197,7 +197,7 @@ class Product < ApplicationRecord
 		end
 
 		#создаём файл со статичными данными
-		@tovs = Product.order(:id)#.limit(10) #where('title like ?', '%Bellelli B-bip%')
+		@tovs = Product.product_qt_not_null.order(:id)#.limit(10) #where('title like ?', '%Bellelli B-bip%')
 		file = "#{Rails.root}/public/c44kz.csv"
 		CSV.open( file, 'w') do |writer|
 		headers = ['fid','Артикул', 'Штрих-код', 'Название товара', 'Краткое описание', 'Полное описание', 'Цена продажи', 'Остаток', 'Изображения', 'Параметр: Брэнд', 'Параметр: Артикул Производителя', 'Подкатегория 1', 'Подкатегория 2', 'Подкатегория 3', 'Подкатегория 4', 'Вес' ]
