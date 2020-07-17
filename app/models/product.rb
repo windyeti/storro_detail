@@ -472,14 +472,14 @@ class Product < ApplicationRecord
   def self.update_pricepr(pr_id)
     product = Product.find_by_id(pr_id)
     if product.pricepr.present?
-      new_price = (product.costprice + product.pricepr.to_f/100*product.costprice).round(0)
+      new_price = (product.costprice + product.pricepr.to_f/100*product.costprice).round(-1)
       product.update_attributes(price: new_price)
     else
       if product.cattitle.present?
         search_product = Product.where(cattitle: product.cattitle).where.not(pricepr: [nil]).first
         if search_product.present?
           product.update_attributes(pricepr: search_product.pricepr)
-          new_price = (product.costprice + search_product.pricepr.to_f/100*product.costprice).round(0)
+          new_price = (product.costprice + search_product.pricepr.to_f/100*product.costprice).round(-1)
           product.update_attributes(price: new_price)
         end
       end
