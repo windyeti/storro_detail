@@ -131,7 +131,7 @@ class Product < ApplicationRecord
     offset = 0
     while count > 0
       puts "offset - "+offset.to_s
-      products = Product.product_api_update.limit(50).offset("#{offset}")
+      products = Product.product_api_update.slice("#{offset}", 50) #.limit(50).offset("#{offset}")
       articles = products.pluck(:sku).join(',')
       # puts articles
       if articles.present?
