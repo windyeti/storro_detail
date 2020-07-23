@@ -4,6 +4,9 @@ class Product < ApplicationRecord
   scope :product_qt_not_null, -> { where('quantity > 0') }
   scope :product_qt_not_null_size, -> { where('quantity > 0').size }
   scope :product_cat, -> { order('cattitle ASC').select(:cattitle).uniq }
+  scope :product_barcode_nil, -> { where(barcode: [nil, '']).order(:id) }
+  scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
+  scope :product_api_update, -> { product_barcode_nil + product_image_nil }
   validates :sku, uniqueness: true
 
   #Product.select(:cattitle).uniq.order('cattitle ASC')
@@ -124,11 +127,11 @@ class Product < ApplicationRecord
   def self.load_by_api
     puts 'загружаем данные api - '+Time.now.in_time_zone('Moscow').to_s
 
-    count = Product.where(barcode: [nil, '']).order(:id).size
+    count = Product.product_api_update.size
     offset = 0
     while count > 0
       puts "offset - "+offset.to_s
-      products = Product.where(barcode: [nil, '']).order(:id).limit(50).offset("#{offset}")
+      products = Product.product_api_update.limit(50).offset("#{offset}")
       articles = products.pluck(:sku).join(',')
       # puts articles
       if articles.present?
