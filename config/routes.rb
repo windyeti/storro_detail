@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post :delete_selected
       get :csv_param
       get :set_cattitle
+      get :insales_param
     end
   end
   root to: 'visitors#index'

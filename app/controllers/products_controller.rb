@@ -179,6 +179,16 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def insales_param
+    if Rails.env.development?
+      Product.insales_param
+    else
+      Product.delay.insales_param
+    end
+    flash[:notice] = 'Задача обновления параметров по api insales запущена'
+    redirect_to products_path
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
