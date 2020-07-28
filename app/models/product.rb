@@ -489,4 +489,44 @@ class Product < ApplicationRecord
     end
   end
 
+  def self.insales_param
+    puts 'start'
+    vparamHeader = []
+    p = Product.all.select(:charact)
+    p.each do |p|
+      if p.charact != nil
+        p.charact.split('---').each do |pa|
+          vparamHeader << pa.split(':')[0].strip if pa != nil
+        end
+      end
+    end
+    values = vparamHeader.uniq
+    values.each do |value|
+      puts "параметр - "+"#{value}"
+      url = "http://"+<%= ENV["INSALES_LOGIN"] %>+":"+<%= ENV["INSALES_PASS"] %>+"@"+<%= ENV["INSALES_DOMAIN"] %>+"/admin/properties.json"
+        data = 	{
+            "property":
+                  {
+                "title": "#{value}"
+                  }
+              }
+
+        RestClient.post( url, data.to_json, {:content_type => 'application/json', accept: :json}) { |response, request, result, &block|
+          puts response.code
+                case response.code
+                when 201
+                  sleep 0.2
+                  puts 'sleep 0.2-201 - сохранили'
+  # 									puts response
+                when 422
+                  puts '422'
+                else
+                  response.return!(&block)
+                end
+                }
+    end
+    puts 'finish'
+  end
+
+
 end
