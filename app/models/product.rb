@@ -503,7 +503,7 @@ class Product < ApplicationRecord
     values = vparamHeader.uniq
     values.each do |value|
       puts "параметр - "+"#{value}"
-      url = "http://"+<%= ENV["INSALES_LOGIN"] %>+":"+<%= ENV["INSALES_PASS"] %>+"@"+<%= ENV["INSALES_DOMAIN"] %>+"/admin/properties.json"
+      url = "http://"+ ENV["INSALES_LOGIN"] +":"+ ENV["INSALES_PASS"] +"@"+ ENV["INSALES_DOMAIN"] +"/admin/properties.json"
         data = 	{
             "property":
                   {
