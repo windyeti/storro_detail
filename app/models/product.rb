@@ -135,7 +135,7 @@ class Product < ApplicationRecord
       articles = products.pluck(:sku).join(',')
       # puts articles
       if articles.present?
-      url = "https://order.al-style.kz/api/element-info?access-token=Py8UvH0yDeHgN0KQ3KTLP2jDEtCR5ijm&article="+articles+"&additional_fields=barcode,description,brand,properties,detailtext,images,weight,url"
+      url = "https://api.al-style.kz/api/element-info?access-token=Py8UvH0yDeHgN0KQ3KTLP2jDEtCR5ijm&article="+articles+"&additional_fields=barcode,description,brand,properties,detailtext,images,weight,url"
       puts url
       RestClient.get( url ) { |response, request, result, &block|
           case response.code
@@ -415,7 +415,7 @@ class Product < ApplicationRecord
 
   def self.set_cattitle
     puts 'проставляем названия категорий - '+Time.now.in_time_zone('Moscow').to_s
-    url = "https://order.al-style.kz/api/categories?access-token=Py8UvH0yDeHgN0KQ3KTLP2jDEtCR5ijm"
+    url = "https://api.al-style.kz/api/categories?access-token=Py8UvH0yDeHgN0KQ3KTLP2jDEtCR5ijm"
 		resp = RestClient.get(url, :accept => :json, :content_type => "application/json")
 		cats = JSON.parse(resp)
 		c_a_o_h = []
