@@ -28,6 +28,8 @@ gem 'mechanize'
 gem 'pg', '~> 0.18'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'bcrypt_pbkdf', '< 2.0', :require => false
+gem 'ed25519', '~> 1.2', '>= 1.2.4'
 
 group :development, :test do
   gem 'byebug', platform: :mri
