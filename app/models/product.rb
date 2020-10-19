@@ -132,9 +132,9 @@ class Product < ApplicationRecord
     while count > 0
       puts "offset - "+offset.to_s
       products = Product.product_api_update.slice("#{offset}".to_i, 50) #.limit(50).offset("#{offset}")
-      articles = products.pluck(:sku).join(',')
+      articles = products.pluck(:sku).join(',') || ''
       # puts articles
-      if articles.present?
+      if articles.present? and articles != ''
       url = "https://api.al-style.kz/api/element-info?access-token=Py8UvH0yDeHgN0KQ3KTLP2jDEtCR5ijm&article="+articles+"&additional_fields=barcode,description,brand,properties,detailtext,images,weight,url"
       puts url
       RestClient.get( url ) { |response, request, result, &block|
@@ -166,6 +166,7 @@ class Product < ApplicationRecord
       else
         break
       end
+
 		end
 
     puts 'закончили загружаем данные api - '+Time.now.in_time_zone('Moscow').to_s
@@ -200,7 +201,7 @@ class Product < ApplicationRecord
 		end
 
 		#создаём файл со статичными данными
-		@tovs = Product.product_qt_not_null.order(:id)#.limit(10) #where('title like ?', '%Bellelli B-bip%')
+		@tovs = Product.product_qt_not_null.order(:id)#.limit(1) #where('title like ?', '%Bellelli B-bip%')
 		file = "#{Rails.root}/public/c44kz.csv"
 		CSV.open( file, 'w') do |writer|
 		headers = ['fid','Артикул', 'Штрих-код', 'Название товара', 'Краткое описание', 'Полное описание', 'Цена продажи', 'Остаток', 'Изображения', 'Параметр: Брэнд', 'Параметр: Артикул Производителя', 'Подкатегория 1', 'Подкатегория 2', 'Подкатегория 3', 'Подкатегория 4', 'Вес' ]
@@ -242,31 +243,37 @@ class Product < ApplicationRecord
 			end
 		end
 		addHeaders = vparamHeader.uniq
-
+    # puts "addHeaders "+addHeaders.to_s
 		# Load the original CSV file
 		rows = CSV.read(file, headers: true).collect do |row|
 			row.to_hash
 		end
 
+    check_property_use = Property.property_status_true.pluck(:title)
+    # puts check_property_use.to_s
+
 		# Original CSV column headers
 		column_names = rows.first.keys
 		# Array of the new column headers
 		addHeaders.each do |addH|
-		additional_column_names = ['Параметр: '+addH]
-		# Append new column name(s)
-		column_names += additional_column_names
-			s = CSV.generate do |csv|
-				csv << column_names
-				rows.each do |row|
-					# Original CSV values
-					values = row.values
-					# Array of the new column(s) of data to be appended to row
-	# 				additional_values_for_row = ['1']
-	# 				values += additional_values_for_row
-					csv << values
-				end
-			end
-		File.open(file, 'w') { |file| file.write(s) }
+      if check_property_use.include?(addH)
+      puts "параметр -"+addH
+  		additional_column_names = ['Параметр: '+addH]
+  		# Append new column name(s)
+  		column_names += additional_column_names
+  			s = CSV.generate do |csv|
+  				csv << column_names
+  				rows.each do |row|
+  					# Original CSV values
+  					values = row.values
+  					# Array of the new column(s) of data to be appended to row
+  	# 				additional_values_for_row = ['1']
+  	# 				values += additional_values_for_row
+  					csv << values
+  				end
+  			end
+  		File.open(file, 'w') { |file| file.write(s) }
+      end
 		end
 		# Overwrite csv file
 
@@ -285,11 +292,17 @@ class Product < ApplicationRecord
 				if vel != nil
 # 				puts vel.id
 					if vel.charact.present? # Вид записи должен быть типа - "Длина рамы: 20 --- Ширина рамы: 30"
-					vel.charact.split('---').each do |vp|
-						key = 'Параметр: '+vp.split(':')[0].strip
-						value = vp.split(':')[1].remove('.') if vp.split(':')[1] !=nil
-						row[key] = value
-					end
+  					vel.charact.split('---').each do |vp|
+              key_val = vp.split(':')[0].strip if vp != nil
+              if check_property_use.include?(key_val)
+  						key = 'Параметр: '+key_val
+                if key.present?
+      						value = vp.split(':')[1].remove('.') if vp.split(':')[1] !=nil
+      						row[key] = value
+                  # puts "здесь key -'"+key+"'-здесь value-'"+value+"'"
+                end
+              end
+  					end
 					end
 				end
 			csv_out << row

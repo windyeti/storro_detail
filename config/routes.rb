@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :properties do
+    collection do
+      get :set_all
+      post :delete_selected
+      get :edit_multiple
+      put :update_multiple
+    end
+  end
   resources :products do
     collection do
       get :get_file

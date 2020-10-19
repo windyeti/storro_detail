@@ -1,0 +1,15 @@
+
+<%= simple_form_for(@property) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs row">
+    <%= f.input :status, as: :radio_buttons, collection: [[true, 'Используем'], [false, 'Не используем']], label_method: :second, value_method: :first, wrapper_html: { class: "col-md-2" } %>
+    <%= f.input :title, wrapper_html: { class: "col-md-4" } %>
+  </div>
+
+  <div class="form-actions mt-4">
+    <%= f.button :submit , class: "btn btn-outline-success" %>
+    <%= link_to 'Back', properties_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

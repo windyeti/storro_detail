@@ -1,0 +1,52 @@
+<div class="row mb-1">
+  <div class="col-2">
+    <h1>Параметры</h1>
+  </div>
+  <div class="col-3">
+    <span class="align-middle">
+      <small>Всего:
+        <%= Property.all.size %></small>
+    </span>
+  </div>
+  <div class="col-2">
+    <div class="dropdown">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Действия
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <%= link_to 'Обновление параметров', set_all_properties_path, class: 'dropdown-item'%>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <%= link_to "Редактировать", edit_multiple_properties_path, class: 'btn btn-secondary', id: 'edit_multiple_property', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
+    <%= link_to 'Удаление', delete_selected_properties_path, class: 'btn btn-secondary', id: 'deleteAllproperty', remote: true%>
+  </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-hover table-condensed table-sm">
+  <thead class="thead-light">
+  <tr>
+    <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
+    <th>Статус</th>
+    <th>Название</th>
+    <th colspan="2"></th>
+  </tr>
+</thead>
+  <tbody id="properties_table">
+  <% @properties.each do |property| %>
+    <tr>
+      <td><%=check_box_tag "property_ids[]", property.id%></td>
+      <td><% if property.status == true %>Да<% else %>Нет<% end %></td>
+      <td><%= link_to property.title, edit_property_path(property) %></td>
+      <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, property %></td>
+      <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, property, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+</div>
+<div class="digg_pagination mt-4 mb-4">
+    <%= will_paginate @properties %>
+</div>

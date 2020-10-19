@@ -1,0 +1,23 @@
+	<div class="form-group mt-0">
+		Выбрано: <%= @properties.count %> шт
+	</div>
+<%= form_tag update_multiple_properties_path, method: :put , id: 'form_edit_multi_property' do %>
+	<%@properties.each do |pr|%>
+		<%= hidden_field_tag "properties_ids[]", pr.id , id: "properties_id_"+pr.id.to_s%>
+	<% end %>
+
+	<%= fields_for :property_attr do |f| %>
+	 <div class="form-group">
+		<%= f.label :status, 'Статус' %><br />
+		<%= f.select :status,  [['Используем', true], ['Не используем', false]] ,{ class: "form-control"}%>
+	</div>
+		<!-- <div class="form-group">
+			<%# f.label :catins, 'Категория Инсалес' %><br />
+			<%# f.select :catins, Product.order('id asc').map { |r| [r.catins] }, {:include_blank => true}, {class: "form-control"} %>
+		</div> -->
+	<% end %>
+	<div class="form-group mt-3">
+		<%= submit_tag "Обновить", class: "btn btn-primary" %>
+		<button type="button" class="btn btn-outline-dark" data-dismiss="modal">Отменить</button>
+	</div>
+<% end %>

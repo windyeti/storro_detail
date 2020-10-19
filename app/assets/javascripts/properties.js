@@ -11,17 +11,17 @@ $(document).ready(function() {
     }
   });
 
-  $("#edit_multiple").click(function(event) {
+  $("#edit_multiple_property").click(function(event) {
     // event.preventDefault();
     var checked_pr_array = [];
-    $('#products_table :checked').each(function() {
+    $('#properties_table :checked').each(function() {
       checked_pr_array.push($(this).val());
     });
     var url = $(this).attr('href');
     $.ajax({
       url: url,
       data: {
-        product_ids: checked_pr_array
+        property_ids: checked_pr_array
       },
       type: "GET",
       success: function(response) {
@@ -39,10 +39,10 @@ $(document).ready(function() {
   //   location.reload();
   // });
 
-  $('#deleteAll').click(function() {
+  $('#deleteAllproperty').click(function() {
     // event.preventDefault();
     var array = [];
-    $('#products_table :checked').each(function() {
+    $('#properties_table :checked').each(function() {
       array.push($(this).val());
     });
 

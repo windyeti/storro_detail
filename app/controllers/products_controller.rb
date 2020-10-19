@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
     @search = Product.ransack(new_q)
     @search.sorts = 'id desc' if @search.sorts.empty?
     @products = @search.result.paginate(page: params[:page], per_page: 100)
-    puts @products.count
+    # puts @products.count
     if params['otchet_type'] == 'selected'
       Product.csv_param_selected( params['selected_products'])
       new_file = "#{Rails.public_path}"+'/ins_c44kz_selected.csv'
