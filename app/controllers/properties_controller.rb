@@ -1,12 +1,13 @@
 class PropertiesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_property, only: [:show, :edit, :update, :destroy]
 
   # GET /properties
   # GET /properties.json
   def index
-    @search = Property.ransack(:q)
-    @search.sorts = 'id desc' if @search.sorts.empty?
-    @properties = @search.result.paginate(page: params[:page], per_page: 50)
+    @search = Property.ransack(params[:q])
+    @search.sorts = 'id asc' if @search.sorts.empty?
+    @properties = @search.result.paginate(page: params[:page], per_page: 100)
   end
 
   # GET /properties/1
