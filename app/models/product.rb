@@ -243,7 +243,7 @@ class Product < ApplicationRecord
 			end
 		end
 		addHeaders = vparamHeader.uniq
-    # puts "addHeaders "+addHeaders.to_s
+    puts "addHeaders "+addHeaders.to_s
 		# Load the original CSV file
 		rows = CSV.read(file, headers: true).collect do |row|
 			row.to_hash
@@ -257,22 +257,22 @@ class Product < ApplicationRecord
 		# Array of the new column headers
 		addHeaders.each do |addH|
       if check_property_use.include?(addH)
-      puts "параметр -"+addH
-  		additional_column_names = ['Параметр: '+addH]
-  		# Append new column name(s)
-  		column_names += additional_column_names
-  			s = CSV.generate do |csv|
-  				csv << column_names
-  				rows.each do |row|
-  					# Original CSV values
-  					values = row.values
-  					# Array of the new column(s) of data to be appended to row
-  	# 				additional_values_for_row = ['1']
-  	# 				values += additional_values_for_row
-  					csv << values
-  				end
-  			end
-  		File.open(file, 'w') { |file| file.write(s) }
+        puts "параметр -"+addH
+    		additional_column_names = ['Параметр: '+addH]
+    		# Append new column name(s)
+    		column_names += additional_column_names
+    		s = CSV.generate do |csv|
+    				csv << column_names
+    				rows.each do |row|
+    					# Original CSV values
+    					values = row.values
+    					# Array of the new column(s) of data to be appended to row
+    	# 				additional_values_for_row = ['1']
+    	# 				values += additional_values_for_row
+    					csv << values
+    				end
+    		end
+    		File.open(file, 'w') { |file| file.write(s) }
       end
 		end
 		# Overwrite csv file
@@ -374,26 +374,30 @@ class Product < ApplicationRecord
 		rows = CSV.read(file, headers: true).collect do |row|
 			row.to_hash
 		end
+    check_property_use = Property.property_status_true.pluck(:title)
+    # puts check_property_use.to_s
 
 		# Original CSV column headers
 		column_names = rows.first.keys
 		# Array of the new column headers
 		addHeaders.each do |addH|
-		additional_column_names = ['Параметр: '+addH]
-		# Append new column name(s)
-		column_names += additional_column_names
-			s = CSV.generate do |csv|
-				csv << column_names
-				rows.each do |row|
-					# Original CSV values
-					values = row.values
-					# Array of the new column(s) of data to be appended to row
-	# 				additional_values_for_row = ['1']
-	# 				values += additional_values_for_row
-					csv << values
-				end
-			end
-		File.open(file, 'w') { |file| file.write(s) }
+      if check_property_use.include?(addH)
+    		additional_column_names = ['Параметр: '+addH]
+    		# Append new column name(s)
+    		column_names += additional_column_names
+    			s = CSV.generate do |csv|
+    				csv << column_names
+    				rows.each do |row|
+    					# Original CSV values
+    					values = row.values
+    					# Array of the new column(s) of data to be appended to row
+    	# 				additional_values_for_row = ['1']
+    	# 				values += additional_values_for_row
+    					csv << values
+    				end
+    			end
+    		File.open(file, 'w') { |file| file.write(s) }
+      end
 		end
 		# Overwrite csv file
 
@@ -503,16 +507,21 @@ class Product < ApplicationRecord
   end
 
   def self.insales_param
-    puts 'start'
+    puts 'start insales_param'
     vparamHeader = []
-    p = Product.all.select(:charact)
-    p.each do |p|
-      if p.charact != nil
-        p.charact.split('---').each do |pa|
-          vparamHeader << pa.split(':')[0].strip if pa != nil
-        end
-      end
+    # p = Product.all.select(:charact)
+    # p.each do |p|
+    #   if p.charact != nil
+    #     p.charact.split('---').each do |pa|
+    #       vparamHeader << pa.split(':')[0].strip if pa != nil
+    #     end
+    #   end
+    # end
+    check_property_use = Property.property_status_true.pluck(:title)
+    check_property_use.each do |cpu|
+      vparamHeader << cpu
     end
+
     values = vparamHeader.uniq
     values.each do |value|
       puts "параметр - "+"#{value}"
@@ -538,7 +547,7 @@ class Product < ApplicationRecord
                 end
                 }
     end
-    puts 'finish'
+    puts 'finish insales_param'
   end
 
 
