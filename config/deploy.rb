@@ -37,9 +37,9 @@ lock "~> 3.14.0"
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
-set :application, 'c44kz'
-set :repo_url, 'git@github.com:stap780/c44kz.git'
-set :deploy_to, '/var/www/c44kz'
+set :application, 'detail'
+set :repo_url, 'git@github.com:stap780/detail.git'
+set :deploy_to, '/var/www/detail'
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public')
 set :format, :pretty

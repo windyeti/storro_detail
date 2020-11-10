@@ -16,7 +16,7 @@ development:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: c44kz_development
+  database: detail_development
   pool:     5
   username: administrator
   password:
@@ -44,7 +44,7 @@ test:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: c44kz_test
+  database: detail_test
   pool:     5
   username: administrator
   password:
@@ -54,8 +54,8 @@ production:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: c44kz_production
+  database: detail_production
   pool:     5
-  username: c44kz
-  password: <%= ENV['C44KZ_DATABASE_PASSWORD'] %>
+  username: detail
+  password: <%= ENV['DETAIL_DATABASE_PASSWORD'] %>
   template: template0
