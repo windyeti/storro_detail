@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200623075413) do
+ActiveRecord::Schema.define(version: 20201113162408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,22 @@ ActiveRecord::Schema.define(version: 20200623075413) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string   "sku"
+    t.string   "title"
+    t.string   "desc"
+    t.string   "cat"
+    t.string   "charact"
+    t.string   "charact_gab"
+    t.decimal  "oldprice"
+    t.decimal  "price"
+    t.integer  "quantity"
+    t.string   "image"
+    t.string   "url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|

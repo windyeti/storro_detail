@@ -17,7 +17,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create product" do
     assert_difference('Product.count') do
-      post products_url, params: { product: { barcode: @product.barcode, cat: @product.cat, catins: @product.catins, costprice: @product.costprice, desc: @product.desc, image: @product.image, price: @product.price, quantity: @product.quantity, sdesc: @product.sdesc, sku: @product.sku, skubrand: @product.skubrand, title: @product.title, url: @product.url, weight: @product.weight } }
+      post products_url, params: { product: { cat: @product.cat, charact: @product.charact, charact_gab: @product.charact_gab, desc: @product.desc, image: @product.image, oldprice: @product.oldprice, price: @product.price, quantity: @product.quantity, sku: @product.sku, title: @product.title, url: @product.url } }
     end
 
     assert_redirected_to product_url(Product.last)
@@ -34,7 +34,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update product" do
-    patch product_url(@product), params: { product: { barcode: @product.barcode, cat: @product.cat, catins: @product.catins, costprice: @product.costprice, desc: @product.desc, image: @product.image, price: @product.price, quantity: @product.quantity, sdesc: @product.sdesc, sku: @product.sku, skubrand: @product.skubrand, title: @product.title, url: @product.url, weight: @product.weight } }
+    patch product_url(@product), params: { product: { cat: @product.cat, charact: @product.charact, charact_gab: @product.charact_gab, desc: @product.desc, image: @product.image, oldprice: @product.oldprice, price: @product.price, quantity: @product.quantity, sku: @product.sku, title: @product.title, url: @product.url } }
     assert_redirected_to product_url(@product)
   end
 

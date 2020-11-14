@@ -2,32 +2,26 @@
 
 one:
   sku: MyString
-  skubrand: MyString
-  barcode: MyString
   title: MyString
-  sdesc: MyString
   desc: MyString
   cat: MyString
-  catins: MyString
-  costprice: 9.99
+  charact: MyString
+  charact_gab: MyString
+  oldprice: 9.99
   price: 9.99
   quantity: MyString
   image: MyString
-  weight: MyString
   url: MyString
 
 two:
   sku: MyString
-  skubrand: MyString
-  barcode: MyString
   title: MyString
-  sdesc: MyString
   desc: MyString
   cat: MyString
-  catins: MyString
-  costprice: 9.99
+  charact: MyString
+  charact_gab: MyString
+  oldprice: 9.99
   price: 9.99
   quantity: MyString
   image: MyString
-  weight: MyString
   url: MyString
