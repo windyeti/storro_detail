@@ -15,13 +15,13 @@ class Product < ApplicationRecord
     url = "https://idcollection.ru/catalogue/producers/eichholtz"
     doc = Nokogiri::HTML(open(url, :read_timeout => 50))
 		paginate_number = doc.css(".pagenavigation__nav.pagenavigation__nav--next")[0]['data-max-page']
-		count = paginate_number.presence || '1'
 		puts count
     if Rails.env.development?
       count = 1
     else
-      count = count
+      count = paginate_number.presence || '1'
     end
+    puts count
     page_array = Array(1..count.to_i)
 		page_array.each do |page|
       product_urls = doc.css('.catalog-section__title-link')
