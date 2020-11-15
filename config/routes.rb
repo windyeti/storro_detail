@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :edit_multiple
       put :update_multiple
       post :delete_selected
+      get :import
     end
   end
   root to: 'visitors#index'

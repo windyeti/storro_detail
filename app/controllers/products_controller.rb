@@ -114,6 +114,16 @@ class ProductsController < ApplicationController
 		end
   end
 
+  def import
+    if Rails.env.development?
+      Product.import
+    else
+      Product.delay.import
+    end
+    flash[:notice] = 'Задача обновления каталога запущена'
+    redirect_to products_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
