@@ -92,7 +92,6 @@ class Product < ApplicationRecord
             Product.create(sku: sku, title: title, desc: desc, cat: cat, charact: charact, charact_gab: charact_gab, oldprice: oldprice, price: price, quantity: quantity, image: image, url: pr_url)
           end
         end
-      end
     end
 
     puts 'end import '+Time.now.in_time_zone('Moscow').to_s
