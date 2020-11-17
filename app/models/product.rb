@@ -82,7 +82,11 @@ class Product < ApplicationRecord
               image_array.push(pict)
             end
           else
-            pict = 'https://idcollection.ru'+pr_doc.css('.element-slider__image')[0]['data-magnify-src']
+            if pr_doc.css('.element-slider__image') != nil
+              pict = 'https://idcollection.ru'+pr_doc.css('.element-slider__image')[0]['data-magnify-src']
+            else
+              pict = ''
+            end
             image_array.push(pict)
           end
           image = image_array.join(' ')
