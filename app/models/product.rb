@@ -29,6 +29,7 @@ class Product < ApplicationRecord
         product_urls.each do |purl|
           pr_url = 'https://idcollection.ru'+purl['href']
           pr_doc = Nokogiri::HTML(open(pr_url, :read_timeout => 50))
+          puts pr_url
           title= pr_doc.css('h1').text
           puts title
           desc = pr_doc.css('.catalog-element-description__text').text.strip
