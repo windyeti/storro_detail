@@ -11,7 +11,7 @@ class Product < ApplicationRecord
 
   def self.import
     puts 'start import '+Time.now.in_time_zone('Moscow').to_s
-
+    Product.update_all(quntity: 0)
     url = "https://idcollection.ru/catalogue/producers/eichholtz"
     doc = Nokogiri::HTML(open(url, :read_timeout => 50))
 		paginate_number = doc.css(".pagenavigation__nav.pagenavigation__nav--next")[0]['data-max-page']
