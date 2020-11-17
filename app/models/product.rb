@@ -83,7 +83,7 @@ class Product < ApplicationRecord
               image_array.push(pict)
             end
           else
-            if pr_doc.css('.element-slider__image') != nil
+            if pr_doc.css('.element-slider__image').size > 0
               pict = 'https://idcollection.ru'+pr_doc.css('.element-slider__image')[0]['data-magnify-src']
             else
               pict = ''
