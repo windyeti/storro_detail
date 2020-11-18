@@ -23,6 +23,7 @@ class Product < ApplicationRecord
     puts count
     page_array = Array(1..count.to_i)
 		page_array.each do |page|
+      puts 'page '+page.to_s
       cat_l = url+"?PAGEN_2="+page.to_s
       cat_doc = Nokogiri::HTML(open(cat_l, :read_timeout => 50))
         product_urls = cat_doc.css('.catalog-section__title-link')
@@ -31,7 +32,7 @@ class Product < ApplicationRecord
           pr_doc = Nokogiri::HTML(open(pr_url, :read_timeout => 50))
           puts pr_url
           title= pr_doc.css('h1').text
-          puts title
+          # puts title
           desc = pr_doc.css('.catalog-element-description__text').text.strip
           cat_array = []
           pr_doc.css('.breadcrumbs__element--title').each do |c|
