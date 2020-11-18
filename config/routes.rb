@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       put :update_multiple
       post :delete_selected
       get :import
+      get :csv_param
     end
   end
   root to: 'visitors#index'

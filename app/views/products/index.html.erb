@@ -1,25 +1,36 @@
-<div class="row mb-1">
-  <div class="col-2">
-    <h1>Товары</h1>
-  </div>
+<div class="row mb-2 mr-0 ml-0 align-items-center">
   <div class="col-3">
+    <h1>Товары</h1>
     <span class="align-middle"><small>Всего: <%= Product.product_all_size %></small></span>
     <span class="align-middle"><small>Отфильтровано: <%=@products.count%></small></span>
     <span class="align-middle"><small>Больше 0: <%= Product.product_qt_not_null_size %></small></span>
   </div>
-  <div class="col-2">
+  <div class="col- mr-1">
     <div class="dropdown">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Действия
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <%= link_to 'Обновить каталог', import_products_path, class: 'dropdown-item'%>
+      <%= link_to 'Сформировать файл', csv_param_products_path, class: 'dropdown-item'%>
     </div>
     </div>
   </div>
-  <div class="col-3">
+  <div class="col- mr-1">
     <%= link_to "Редактировать", edit_multiple_products_path, class: 'btn btn-secondary', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
     <%= link_to 'Удаление', delete_selected_products_path, class: 'btn btn-secondary', id: 'deleteAll', remote: true%>
+  </div>
+  <div class="col- row">
+    <%= search_form_for @search, html: {class: 'form-inline col-12'}  do |f|%>
+        <%= f.search_field :sku_or_title_cont, placeholder: 'Артикул, Название', class: "form-control input-sm"%>
+        <%= f.collection_select :cat_cont, Product.product_cat, "cat", "cat", {include_blank: false, prompt: 'Категория'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+        <%= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
+      <div class="form-group ml-2">
+        <%= f.submit 'Поиск', class: 'btn btn-info' %>
+        <%= link_to 'Сбросить',products_path, class: 'btn btn-outline-dark' %>
+        <%= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(params.permit(:products).merge(selected_products: @products.pluck(:id), otchet_type: 'selected')), title: "Создать файл с выбранными товарами", class: 'btn btn-outline-dark'%>
+      </div>
+    <% end %>
   </div>
 </div>
 
