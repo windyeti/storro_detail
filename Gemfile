@@ -23,7 +23,6 @@ gem 'ransack'
 gem 'roo'
 gem 'roo-xls'
 gem 'whenever', require: false
-gem 'figaro'
 gem 'mechanize'
 gem 'pg', '~> 0.18'
 gem 'delayed_job_active_record'
