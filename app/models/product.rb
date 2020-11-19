@@ -281,4 +281,12 @@ class Product < ApplicationRecord
 	# CaseMailer.notifier_process(current_process).deliver_now
 	end
 
+  def self.clean_sm
+    products = Product.all
+    products.each do |pr|
+      pr.charact_gab = pr.charact_gab.gsub('cm', '').gsub('см', '')
+      pr.save
+    end
+  end
+
 end
