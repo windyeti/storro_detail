@@ -138,11 +138,12 @@ class Product < ApplicationRecord
       file = "#{Rails.root}/public/detail.csv"
     end
 		CSV.open( file, 'w') do |writer|
-		headers = ['fid','Артикул', 'Название товара', 'Полное описание', 'Цена продажи', 'Старая цена' , 'Остаток', 'Изображения', 'Подкатегория 1', 'Подкатегория 2', 'Подкатегория 3', 'Подкатегория 4' ]
+		headers = ['fid','Артикул', 'Название товара', 'Полное описание', 'Цена продажи', 'Старая цена' , 'Остаток', 'Изображения', 'Подкатегория 1', 'Подкатегория 2', 'Подкатегория 3', 'Подкатегория 4', 'Параметр: Ширина', 'Параметр: Глубина', 'Параметр: Высота', 'Параметр: Глубина сиденья', 'Параметр: Высота сиденья', 'Параметр: Диаметр' ]
 
 		writer << headers
 		@tovs.each do |pr|
 			if pr.title != nil
+        puts pr.id
 				fid = pr.id
 				sku = pr.sku
         title = pr.title
@@ -155,7 +156,53 @@ class Product < ApplicationRecord
 				cat1 = pr.cat.split('---')[1] || '' if pr.cat != nil
 				cat2 = pr.cat.split('---')[2] || '' if pr.cat != nil
 				cat3 = pr.cat.split('---')[3] || '' if pr.cat != nil
-				writer << [fid, sku, title, desc, price, oldprice, quantity, image, cat, cat1, cat2, cat3 ]
+        charact_gab = pr.charact_gab
+
+        shirina = ''
+        glubina = ''
+        visota = ''
+        glubina_sid = ''
+        visota_sid = ''
+        diametr = ''
+
+        if charact_gab.include?('A.') and charact_gab.include?('Б.')
+          shirina = charact_gab.split('|')[0].gsub('A. ', '') if !charact_gab.split('|')[0].nil? and charact_gab.split('|')[0].include?('A.')
+          glubina = charact_gab.split('|')[1].gsub('Б. ', '') if !charact_gab.split('|')[1].nil? and charact_gab.split('|')[1].include?('Б.')
+          visota = charact_gab.split('|')[2].gsub('С. ', '') if !charact_gab.split('|')[2].nil? and charact_gab.split('|')[2].include?('С.')
+          glubina_sid = charact_gab.split('|')[3].gsub('Д. ', '') if !charact_gab.split('|')[3].nil? and charact_gab.split('|')[3].include?('Д.')
+          visota_sid = charact_gab.split('|')[4].gsub('Е. ', '') if !charact_gab.split('|')[4].nil? and charact_gab.split('|')[4].include?('Е.')
+        end
+        if charact_gab.include?('A.') and charact_gab.include?('B.')
+          shirina = charact_gab.split('|')[0].gsub('A. ', '') if !charact_gab.split('|')[0].nil? and charact_gab.split('|')[0].include?('A.')
+          glubina = charact_gab.split('|')[1].gsub('B. ', '') if !charact_gab.split('|')[1].nil? and charact_gab.split('|')[1].include?('B.')
+          visota = charact_gab.split('|')[2].gsub('C. ', '') if !charact_gab.split('|')[2].nil? and charact_gab.split('|')[2].include?('C.')
+          glubina_sid = charact_gab.split('|')[3].gsub('D. ', '') if !charact_gab.split('|')[3].nil? and charact_gab.split('|')[3].include?('D.')
+          visota_sid = charact_gab.split('|')[4].gsub('E. ', '') if !charact_gab.split('|')[4].nil? and charact_gab.split('|')[4].include?('E.')
+        end
+        if charact_gab.split('x').size == 3 and charact_gab.include?('H.') and !charact_gab.include?('ø')
+          shirina = charact_gab.split('x')[0]
+          glubina = charact_gab.split('x')[1]
+          visota = charact_gab.split('x')[2].gsub('H.', '').gsub(' cm', '')
+        end
+        if charact_gab.split('x').size == 3  and charact_gab.include?('высота') and !charact_gab.include?('ø')
+          shirina = charact_gab.split('x')[0]
+          glubina = charact_gab.split('x')[1]
+          visota = charact_gab.split('x')[2].gsub('высота', '').gsub(' cm', '')
+        end
+        if charact_gab.split('x').size == 3  and charact_gab.include?('H.') and charact_gab.include?('ø')
+          diametr = charact_gab.split('x')[0]
+          glubina = charact_gab.split('x')[1]
+          visota = charact_gab.split('x')[2].gsub('H.', '').gsub(' cm', '')
+        end
+        if charact_gab.split('x').size == 2 and charact_gab.include?('ø')
+          diametr = charact_gab.split('x')[0].gsub('ø ', '').gsub(' cm', '')
+          visota = charact_gab.split('x')[1].gsub('H.', '').gsub(' cm', '')
+        end
+        if charact_gab.split('x').size == 2 and !charact_gab.include?('ø')
+          shirina = charact_gab.split('x')[0]
+          glubina = charact_gab.split('x')[1].gsub(' cm', '')
+        end
+        writer << [fid, sku, title, desc, price, oldprice, quantity, image, cat, cat1, cat2, cat3, shirina, glubina, visota, glubina_sid, visota_sid, diametr ]
 				end
 			end
 		end #CSV.open
