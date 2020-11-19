@@ -166,32 +166,32 @@ class Product < ApplicationRecord
         diametr = ''
 
         if charact_gab.include?('A.') and charact_gab.include?('Б.')
-          shirina = charact_gab.split('|')[0].gsub('A. ', '') if !charact_gab.split('|')[0].nil? and charact_gab.split('|')[0].include?('A.')
-          glubina = charact_gab.split('|')[1].gsub('Б. ', '') if !charact_gab.split('|')[1].nil? and charact_gab.split('|')[1].include?('Б.')
-          visota = charact_gab.split('|')[2].gsub('С. ', '') if !charact_gab.split('|')[2].nil? and charact_gab.split('|')[2].include?('С.')
-          glubina_sid = charact_gab.split('|')[3].gsub('Д. ', '') if !charact_gab.split('|')[3].nil? and charact_gab.split('|')[3].include?('Д.')
-          visota_sid = charact_gab.split('|')[4].gsub('Е. ', '') if !charact_gab.split('|')[4].nil? and charact_gab.split('|')[4].include?('Е.')
+          shirina = charact_gab.split('|')[0].gsub('A. ', '').gsub(' cm', '') if !charact_gab.split('|')[0].nil? and charact_gab.split('|')[0].include?('A.')
+          glubina = charact_gab.split('|')[1].gsub('Б. ', '').gsub(' cm', '') if !charact_gab.split('|')[1].nil? and charact_gab.split('|')[1].include?('Б.')
+          visota = charact_gab.split('|')[2].gsub('С. ', '').gsub(' cm', '') if !charact_gab.split('|')[2].nil? and charact_gab.split('|')[2].include?('С.')
+          glubina_sid = charact_gab.split('|')[3].gsub('Д. ', '').gsub(' cm', '') if !charact_gab.split('|')[3].nil? and charact_gab.split('|')[3].include?('Д.')
+          visota_sid = charact_gab.split('|')[4].gsub('Е. ', '').gsub(' cm', '') if !charact_gab.split('|')[4].nil? and charact_gab.split('|')[4].include?('Е.')
         end
         if charact_gab.include?('A.') and charact_gab.include?('B.')
-          shirina = charact_gab.split('|')[0].gsub('A. ', '') if !charact_gab.split('|')[0].nil? and charact_gab.split('|')[0].include?('A.')
-          glubina = charact_gab.split('|')[1].gsub('B. ', '') if !charact_gab.split('|')[1].nil? and charact_gab.split('|')[1].include?('B.')
-          visota = charact_gab.split('|')[2].gsub('C. ', '') if !charact_gab.split('|')[2].nil? and charact_gab.split('|')[2].include?('C.')
-          glubina_sid = charact_gab.split('|')[3].gsub('D. ', '') if !charact_gab.split('|')[3].nil? and charact_gab.split('|')[3].include?('D.')
-          visota_sid = charact_gab.split('|')[4].gsub('E. ', '') if !charact_gab.split('|')[4].nil? and charact_gab.split('|')[4].include?('E.')
+          shirina = charact_gab.split('|')[0].gsub('A. ', '').gsub(' cm', '') if !charact_gab.split('|')[0].nil? and charact_gab.split('|')[0].include?('A.')
+          glubina = charact_gab.split('|')[1].gsub('B. ', '').gsub(' cm', '') if !charact_gab.split('|')[1].nil? and charact_gab.split('|')[1].include?('B.')
+          visota = charact_gab.split('|')[2].gsub('C. ', '').gsub(' cm', '') if !charact_gab.split('|')[2].nil? and charact_gab.split('|')[2].include?('C.')
+          glubina_sid = charact_gab.split('|')[3].gsub('D. ', '').gsub(' cm', '') if !charact_gab.split('|')[3].nil? and charact_gab.split('|')[3].include?('D.')
+          visota_sid = charact_gab.split('|')[4].gsub('E. ', '').gsub(' cm', '') if !charact_gab.split('|')[4].nil? and charact_gab.split('|')[4].include?('E.')
         end
         if charact_gab.split('x').size == 3 and charact_gab.include?('H.') and !charact_gab.include?('ø')
-          shirina = charact_gab.split('x')[0]
-          glubina = charact_gab.split('x')[1]
+          shirina = charact_gab.split('x')[0].gsub(' cm', '')
+          glubina = charact_gab.split('x')[1].gsub(' cm', '')
           visota = charact_gab.split('x')[2].gsub('H.', '').gsub(' cm', '')
         end
         if charact_gab.split('x').size == 3  and charact_gab.include?('высота') and !charact_gab.include?('ø')
-          shirina = charact_gab.split('x')[0]
-          glubina = charact_gab.split('x')[1]
+          shirina = charact_gab.split('x')[0].gsub(' cm', '')
+          glubina = charact_gab.split('x')[1].gsub(' cm', '')
           visota = charact_gab.split('x')[2].gsub('высота', '').gsub(' cm', '')
         end
         if charact_gab.split('x').size == 3  and charact_gab.include?('H.') and charact_gab.include?('ø')
-          diametr = charact_gab.split('x')[0]
-          glubina = charact_gab.split('x')[1]
+          diametr = charact_gab.split('x')[0].gsub(' cm', '')
+          glubina = charact_gab.split('x')[1].gsub(' cm', '')
           visota = charact_gab.split('x')[2].gsub('H.', '').gsub(' cm', '')
         end
         if charact_gab.split('x').size == 2 and charact_gab.include?('ø')
@@ -199,7 +199,7 @@ class Product < ApplicationRecord
           visota = charact_gab.split('x')[1].gsub('H.', '').gsub(' cm', '')
         end
         if charact_gab.split('x').size == 2 and !charact_gab.include?('ø')
-          shirina = charact_gab.split('x')[0]
+          shirina = charact_gab.split('x')[0].gsub(' cm', '')
           glubina = charact_gab.split('x')[1].gsub(' cm', '')
         end
         writer << [fid, sku, title, desc, price, oldprice, quantity, image, cat, cat1, cat2, cat3, shirina, glubina, visota, glubina_sid, visota_sid, diametr ]
