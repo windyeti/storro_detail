@@ -2,7 +2,7 @@ class ProductMailer < ApplicationMailer
 
   layout 'product_mailer'
   default from: 'ad2020k@yandex.ru'
-  # default reply_to: 'ad2020k@yandex.ru'
+  default reply_to: 'ad2020k@yandex.ru'
 
   	def downloadproduct_product(productbefore, productafter)
   		@productbefore = productbefore
