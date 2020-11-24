@@ -49,8 +49,8 @@ Rails.application.configure do
     port: 465,
     domain: "yandex.ru",
     authentication: "login",
-    user_name: Rails.application.secrets.email_provider_username,
-    password: Rails.application.secrets.email_provider_password,
+    user_name: 'ad2020k@yandex.ru',
+    password: 'zima2021',
     enable_starttls_auto: true
   }
   # ActionMailer Config

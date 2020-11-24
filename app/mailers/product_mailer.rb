@@ -1,26 +1,24 @@
 class ProductMailer < ApplicationMailer
 
   layout 'product_mailer'
+  default from: 'ad2020k@yandex.ru'
+  # default reply_to: 'ad2020k@yandex.ru'
 
   	def downloadproduct_product(productbefore, productafter)
   		@productbefore = productbefore
   		@productafter = productafter
   		@app_name = 'Detail - управление товарами'
 
-  		mail to: 'panaet80@gmail.com, info@two-g.ru',
-  		     subject: "Робот Detail - загрузка и обновление товаров",
-  		     from: "robot@gmail.com",
-  		     reply_to: "robot@gmail.com"
+  		mail to: 'panaet80@gmail.com',
+  		     subject: "Робот Detail - загрузка и обновление товаров"
   	end
 
     def ins_file(file)
   		@file = file
   		@app_name = 'Detail - управление товарами'
 
-  		mail to: 'panaet80@gmail.com, info@two-g.ru',
-  		     subject: "Робот Detail - файл создан",
-  		     from: "robot@gmail.com",
-  		     reply_to: "robot@gmail.com"
+  		mail to: 'panaet80@gmail.com',
+  		     subject: "Робот Detail - файл создан"
   	end
 
 end
