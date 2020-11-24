@@ -281,7 +281,7 @@ class Product < ApplicationRecord
 			end
 		end
 
-    Product.ins_file(new_file).deliver_now
+    ProductMailer.ins_file(new_file).deliver_now
 	end
 
   def self.clean_sm

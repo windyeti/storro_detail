@@ -31,7 +31,7 @@ env "GEM_HOME", ENV["GEM_HOME"]
 set :output, "#{path}/log/cron.log"
 set :chronic_options, :hours24 => true
 
-every 1.day, at: ['07:40'] do
+every 1.day, at: ['19:00'] do
   runner "Product.csv_param"
 end
 
