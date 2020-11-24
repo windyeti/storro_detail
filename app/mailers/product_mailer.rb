@@ -13,5 +13,14 @@ class ProductMailer < ApplicationMailer
   		     reply_to: "robot@gmail.com"
   	end
 
+    def ins_file(file)
+  		@file = file
+  		@app_name = 'Detail - управление товарами'
+
+  		mail to: 'panaet80@gmail.com',
+  		     subject: "Робот Detail - файл создан",
+  		     from: "robot@gmail.com",
+  		     reply_to: "robot@gmail.com"
+  	end
 
 end

@@ -146,7 +146,7 @@ class Product < ApplicationRecord
 		writer << headers
 		@tovs.each do |pr|
 			if pr.title != nil
-        puts pr.id
+        puts "pr.id - "+pr.id.to_s
 				fid = pr.id
 				sku = pr.sku
         title = pr.title
@@ -280,8 +280,8 @@ class Product < ApplicationRecord
 			csv_out << row
 			end
 		end
-	# current_process = "создаём файл csv_param"
-	# CaseMailer.notifier_process(current_process).deliver_now
+
+    Product.ins_file(new_file).deliver_now
 	end
 
   def self.clean_sm
