@@ -103,7 +103,7 @@ class Product < ApplicationRecord
 
     productcount = Product.product_qt_not_null_size ||= "0"
 		productall = Product.product_all_size ||= "0"
-    ProductMailer.downloadproduct_product(productcount, productall).deliver_now
+    # ProductMailer.downloadproduct_product(productcount, productall).deliver_now
     puts 'end import '+Time.now.in_time_zone('Moscow').to_s
   end
 
@@ -281,7 +281,7 @@ class Product < ApplicationRecord
 			end
 		end
 
-    ProductMailer.ins_file(new_file).deliver_now
+    # ProductMailer.ins_file(new_file).deliver_now
 	end
 
   def self.clean_sm
