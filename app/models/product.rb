@@ -275,7 +275,7 @@ class Product < ApplicationRecord
             if vp.split(':')[0].strip != 'Материал'
 						  value = vp.split(':')[1].remove('.') if vp.split(':')[1] !=nil
             else
-              value = vp.split(':')[1].remove('.').gsub(',','##') if vp.split(':')[1] !=nil
+              value = vp.split(':')[1].remove('.').gsub(', ','##') if vp.split(':')[1] !=nil
             end
 						row[key] = value
 					end
