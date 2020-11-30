@@ -272,7 +272,11 @@ class Product < ApplicationRecord
 					if vel.charact.present? # Вид записи должен быть типа - "Длина рамы: 20 --- Ширина рамы: 30"
 					vel.charact.split('---').each do |vp|
 						key = 'Параметр: '+vp.split(':')[0].strip
-						value = vp.split(':')[1].remove('.') if vp.split(':')[1] !=nil
+            if vp.split(':')[0].strip != 'Материал'
+						  value = vp.split(':')[1].remove('.') if vp.split(':')[1] !=nil
+            else
+              value = vp.split(':')[1].remove('.').gsub(',','##') if vp.split(':')[1] !=nil
+            end
 						row[key] = value
 					end
 					end
