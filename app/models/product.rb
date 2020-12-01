@@ -149,7 +149,7 @@ class Product < ApplicationRecord
         puts "pr.id - "+pr.id.to_s
 				fid = pr.id
 				sku = pr.sku
-        title = pr.title
+        title = pr.title.gsub('Eichholtz','').gsub(sku,'')
         desc = pr.desc
         price = pr.price
         oldprice = pr.oldprice
@@ -273,9 +273,10 @@ class Product < ApplicationRecord
 					vel.charact.split('---').each do |vp|
 						key = 'Параметр: '+vp.split(':')[0].strip
             if vp.split(':')[0].strip != 'Материал'
-						  value = vp.split(':')[1].remove('.') if vp.split(':')[1] !=nil
-            else
-              value = vp.split(':')[1].remove('.').gsub(', ','##') if vp.split(':')[1] !=nil
+						  value = vp.split(':')[1].remove('.').strip.split.map(&:capitalize).join(' ') if vp.split(':')[1] !=nil
+            end
+            if vp.split(':')[0].strip == 'Материал'
+              value = vp.split(':')[1].remove('.').strip.split(', ').map(&:capitalize).join(',').gsub(',','##') if vp.split(':')[1] !=nil
             end
 						row[key] = value
 					end
