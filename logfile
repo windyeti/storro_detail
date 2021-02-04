@@ -1,0 +1,7 @@
+2021-02-04 10:50:00.059 MSK [3265] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-04 10:50:00.063 MSK [3265] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-04 10:50:00.063 MSK [3265] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-04 10:50:00.064 MSK [3265] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-04 10:50:00.077 MSK [3274] LOG:  database system was shut down at 2021-02-04 05:01:11 MSK
+2021-02-04 10:50:00.090 MSK [3265] LOG:  database system is ready to accept connections
+2021-02-04 11:27:15.641 MSK [4574] FATAL:  database "qna_development" does not exist

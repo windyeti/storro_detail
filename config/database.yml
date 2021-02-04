@@ -18,7 +18,6 @@ development:
   encoding: unicode
   database: detail_development
   pool:     5
-  username: administrator
   password:
   template: template0
 
@@ -46,16 +45,5 @@ test:
   encoding: unicode
   database: detail_test
   pool:     5
-  username: administrator
   password:
-  template: template0
-
-production:
-  adapter:  postgresql
-  host:     localhost
-  encoding: unicode
-  database: detail_production
-  pool:     5
-  username: detail
-  password: <%= ENV['DETAIL_DATABASE_PASSWORD'] %>
   template: template0
