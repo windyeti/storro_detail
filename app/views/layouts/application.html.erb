@@ -11,24 +11,21 @@
   </head>
   <body class="d-flex flex-column min-vh-100">
     <header>
-    <% if user_signed_in? %>
       <%= render 'layouts/navigation' %>
-    <% end %>
     </header>
     <main role="main" class="container-fluid mb-5">
        <%= render 'layouts/messages' %>
        <%= yield %>
     </main>
-    <% if user_signed_in? %>
-      <footer class="text-muted bg-light pt-3 pb-3 mt-auto">
-        <div class="container">
-          <p class="float-right">
-            <a href="#">Back to top</a>
-          </p>
-          <p>detail <a href="http://#" target="_blank">Visit us</a></p>
-        </div>
-      </footer>
-    <% end %>
+
+    <footer class="text-muted bg-light pt-3 pb-3 mt-auto">
+      <div class="container">
+        <p class="pb-2">
+          <%= link_to 'BACK', providers_path, class: 'float-right' %>
+        </p>
+      </div>
+    </footer>
+
     <div class="modal fade"  id="modal-edit" role="dialog" tabindex="-1" aria-labelledby="editmodalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

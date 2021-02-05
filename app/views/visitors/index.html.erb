@@ -2,7 +2,7 @@
 <h3>Welcome</h3>
 <p>This is our app</p>
 <ul class="form-sign-help">
-<%# render "layouts/nav_links_for_auth" %>
+<% render "layouts/nav_links_for_auth" %>
 <li class='nav-item'><%= link_to 'Войти', new_user_session_path, class: 'nav-link' %></li>
 </ul>
 <% end %>
@@ -18,8 +18,8 @@
 <p><a href="/ins_detail.csv">Скачать файл</a> </p>
 <%end%>
 
-<%# if Rails.cache.read('file_qt_update') != nil %>
-<%# end %>
+<% if Rails.cache.read('file_qt_update') != nil %>
+<% end %>
 
 <% file_ost = "#{Rails.public_path}"+'/ost.xlsx' #+Date.today.in_time_zone('Moscow').strftime("%d_%m_%Y").to_s+'.xlsx'%>
 <% if File.file?(file_ost) %>

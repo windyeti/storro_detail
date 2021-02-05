@@ -1,0 +1,8 @@
+<h1>List or providers</h1>
+<div class="form-import my-4">
+  <h3>Импорт товаров из CSV</h3>
+  <%= form_tag import_products_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
+  <% end %>
+</div>

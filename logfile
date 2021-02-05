@@ -5,3 +5,27 @@
 2021-02-04 10:50:00.077 MSK [3274] LOG:  database system was shut down at 2021-02-04 05:01:11 MSK
 2021-02-04 10:50:00.090 MSK [3265] LOG:  database system is ready to accept connections
 2021-02-04 11:27:15.641 MSK [4574] FATAL:  database "qna_development" does not exist
+2021-02-05 01:16:20.201 MSK [3265] LOG:  received smart shutdown request
+2021-02-05 01:16:20.208 MSK [3265] LOG:  background worker "logical replication launcher" (PID 3280) exited with exit code 1
+2021-02-05 01:16:20.208 MSK [3275] LOG:  shutting down
+2021-02-05 01:16:20.228 MSK [3265] LOG:  database system is shut down
+2021-02-05 11:36:22.052 MSK [68816] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-05 11:36:22.057 MSK [68816] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-05 11:36:22.057 MSK [68816] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-05 11:36:22.058 MSK [68816] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-05 11:36:22.078 MSK [68821] LOG:  database system was shut down at 2021-02-05 01:16:20 MSK
+2021-02-05 11:36:22.094 MSK [68816] LOG:  database system is ready to accept connections
+2021-02-05 13:52:25.345 MSK [68816] LOG:  received smart shutdown request
+2021-02-05 13:52:25.347 MSK [68816] LOG:  background worker "logical replication launcher" (PID 68827) exited with exit code 1
+2021-02-05 13:52:25.347 MSK [68822] LOG:  shutting down
+2021-02-05 13:52:25.356 MSK [68816] LOG:  database system is shut down
+2021-02-05 13:54:18.908 MSK [3225] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-05 13:54:19.233 MSK [3225] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-05 13:54:19.233 MSK [3225] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-05 13:54:19.235 MSK [3225] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-05 13:54:19.265 MSK [3226] LOG:  database system was shut down at 2021-02-05 13:52:25 MSK
+2021-02-05 13:54:19.283 MSK [3225] LOG:  database system is ready to accept connections
+2021-02-05 20:45:49.538 MSK [3225] LOG:  received smart shutdown request
+2021-02-05 20:45:49.541 MSK [3225] LOG:  background worker "logical replication launcher" (PID 3232) exited with exit code 1
+2021-02-05 20:45:49.541 MSK [3227] LOG:  shutting down
+2021-02-05 20:45:49.550 MSK [3225] LOG:  database system is shut down

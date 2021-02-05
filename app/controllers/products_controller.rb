@@ -6,25 +6,25 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    if params[:q].present?
-      new_q = {}
-      params[:q].each do |k,v|
-        if k == 'quantity_in'
-          puts v
-          if v == "0"
-            value = 0
-          end
-          if v == "1"
-            value = Array(1..200)
-          end
-            new_q[k] = value
-        else
-        new_q[k] = v
-        end
-      end
-      # puts new_q
-    end
-    @search = Product.ransack(new_q)
+    # if params[:q].present?
+    #   new_q = {}
+    #   params[:q].each do |k,v|
+    #     if k == 'quantity_in'
+    #       puts v
+    #       if v == "0"
+    #         value = 0
+    #       end
+    #       if v == "1"
+    #         value = Array(1..200)
+    #       end
+    #         new_q[k] = value
+    #     else
+    #     new_q[k] = v
+    #     end
+    #   end
+    #   # puts new_q
+    # end
+    @search = Product.ransack(params[:p])
     @search.sorts = 'id desc' if @search.sorts.empty?
     @products = @search.result.paginate(page: params[:page], per_page: 100)
     if params['otchet_type'] == 'selected'
@@ -139,12 +139,12 @@ class ProductsController < ApplicationController
 
   def import
     if Rails.env.development?
-      Product.import
+      Product.import_insales(params[:file])
     else
-      Product.delay.import
+      Product.delay.import_insales(params[:file])
     end
     flash[:notice] = 'Задача обновления каталога запущена'
-    redirect_to products_path
+    redirect_to providers_path
   end
 
   def csv_param
