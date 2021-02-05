@@ -12,6 +12,6 @@ Rails.application.routes.draw do
     end
   end
   root to: 'providers#index'
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users
 end

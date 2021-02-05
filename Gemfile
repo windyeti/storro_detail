@@ -29,6 +29,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'bcrypt_pbkdf', '< 2.0', :require => false
 gem 'ed25519', '~> 1.2', '>= 1.2.4'
+gem 'cancancan'
 
 group :development, :test do
   gem 'byebug', platform: :mri

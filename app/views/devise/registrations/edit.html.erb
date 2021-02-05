@@ -12,6 +12,11 @@
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
+
+      <div class="form-group">
+        <%= f.label :role %>
+        <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}, class: 'form-control') %>
+      </div>
     </div>
     <fieldset>
       <p>Оставьте эти поля пустыми , если вы не хотите менять пароль.</p>
