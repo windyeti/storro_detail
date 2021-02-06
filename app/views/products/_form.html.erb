@@ -21,7 +21,7 @@
       ID Варианта Товара в InSales: <%= @product.productid_var_insales %>
     </span>
 
-    <%= f.input :provider,:collection => Provider.all,:label_method => :name, :value_method => :id, :label => "Поставщики" , :include_blank => "Выберите" %>
+    <%= f.input :provider_id,:collection => Provider.all,:label_method => :name, :value_method => :id, :label => "Поставщики" , :include_blank => "Выберите" %>
 
     <%= f.input :product_sku_provider,  wrapper_html: { class: "col-md-2" } %>
 
