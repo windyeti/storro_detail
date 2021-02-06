@@ -35,3 +35,23 @@
 2021-02-05 23:57:14.603 MSK [66681] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2021-02-05 23:57:14.629 MSK [66687] LOG:  database system was shut down at 2021-02-05 20:45:49 MSK
 2021-02-05 23:57:14.641 MSK [66681] LOG:  database system is ready to accept connections
+2021-02-06 03:12:47.870 MSK [66681] LOG:  received smart shutdown request
+2021-02-06 03:12:47.874 MSK [66681] LOG:  background worker "logical replication launcher" (PID 66696) exited with exit code 1
+2021-02-06 03:12:47.874 MSK [66691] LOG:  shutting down
+2021-02-06 03:12:47.885 MSK [66681] LOG:  database system is shut down
+2021-02-06 10:59:25.016 MSK [35481] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-06 10:59:25.339 MSK [35481] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-06 10:59:25.339 MSK [35481] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-06 10:59:25.341 MSK [35481] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-06 10:59:25.370 MSK [35494] LOG:  database system was shut down at 2021-02-06 03:12:47 MSK
+2021-02-06 10:59:25.386 MSK [35481] LOG:  database system is ready to accept connections
+2021-02-06 15:24:36.135 MSK [35481] LOG:  received smart shutdown request
+2021-02-06 15:24:36.137 MSK [35481] LOG:  background worker "logical replication launcher" (PID 35500) exited with exit code 1
+2021-02-06 15:24:36.138 MSK [35495] LOG:  shutting down
+2021-02-06 15:24:36.146 MSK [35481] LOG:  database system is shut down
+2021-02-06 15:26:03.204 MSK [3469] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-06 15:26:03.414 MSK [3469] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-06 15:26:03.414 MSK [3469] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-06 15:26:03.415 MSK [3469] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-06 15:26:03.455 MSK [3470] LOG:  database system was shut down at 2021-02-06 15:24:36 MSK
+2021-02-06 15:26:03.640 MSK [3469] LOG:  database system is ready to accept connections

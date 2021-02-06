@@ -44,9 +44,10 @@
       <th style="width:250px;">Title</th>
       <th>Desc</th>
       <th>Cat</th>
-      <th>Charact</th>
-      <th>Charact gab</th>
-      <th>Oldprice</th>
+      <th>Видимость</th>
+      <th>Поставщик</th>
+      <th>Стоимость у поставщика</th>
+<!--      <th>Oldprice</th>-->
       <th>Price</th>
       <th>Quantity</th>
       <th style="width:250px;">Image</th>
@@ -63,13 +64,22 @@
         <td><%= link_to product.title, edit_product_path(product) %></td>
         <td><%= product.desc.truncate(25) if product.desc != nil%></td>
         <td><%= product.cat %></td>
-        <td><%= product.charact.truncate(25) if product.charact != nil %></td>
-        <td><%= product.charact_gab %></td>
-        <td><%= product.oldprice %></td>
+        <td><%= product.visible ? "выставлен" : "скрыт" %></td>
+        <td><%= product.provider&.name %></td>
+        <td><%= product.provider_price %></td>
+<!--        <td><%#= product.oldprice %></td>-->
         <td><%= product.price %></td>
         <td><%= product.quantity %></td>
-        <td class="row ml-0 mr-0"><% product.image.split(' ').each do |pict| %><div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div><% end %></td>
-        <td><% if product.url.present? %><%= link_to 'Товар у поставщика', product.url , target: 'blank' %><%end%></td>
+        <td class="row ml-0 mr-0">
+          <% if product.image.present? %>
+            <% product.image.split(' ').each do |pict| %>
+              <div class="w-25">
+                <img class="img-thumbnail" src="<%= pict %>">
+              </div>
+            <% end %>
+          <% end %>
+        </td>
+        <td><% if product.url.present? %><%= link_to 'Товар в InSales', product.url , target: 'blank' %><%end%></td>
         <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
         <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
       </tr>

@@ -5,22 +5,53 @@
 
   <div class="form-inputs row">
     <%= f.input :title, wrapper_html: { class: "col-md-5" }  %>
-    <%= f.input :sku  ,  wrapper_html: { class: "col-md-2" }%>
-    <%= f.input :oldprice,  wrapper_html: { class: "col-md-2" } %>
+
+    <span class="col-md-2">
+      Артикул Товара в InSales: <%= @product.sku %>
+    </span>
+
+    <%#= f.input :oldprice,  wrapper_html: { class: "col-md-2" } %>
     <%= f.input :price,  wrapper_html: { class: "col-md-2" } %>
+    <%= f.input :provider_price,  wrapper_html: { class: "col-md-2" } %>
+
+    <span class="col-md-2">
+      ID Товара в InSales: <%= @product.productid_insales %>
+    </span>
+    <span class="col-md-2">
+      ID Варианта Товара в InSales: <%= @product.productid_var_insales %>
+    </span>
+
+    <%= f.input :provider,:collection => Provider.all,:label_method => :name, :value_method => :id, :label => "Поставщики" , :include_blank => "Выберите" %>
+
+    <%= f.input :product_sku_provider,  wrapper_html: { class: "col-md-2" } %>
+
+    <span class="col-md-2">
+      Видимость: <%= @product.visible ? "выстален" : "скрыт" %>
+    </span>
+
     <%= f.input :quantity,  wrapper_html: { class: "col-md-1" } %>
     <%= f.input :desc, wrapper_html: { class: "col-md-12" } %>
-    <%= f.input :cat, wrapper_html: { class: "col-md-3" } %>
-    <%= f.input :charact, wrapper_html: { class: "col-md-3" } %>
-    <%= f.input :charact_gab, wrapper_html: { class: "col-md-3" } %>
-    <% if @product.url.present? %><%= link_to 'Товар у поставщика', @product.url , class: "d-flex align-items-center", target: 'blank' %><%end%>
+
+    <%= f.input :cat, wrapper_html: { class: "col-md-12" } %>
+
+    <%#= f.input :charact, wrapper_html: { class: "col-md-3" } %>
+    <%#= f.input :charact_gab, wrapper_html: { class: "col-md-3" } %>
+
+    <% if @product.url.present? %>
+      <div class="col-md-2">
+        <%= link_to 'Товар в InSales', @product.url , class: "d-flex align-items-center", target: 'blank' %>
+      </div>
+    <%end%>
   </div>
+
   <% if @product.image.present? %>
-  <div class="row ml-0 mr-0">
-  <% @product.image.split(' ').each do |pict| %>
-  <div class="w-25"><img class="img-fluid img-thumbnail" src="<%= pict %>"></div>
-  <% end %>
-  </div>
+    <div class="row ml-0 mr-0">
+      <% @product.image.split(' ').each do |pict| %>
+        <div class="w-25">
+          <img class="img-fluid img-thumbnail" src="<%= pict %>">
+        </div>
+      <% end %>
+    </div>
   <%end%>
 
   <div class="form-actions mt-4">
@@ -28,3 +59,4 @@
     <%= link_to 'Back', products_path, class: "btn btn-outline-secondary" %>
   </div>
 <% end %>
+

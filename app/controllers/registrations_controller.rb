@@ -2,6 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   # only admin can create new user
   before_action :auth_admin
 
+
   # allow authenticated user create a new user (registration)
   # i.e. prevented default devise behaving
   # в противном случае, аутентифицированный пользователь-админ при попытке

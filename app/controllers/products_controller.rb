@@ -3,6 +3,8 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
+  # TODO authorize_resource Сделать разграничение прав для Юзера
+
   # GET /products
   # GET /products.json
   def index

@@ -1,4 +1,4 @@
 class Provider < ApplicationRecord
-  validates :name, uniqueness: true
-  validates :prefix, presence: true
+  validates :prefix, :name, :permalink, uniqueness: true
+  validates :prefix, :name, :permalink, presence: true
 end

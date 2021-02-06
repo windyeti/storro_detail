@@ -18,24 +18,33 @@ class Product < ApplicationRecord
 
     (11..last_spreadsheet).each do |i|
 
-      data = {
+      data_create = {
         sku: spreadsheets.cell(i, 'Z'),
         title: spreadsheets.cell(i, 'B'),
         url: spreadsheets.cell(i, 'D'),
         desc: spreadsheets.cell(i, 'F'),
         quantity: spreadsheets.cell(i, 'AF').to_i,
-        oldprice: spreadsheets.cell(i, 'AD'),
+        cat: spreadsheets.cell(i, 'L'),
+        # oldprice: spreadsheets.cell(i, 'AD'),
         price: spreadsheets.cell(i, 'AC').to_f,
         provider_price: spreadsheets.cell(i, 'AE').to_f,
         productid_insales: spreadsheets.cell(i, 'A'),
         productid_var_insales: spreadsheets.cell(i, 'Y'),
         product_sku_provider: spreadsheets.cell(i, 'X'),
-        visible: spreadsheets.cell(i, 'G') == 'выставлен' ? true : false
+        visible: spreadsheets.cell(i, 'G') == 'скрыт' ? false : true
       }
 
-      product = Product.find_by(productid_insales: data[:productid_insales])
+      data_update = {
+        sku: spreadsheets.cell(i, 'Z'),
+        title: spreadsheets.cell(i, 'B'),
+        url: spreadsheets.cell(i, 'D'),
+        desc: spreadsheets.cell(i, 'F'),
+        cat: spreadsheets.cell(i, 'L')
+      }
 
-      product.present? ? product.update(data) : Product.create(data)
+      product = Product.find_by(productid_insales: data_create[:productid_insales])
+
+      product.present? ? product.update(data_update) : Product.create(data_create)
     end
   end
 
