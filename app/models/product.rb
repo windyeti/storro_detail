@@ -12,8 +12,8 @@ class Product < ApplicationRecord
   def self.import_insales(file)
 
     spreadsheets = open_spreadsheet(file)
-    p last_spreadsheet = spreadsheets.last_row.to_i
-    p header = spreadsheets.row(1)
+    last_spreadsheet = spreadsheets.last_row.to_i
+    # header = spreadsheets.row(1)
 
     (11..last_spreadsheet).each do |i|
 
