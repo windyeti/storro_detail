@@ -46,6 +46,7 @@
       <th>Cat</th>
       <th>Видимость</th>
       <th>Поставщик</th>
+      <th>Артикул товара у поставщика</th>
       <th>Стоимость у поставщика</th>
 <!--      <th>Oldprice</th>-->
       <th>Price</th>
@@ -66,6 +67,7 @@
         <td><%= product.cat %></td>
         <td><%= product.visible ? "выставлен" : "скрыт" %></td>
         <td><%= product.provider&.name %></td>
+        <td><%= product.product_sku_provider %></td>
         <td><%= product.provider_price %></td>
 <!--        <td><%#= product.oldprice %></td>-->
         <td><%= product.price %></td>
