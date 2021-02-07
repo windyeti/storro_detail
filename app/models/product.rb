@@ -15,7 +15,7 @@ class Product < ApplicationRecord
     last_spreadsheet = spreadsheets.last_row.to_i
     # header = spreadsheets.row(1)
 
-    (11..last_spreadsheet).each do |i|
+    (2..last_spreadsheet).each do |i|
 
       data_create = {
         sku: spreadsheets.cell(i, 'Z'),
