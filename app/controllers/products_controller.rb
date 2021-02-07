@@ -143,7 +143,8 @@ class ProductsController < ApplicationController
     if Rails.env.development?
       Product.import_insales(params[:file])
     else
-      Product.delay.import_insales(params[:file])
+      Product.import_insales(params[:file])
+      # Product.delay.import_insales(params[:file])
     end
     flash[:notice] = 'Задача обновления каталога запущена'
     redirect_to providers_path
