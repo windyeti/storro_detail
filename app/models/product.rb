@@ -8,13 +8,12 @@ class Product < ApplicationRecord
   scope :product_qt_not_null_size, -> { where('quantity > 0').size }
   scope :product_cat, -> { order('cat DESC').select(:cat).uniq }
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
-  validates :sku, uniqueness: true
 
   def self.import_insales(file)
 
     spreadsheets = open_spreadsheet(file)
-    last_spreadsheet = spreadsheets.last_row.to_i
-    header = spreadsheets.row(1)
+    p last_spreadsheet = spreadsheets.last_row.to_i
+    p header = spreadsheets.row(1)
 
     (11..last_spreadsheet).each do |i|
 
@@ -42,9 +41,23 @@ class Product < ApplicationRecord
         cat: spreadsheets.cell(i, 'L')
       }
 
-      product = Product.find_by(productid_insales: data_create[:productid_insales])
+      product = Product
+                  .where(productid_insales: data_create[:productid_insales])
+                  .where(productid_var_insales: data_create[:productid_var_insales])
 
       product.present? ? product.update(data_update) : Product.create(data_create)
+    end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when ".csv" then Roo::Spreadsheet.open(file.path, { csv_options: { encoding: 'bom|utf-8', col_sep: "\t" } })
+      # when ".csv" then Roo::CSV.new(file.path)
+      # when ".csv" then Roo::CSV.new(file.path, csv_options: {col_sep: "\t"})
+    when ".xls" then Roo::Excel.new(file.path)
+    when ".xlsx" then Roo::Excelx.new(file.path)
+    when ".XLS" then Roo::Excel.new(file.path)
+    else raise "Unknown file type: #{file.original_filename}"
     end
   end
 
@@ -333,17 +346,6 @@ class Product < ApplicationRecord
     products.each do |pr|
       pr.charact_gab = pr.charact_gab.gsub('cm', '').gsub('см', '')
       pr.save
-    end
-  end
-
-  def self.open_spreadsheet(file)
-    case File.extname(file.original_filename)
-    when ".csv" then Roo::CSV.new(file.path)
-    # when ".csv" then Roo::CSV.new(file.path, csv_options: {col_sep: "\t"})
-    when ".xls" then Roo::Excel.new(file.path)
-    when ".xlsx" then Roo::Excelx.new(file.path)
-    when ".XLS" then Roo::Excel.new(file.path)
-    else raise "Unknown file type: #{file.original_filename}"
     end
   end
 
