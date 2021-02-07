@@ -1,6 +1,4 @@
 class ProductsController < ApplicationController
-
-  before_action :authenticate_user!
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # TODO authorize_resource Сделать разграничение прав для Юзера
@@ -143,8 +141,8 @@ class ProductsController < ApplicationController
     if Rails.env.development?
       Product.import_insales(params[:file])
     else
-      # Product.import_insales(params[:file])
-      Product.delay.import_insales(params[:file])
+      Product.import_insales(params[:file])
+      # Product.delay.import_insales(params[:file])
     end
     flash[:notice] = 'Задача обновления каталога запущена'
     redirect_to providers_path
