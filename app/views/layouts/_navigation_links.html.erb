@@ -1,7 +1,11 @@
+<li class="nav-item <%= 'active' if current_page?(providers_path) %>'"><%= link_to 'Поставщики', providers_path, class: 'nav-link' %></li>
 <li class="nav-item <%= 'active' if current_page?(products_path) %>'"><%= link_to 'Товары', products_path, class: 'nav-link' %></li>
 <!--<li class="nav-item <%#= 'active' if current_page?(users_path) %>'"><%#= link_to 'Пользватели', users_path, class: 'nav-link' %></li>-->
 <!--<li class="nav-item <%#= 'active' if current_page?(page_path('about')) %>'"><%#= link_to 'About', page_path('about'), class: 'nav-link' %></li>-->
-
-<li class="nav-item'">
-  <%#= link_to 'Import products from InSales', import_products_path, class: 'btn btn-outline-success btn-sm' %>
-</li>
+<% if can? :create, User %>
+  <li class='nav-item'><%= link_to 'Создать пользователя', new_user_registration_path, class: 'nav-link' %></li>
+  <li class='nav-item'><%= link_to 'Создать поставщика', new_provider_path, class: 'nav-link' %></li>
+<!--  <li class="nav-item'">-->
+    <%#= link_to 'Import products from InSales', import_products_path, class: 'btn btn-outline-success btn-sm' %>
+<!--  </li>-->
+<% end %>

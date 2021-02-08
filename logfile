@@ -55,3 +55,29 @@
 2021-02-06 15:26:03.415 MSK [3469] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2021-02-06 15:26:03.455 MSK [3470] LOG:  database system was shut down at 2021-02-06 15:24:36 MSK
 2021-02-06 15:26:03.640 MSK [3469] LOG:  database system is ready to accept connections
+2021-02-07 20:41:08.397 MSK [5814] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-07 20:41:08.435 MSK [5814] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-07 20:41:08.435 MSK [5814] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-07 20:41:08.436 MSK [5814] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-07 20:41:08.596 MSK [5830] LOG:  database system was shut down at 2021-02-07 19:19:05 MSK
+2021-02-07 20:41:08.619 MSK [5814] LOG:  database system is ready to accept connections
+2021-02-08 03:54:43.294 MSK [5814] LOG:  received smart shutdown request
+2021-02-08 03:54:43.296 MSK [5814] LOG:  background worker "logical replication launcher" (PID 5843) exited with exit code 1
+2021-02-08 03:54:43.296 MSK [5833] LOG:  shutting down
+2021-02-08 03:54:43.310 MSK [5814] LOG:  database system is shut down
+2021-02-08 12:50:48.145 MSK [74234] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-08 12:50:48.468 MSK [74234] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-08 12:50:48.468 MSK [74234] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-08 12:50:48.469 MSK [74234] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-08 12:50:48.493 MSK [74235] LOG:  database system was shut down at 2021-02-08 03:54:43 MSK
+2021-02-08 12:50:48.502 MSK [74234] LOG:  database system is ready to accept connections
+2021-02-08 13:41:36.179 MSK [74234] LOG:  received smart shutdown request
+2021-02-08 13:41:36.180 MSK [74234] LOG:  background worker "logical replication launcher" (PID 74241) exited with exit code 1
+2021-02-08 13:41:36.181 MSK [74236] LOG:  shutting down
+2021-02-08 13:41:36.189 MSK [74234] LOG:  database system is shut down
+2021-02-08 13:47:17.060 MSK [21365] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-08 13:47:17.064 MSK [21365] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-08 13:47:17.064 MSK [21365] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-08 13:47:17.065 MSK [21365] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-08 13:47:17.085 MSK [21366] LOG:  database system was shut down at 2021-02-08 13:41:36 MSK
+2021-02-08 13:47:17.092 MSK [21365] LOG:  database system is ready to accept connections

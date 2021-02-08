@@ -19,7 +19,8 @@ class Ability
 
   def auth_user
     guest
-
+    can :read, Provider
+    can [:read, :create, :update, :import], Product
   end
 
   def admin

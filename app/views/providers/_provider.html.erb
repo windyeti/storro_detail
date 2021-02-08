@@ -1,7 +1,9 @@
 <div class="provider d-flex" id="provider_<%= provider.id %>">
   <span class="name mr-auto"><%= link_to provider.name, provider %></span>
-  <span class="edit-delete">
-    <span class="edit ml-2"><%= link_to 'edit', edit_provider_path(provider) %></span>
-    <span class="delete ml-2"><%= link_to 'delete', provider, method: :delete, data: {confirm: "Вы уверены что хотите удалить поставщика #{provider.name}?"} %></span>
-  </span>
+  <% if can? :edit, provider %>
+    <span class="edit-delete">
+      <span class="edit ml-2"><%= link_to 'edit', edit_provider_path(provider) %></span>
+      <span class="delete ml-2"><%= link_to 'delete', provider, method: :delete, data: {confirm: "Вы уверены что хотите удалить поставщика #{provider.name}?"} %></span>
+    </span>
+  <% end %>
 </div>

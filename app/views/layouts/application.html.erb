@@ -12,7 +12,6 @@
   <body class="d-flex flex-column min-vh-100">
     <header>
       <%= render 'layouts/navigation' %>
-      <%= render 'layouts/admin_panel' if can? :create, User %>
     </header>
     <main role="main" class="container-fluid mb-5">
        <%= render 'layouts/messages' %>
