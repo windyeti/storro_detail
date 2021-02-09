@@ -24,7 +24,7 @@ class ProductsController < ApplicationController
     #   end
     #   # puts new_q
     # end
-    @search = Product.ransack(params[:p])
+    @search = Product.ransack(params[:q])
     @search.sorts = 'id desc' if @search.sorts.empty?
     @products = @search.result.paginate(page: params[:page], per_page: 100)
     if params['otchet_type'] == 'selected'

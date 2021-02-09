@@ -81,3 +81,61 @@
 2021-02-08 13:47:17.065 MSK [21365] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2021-02-08 13:47:17.085 MSK [21366] LOG:  database system was shut down at 2021-02-08 13:41:36 MSK
 2021-02-08 13:47:17.092 MSK [21365] LOG:  database system is ready to accept connections
+2021-02-08 17:40:29.566 MSK [21365] LOG:  received smart shutdown request
+2021-02-08 17:40:29.568 MSK [21365] LOG:  background worker "logical replication launcher" (PID 21372) exited with exit code 1
+2021-02-08 17:40:29.568 MSK [21367] LOG:  shutting down
+2021-02-08 17:40:29.578 MSK [21365] LOG:  database system is shut down
+2021-02-08 17:42:08.239 MSK [3028] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-08 17:42:08.246 MSK [3028] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-08 17:42:08.246 MSK [3028] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-08 17:42:08.247 MSK [3028] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-08 17:42:08.501 MSK [3034] LOG:  database system was shut down at 2021-02-08 17:40:29 MSK
+2021-02-08 17:42:08.527 MSK [3028] LOG:  database system is ready to accept connections
+2021-02-08 18:19:16.536 MSK [3028] LOG:  received smart shutdown request
+2021-02-08 18:19:16.538 MSK [3028] LOG:  background worker "logical replication launcher" (PID 3040) exited with exit code 1
+2021-02-08 18:19:16.538 MSK [3035] LOG:  shutting down
+2021-02-08 18:19:16.551 MSK [3028] LOG:  database system is shut down
+2021-02-08 21:22:05.562 MSK [83881] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-08 21:22:05.567 MSK [83881] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-08 21:22:05.567 MSK [83881] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-08 21:22:05.568 MSK [83881] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-08 21:22:05.590 MSK [83890] LOG:  database system was shut down at 2021-02-08 18:19:16 MSK
+2021-02-08 21:22:05.607 MSK [83881] LOG:  database system is ready to accept connections
+2021-02-09 00:32:47.009 MSK [83881] LOG:  received smart shutdown request
+2021-02-09 00:32:47.010 MSK [83881] LOG:  background worker "logical replication launcher" (PID 83896) exited with exit code 1
+2021-02-09 00:32:47.010 MSK [83891] LOG:  shutting down
+2021-02-09 00:32:47.026 MSK [83881] LOG:  database system is shut down
+2021-02-09 01:10:01.648 MSK [93779] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-09 01:10:01.651 MSK [93779] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-09 01:10:01.652 MSK [93779] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-09 01:10:01.652 MSK [93779] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-09 01:10:01.672 MSK [93780] LOG:  database system was shut down at 2021-02-09 00:32:47 MSK
+2021-02-09 01:10:01.682 MSK [93779] LOG:  database system is ready to accept connections
+2021-02-09 01:52:22.789 MSK [93779] LOG:  received smart shutdown request
+2021-02-09 01:52:22.791 MSK [93779] LOG:  background worker "logical replication launcher" (PID 93786) exited with exit code 1
+2021-02-09 01:52:22.791 MSK [93781] LOG:  shutting down
+2021-02-09 01:52:22.800 MSK [93779] LOG:  database system is shut down
+2021-02-09 01:56:57.791 MSK [13123] LOG:  starting PostgreSQL 13.0 on x86_64-apple-darwin19.6.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.2), 64-bit
+2021-02-09 01:56:57.797 MSK [13123] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-02-09 01:56:57.797 MSK [13123] LOG:  listening on IPv6 address "::1", port 5432
+2021-02-09 01:56:57.798 MSK [13123] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-02-09 01:56:57.832 MSK [13127] LOG:  database system was shut down at 2021-02-09 01:52:22 MSK
+2021-02-09 01:56:57.849 MSK [13123] LOG:  database system is ready to accept connections
+2021-02-09 15:51:55.376 MSK [35510] ERROR:  operator does not exist: character varying > integer at character 44
+2021-02-09 15:51:55.376 MSK [35510] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2021-02-09 15:51:55.376 MSK [35510] STATEMENT:  SELECT COUNT(*) FROM "mbs" WHERE (quantity > 0)
+2021-02-09 15:56:21.473 MSK [35510] ERROR:  operator does not exist: character varying > integer at character 44
+2021-02-09 15:56:21.473 MSK [35510] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2021-02-09 15:56:21.473 MSK [35510] STATEMENT:  SELECT COUNT(*) FROM "mbs" WHERE (quantity > 0)
+2021-02-09 15:56:37.230 MSK [35510] ERROR:  operator does not exist: character varying > integer at character 44
+2021-02-09 15:56:37.230 MSK [35510] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2021-02-09 15:56:37.230 MSK [35510] STATEMENT:  SELECT COUNT(*) FROM "mbs" WHERE (quantity > 0)
+2021-02-09 15:57:24.649 MSK [35510] ERROR:  operator does not exist: character varying > integer at character 44
+2021-02-09 15:57:24.649 MSK [35510] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2021-02-09 15:57:24.649 MSK [35510] STATEMENT:  SELECT COUNT(*) FROM "mbs" WHERE (quantity > 0)
+2021-02-09 15:58:30.942 MSK [35510] ERROR:  operator does not exist: character varying > integer at character 43
+2021-02-09 15:58:30.942 MSK [35510] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2021-02-09 15:58:30.942 MSK [35510] STATEMENT:  SELECT "mbs".* FROM "mbs" WHERE (quantity > 0)
+2021-02-09 16:00:24.116 MSK [35510] ERROR:  operator does not exist: character varying > integer at character 44
+2021-02-09 16:00:24.116 MSK [35510] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2021-02-09 16:00:24.116 MSK [35510] STATEMENT:  SELECT COUNT(*) FROM "mbs" WHERE (quantity > 0)

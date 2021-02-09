@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
 
-  resources :providers
+  resources :mbs
+
+  resources :providers do
+    collection do
+      get :create_csv
+    end
+    member do
+      get :import
+      get :syncronaize
+    end
+  end
 
   resources :products do
     collection do

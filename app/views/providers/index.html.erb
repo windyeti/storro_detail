@@ -12,3 +12,6 @@
     <%= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
   <% end %>
 </div>
+
+<%= link_to 'Create CSV', create_csv_providers_path, class: 'btn btn-sm btn-outline-success' %>
+<%= link_to 'Download CSV', asset_path("ins_detail.csv"), download: "export_insales_#{Time.now}", class: 'btn btn-sm btn-outline-success' %>
