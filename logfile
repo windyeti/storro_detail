@@ -139,3 +139,21 @@
 2021-02-09 16:00:24.116 MSK [35510] ERROR:  operator does not exist: character varying > integer at character 44
 2021-02-09 16:00:24.116 MSK [35510] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
 2021-02-09 16:00:24.116 MSK [35510] STATEMENT:  SELECT COUNT(*) FROM "mbs" WHERE (quantity > 0)
+2021-02-09 16:14:42.483 MSK [71259] ERROR:  column "quantity" cannot be cast automatically to type integer
+2021-02-09 16:14:42.483 MSK [71259] HINT:  You might need to specify "USING quantity::integer".
+2021-02-09 16:14:42.483 MSK [71259] STATEMENT:  ALTER TABLE "mbs" ALTER COLUMN "quantity" TYPE integer
+2021-02-09 16:17:00.139 MSK [77182] ERROR:  column "quantity" cannot be cast automatically to type integer
+2021-02-09 16:17:00.139 MSK [77182] HINT:  You might need to specify "USING quantity::integer".
+2021-02-09 16:17:00.139 MSK [77182] STATEMENT:  ALTER TABLE "mbs" ALTER COLUMN "quantity" TYPE integer
+2021-02-09 16:17:55.613 MSK [79324] ERROR:  database "detail_development" is being accessed by other users
+2021-02-09 16:17:55.613 MSK [79324] DETAIL:  There are 2 other sessions using the database.
+2021-02-09 16:17:55.613 MSK [79324] STATEMENT:  DROP DATABASE IF EXISTS "detail_development"
+2021-02-09 16:19:35.858 MSK [83323] ERROR:  database "detail_development" is being accessed by other users
+2021-02-09 16:19:35.858 MSK [83323] DETAIL:  There is 1 other session using the database.
+2021-02-09 16:19:35.858 MSK [83323] STATEMENT:  DROP DATABASE IF EXISTS "detail_development"
+2021-02-09 16:26:17.913 MSK [99769] ERROR:  column "quantity" cannot be cast automatically to type integer
+2021-02-09 16:26:17.913 MSK [99769] HINT:  You might need to specify "USING quantity::integer".
+2021-02-09 16:26:17.913 MSK [99769] STATEMENT:  ALTER TABLE "mbs" ALTER COLUMN "quantity" TYPE integer
+2021-02-09 16:29:52.966 MSK [9048] FATAL:  database "egorrails" does not exist
+2021-02-09 16:30:40.230 MSK [11171] FATAL:  database "egorrails" does not exist
+2021-02-09 16:30:58.994 MSK [11826] FATAL:  role "root" does not exist
