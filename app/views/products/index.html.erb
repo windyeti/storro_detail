@@ -1,13 +1,4 @@
 <div class="row mb-2 mr-0 ml-0 align-items-center">
-  <div class="col-12">
-    <div class="form-import my-4">
-      <h3>Обновить каталог</h3>
-      <%= form_tag import_products_path, multipart: true do %>
-        <%= file_field_tag :file %>
-        <%= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
-      <% end %>
-    </div>
-  </div>
   <div class="col-3">
     <h1>Товары</h1>
     <span class="align-middle"><small>Всего: <%= Product.product_all_size %></small></span>
@@ -26,14 +17,16 @@
     </div>
   </div>
   <div class="col- mr-1">
-    <%= link_to '<span class="oi oi-pencil"></span>'.html_safe, edit_multiple_products_path, class: 'btn btn-secondary', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
-    <%= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_products_path, class: 'btn btn-secondary', id: 'deleteAll', remote: true%>
+    <%#= link_to '<span class="oi oi-pencil"></span>'.html_safe, edit_multiple_products_path, class: 'btn btn-secondary', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
+    <%#= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_products_path, class: 'btn btn-secondary', id: 'deleteAll', remote: true%>
   </div>
   <div class="col- ">
     <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
         <%= f.search_field :sku_or_title_cont, placeholder: 'Артикул, Название', class: "form-control input-sm"%>
         <%= f.collection_select :cat_cont, Product.product_cat, "cat", "cat", {include_blank: false, prompt: 'Категория'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
-        <%= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
+        <%= f.search_field :quantity_eq, placeholder: 'Остаток: >=', class: "form-control input-sm" %>
+        <%= f.search_field :productid_provider_eq, placeholder: 'ID продукта у поставщика', class: "form-control input-sm" %>
+        <%#= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
       <div class="form-group ml-2">
         <%# f.submit 'Поиск', class: 'btn btn-info' %>
         <%= button_tag(type: 'submit', :class => "btn btn-info") do %><span class="oi oi-magnifying-glass"></span><% end %>
@@ -50,6 +43,7 @@
     <tr>
       <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
       <th>Sku</th>
+      <th>ID продукта в таблице поставщика</th>
       <th style="width:250px;">Title</th>
       <th>Desc</th>
       <th>Cat</th>
@@ -71,6 +65,7 @@
       <tr>
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.sku %></td>
+        <td><%= product.productid_provider %></td>
         <td><%= link_to product.title, edit_product_path(product) %></td>
         <td><%= product.desc.truncate(25) if product.desc != nil%></td>
         <td><%= product.cat %></td>

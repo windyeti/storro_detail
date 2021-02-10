@@ -12,23 +12,23 @@
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <%= link_to 'Импортировать товары поставщика', import_mbs_path, class: 'dropdown-item'%>
-        <%= link_to 'Обновить каталог', syncronaize_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Синхронизировать', syncronaize_mbs_path, class: 'dropdown-item'%>
         <div class="dropdown-divider"></div>
-        <%= link_to 'Сформировать файл', create_csv_products_path, class: 'dropdown-item'%>
-        <%= link_to 'Скачать файл', "/export_insales.csv", download: "export_insales_#{Time.now}", class: 'dropdown-item' %>
+        <%#= link_to 'Сформировать файл', create_csv_products_path, class: 'dropdown-item'%>
+        <%#= link_to 'Скачать файл', "/export_insales.csv", download: "export_insales_#{Time.now}", class: 'dropdown-item' %>
       </div>
     </div>
   </div>
   <div class="col- mr-1">
-    <%= link_to '<span class="oi oi-pencil"></span>'.html_safe, edit_multiple_products_path, class: 'btn btn-secondary', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
-    <%= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_products_path, class: 'btn btn-secondary', id: 'deleteAll', remote: true%>
+    <%#= link_to '<span class="oi oi-pencil"></span>'.html_safe, edit_multiple_products_path, class: 'btn btn-secondary', id: 'edit_multiple', remote: true, data: { toggle: 'modal', 'target': '#modal-edit' } %>
+    <%#= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_products_path, class: 'btn btn-secondary', id: 'deleteAll', remote: true%>
   </div>
   <div class="col- ">
     <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
       <%= f.search_field :title_cont, placeholder: 'Название', class: "form-control input-sm"%>
       <%= f.collection_select :cat_cont, Mb.product_cat, "cat", "cat", {include_blank: false, prompt: 'Категория'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
       <%= f.search_field :quantity_gt, placeholder: 'Остаток: >=', class: "form-control input-sm"%>
-      <%= f.search_field :vendorcode_gt, placeholder: 'VendorCode', class: "form-control input-sm"%>
+      <%= f.search_field :vendorcode_eq, placeholder: 'VendorCode', class: "form-control input-sm"%>
       <%#= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
       <div class="form-group ml-2">
         <% f.submit 'Поиск', class: 'btn btn-info' %>

@@ -27,4 +27,16 @@
 <!--<p>Остатки обновлялись в - <%#= File.ctime(file_ost).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>-->
 <%# end %>
 
-<% end %>
+<div class="row mb-2 mr-0 ml-0 align-items-center">
+  <% end %>
+  <div class="col-12">
+    <div class="form-import">
+      <h3>Обновить каталог</h3>
+      <%= form_tag import_products_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

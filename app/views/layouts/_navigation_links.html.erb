@@ -1,22 +1,27 @@
-<li class="nav-item <%= 'active' if current_page?(providers_path) %>'"><%= link_to 'Поставщики', providers_path, class: 'nav-link' %></li>
 <li class="nav-item <%= 'active' if current_page?(products_path) %>'"><%= link_to 'Товары', products_path, class: 'nav-link' %></li>
 <!--<li class="nav-item <%#= 'active' if current_page?(users_path) %>'"><%#= link_to 'Пользватели', users_path, class: 'nav-link' %></li>-->
 <!--<li class="nav-item <%#= 'active' if current_page?(page_path('about')) %>'"><%#= link_to 'About', page_path('about'), class: 'nav-link' %></li>-->
-<% if can? :create, User %>
-  <li class='nav-item'><%= link_to 'Создать пользователя', new_user_registration_path, class: 'nav-link' %></li>
-  <li class='nav-item'><%= link_to 'Создать поставщика', new_provider_path, class: 'nav-link' %></li>
-<!--  <li class="nav-item'">-->
-    <%#= link_to 'Import products from InSales', import_products_path, class: 'btn btn-outline-success btn-sm' %>
-<!--  </li>-->
-<% end %>
 <ul class="navbar-nav dropdown">
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Поставщики
+      Товары поставщиков
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <%= link_to 'МБ', mbs_path, class: 'dropdown-item' %>
       <div class="dropdown-divider"></div>
+    </div>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Настройки
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <%= link_to 'Список поставщиков', providers_path, class: 'dropdown-item' %>
+      <% if can? :create, User %>
+        <div class="dropdown-divider"></div>
+        <%= link_to 'Создать пользователя', new_user_registration_path, class: 'dropdown-item' %>
+        <%= link_to 'Создать поставщика', new_provider_path, class: 'dropdown-item' %>
+       <% end %>
     </div>
   </li>
 </ul>
