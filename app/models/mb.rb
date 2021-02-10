@@ -55,7 +55,7 @@ class Mb < ApplicationRecord
 
         # с округлением по целого по правилу 0.5
         insales_product.price = new_insales_price.round
-        insales_product.provider_price = provider_product.price.to_f.round
+        insales_product.provider_price = provider_product.price.to_f
 
         insales_product.visible = true if provider_product.quantity >= 3
 
