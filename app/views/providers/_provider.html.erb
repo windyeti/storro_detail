@@ -3,7 +3,7 @@
   <% if can? :edit, provider %>
     <span class="edit-delete">
       <span class="edit ml-2"><%= link_to 'edit', edit_provider_path(provider) %></span>
-      <span class="delete ml-2"><%= link_to 'delete', provider, method: :delete, data: {confirm: "Вы уверены что хотите удалить поставщика #{provider.name}?"} %></span>
+<!--      <span class="delete ml-2"><%#= link_to 'delete', provider, method: :delete, data: {confirm: "Вы уверены что хотите удалить поставщика #{provider.name}?"} %></span>-->
     </span>
   <% end %>
 </div>
