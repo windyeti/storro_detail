@@ -71,7 +71,7 @@ class Product < ApplicationRecord
     @products = Product.order(:id)
 
     CSV.open("#{Rails.root}/public/export_insales.csv", "wb") do |writer|
-      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Видимость' ]
+      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Видимость', 'Остаток' ]
 
       writer << headers
       @products.each do |pr|
@@ -80,9 +80,10 @@ class Product < ApplicationRecord
           title = pr.title
           sku = pr.sku
           price = pr.price
-          visible = pr.visible ? 'выставлен' : 'скрыт'
+          visible = pr.visible ? 'выставлен' : 'скрыт',
+          quantity = pr.quantity
 
-          writer << [productid_var_insales, sku, title, price, visible ]
+          writer << [productid_var_insales, sku, title, price, visible, quantity]
         end
       end
     end #CSV.open

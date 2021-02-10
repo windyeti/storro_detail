@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :mbs do
     collection do
       get :import
+      get :linking
       get :syncronaize
     end
   end

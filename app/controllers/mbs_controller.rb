@@ -15,6 +15,11 @@ class MbsController < ApplicationController
     redirect_to mbs_path
   end
 
+  def linking
+    Mb.linking
+    redirect_to mbs_path
+  end
+
   def syncronaize
     Mb.syncronaize
     redirect_to mbs_path

@@ -50,6 +50,22 @@ class Mb < ApplicationRecord
     end
   end
 
+  def self.linking
+    Product.all.find_each(batch_size: 1000) do |product|
+      if product.sku =~ /^[МБ]/
+        vendorcode = product.sku.sub(/^МБ/, '')
+        Mb.all.find_each(batch_size: 1000) do |mb|
+          if mb.vendorcode == vendorcode
+            product.productid_provider = mb.id
+            product.provider_id = 1
+            product.save
+            break
+          end
+        end
+      end
+    end
+  end
+
   def self.syncronaize
     Product.all.each do |insales_product|
 
@@ -71,5 +87,11 @@ class Mb < ApplicationRecord
 
       insales_product.save
     end
+  end
+
+  def self.import_linking_syncronaize
+    self.import
+    self.linking
+    self.syncronaize
   end
 end
