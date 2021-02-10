@@ -12,6 +12,7 @@
 
 /_work
 logfile
+/public/export_insales.csv
 
 # bundler state
 /.bundle

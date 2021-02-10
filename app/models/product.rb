@@ -62,18 +62,17 @@ class Product < ApplicationRecord
   end
 
   def self.create_csv
-    file = "#{Rails.root}/app/assets/export_insales.csv"
+    file = "#{Rails.root}/public/export_insales.csv"
     check = File.file?(file)
     if check.present?
       File.delete(file)
     end
 
     @products = Product.order(:id)
-    file = "#{Rails.root}/app/assets/export_insales.csv"
 
-    CSV.open(file, 'w') do |writer|
-      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Остаток' ]
-#
+    CSV.open("#{Rails.root}/public/export_insales.csv", "wb") do |writer|
+      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Видимость' ]
+
       writer << headers
       @products.each do |pr|
         if pr.title != nil
@@ -81,23 +80,12 @@ class Product < ApplicationRecord
           title = pr.title
           sku = pr.sku
           price = pr.price
-          quantity = pr.price
+          visible = pr.visible ? 'выставлен' : 'скрыт'
 
-          writer << [productid_var_insales, title, sku, price, quantity ]
+          writer << [productid_var_insales, sku, title, price, visible ]
         end
       end
     end #CSV.open
-  end
-
-  def self.syncronaize(provider)
-    p provider = Provider.find(provider)
-    provider_klass = provider.permalink.capitalize.constantize
-    provider_products = provider_klass.all
-    provider_products.each do |provider_product|
-      provider_product
-      insales_product1 = Product.where(provider: provider_product).where(product_sku_provider: provider_product.vendorcode)
-      insales_product2 = Product.find_by(productid_provider: provider_product.id)
-    end
   end
 
 #   def self.import
@@ -387,11 +375,5 @@ class Product < ApplicationRecord
 #       pr.save
 #     end
 #   end
-
-  private
-
-  def check_file
-
-  end
 
 end

@@ -9,3 +9,14 @@
     <%#= link_to 'Import products from InSales', import_products_path, class: 'btn btn-outline-success btn-sm' %>
 <!--  </li>-->
 <% end %>
+<ul class="navbar-nav dropdown">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Поставщики
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <%= link_to 'МБ', mbs_path, class: 'dropdown-item' %>
+      <div class="dropdown-divider"></div>
+    </div>
+  </li>
+</ul>

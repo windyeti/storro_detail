@@ -1,4 +1,13 @@
 <div class="row mb-2 mr-0 ml-0 align-items-center">
+  <div class="col-12">
+    <div class="form-import my-4">
+      <h3>Обновить каталог</h3>
+      <%= form_tag import_products_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+  </div>
   <div class="col-3">
     <h1>Товары</h1>
     <span class="align-middle"><small>Всего: <%= Product.product_all_size %></small></span>
@@ -11,8 +20,8 @@
       Действия
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <%= link_to 'Обновить каталог', import_products_path, class: 'dropdown-item'%>
-      <%= link_to 'Сформировать файл', csv_param_products_path, class: 'dropdown-item'%>
+      <%= link_to 'Сформировать файл', create_csv_products_path, class: 'dropdown-item'%>
+      <%= link_to 'Скачать файл', "/export_insales.csv", download: "export_insales_#{Time.now}", class: 'dropdown-item' %>
     </div>
     </div>
   </div>
@@ -29,7 +38,7 @@
         <%# f.submit 'Поиск', class: 'btn btn-info' %>
         <%= button_tag(type: 'submit', :class => "btn btn-info") do %><span class="oi oi-magnifying-glass"></span><% end %>
         <%= link_to '<span class="oi oi-reload"></span>'.html_safe, products_path, class: 'btn btn-outline-dark' %>
-        <%= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(params.permit(:products).merge(selected_products: @products.pluck(:id), otchet_type: 'selected')), title: "Создать файл с выбранными товарами", class: 'btn btn-outline-dark'%>
+        <%#= link_to '<span class="oi oi-list"></span>'.html_safe, products_path(params.permit(:products).merge(selected_products: @products.pluck(:id), otchet_type: 'selected')), title: "Создать файл с выбранными товарами", class: 'btn btn-outline-dark'%>
       </div>
     <% end %>
   </div>

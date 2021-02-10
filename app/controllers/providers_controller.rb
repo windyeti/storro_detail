@@ -41,25 +41,6 @@ class ProvidersController < ApplicationController
     redirect_to providers_path
   end
 
-  def import
-    case @provider.permalink
-    when 'mb'
-      Mb.import
-    else
-      p "Нет такого поставщика #{@provider.name}"
-    end
-    redirect_to root_path
-  end
-
-  def create_csv
-    Product.create_csv
-    redirect_to root_path
-  end
-
-  def syncronaize
-    Product.syncronaize(@provider)
-    redirect_to root_path
-  end
 
   private
 

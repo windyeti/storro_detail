@@ -23,7 +23,7 @@
 
     <%= f.input :provider_id,:collection => Provider.all,:label_method => :name, :value_method => :id, :label => "Поставщики" , :include_blank => "Выберите" %>
 
-    <%= f.input :product_sku_provider,  wrapper_html: { class: "col-md-2" } %>
+    <%= f.input :productid_provider,  wrapper_html: { class: "col-md-2" } %>
 
     <span class="col-md-2">
       Видимость: <%= @product.visible ? "выстален" : "скрыт" %>

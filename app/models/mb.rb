@@ -41,4 +41,27 @@ class Mb < ApplicationRecord
       end
     end
   end
+
+  def self.syncronaize
+    Product.all.each do |insales_product|
+
+      # если товар есть у поставщика и его количество более 3, то visible поменяется ниже на true
+      insales_product.visible = false
+
+      provider_product = Mb.find(insales_product.productid_provider) rescue nil
+
+      if provider_product.present?
+        new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product.price.to_f
+
+        # с округлением по целого по правилу 0.5
+        insales_product.price = new_insales_price.round
+        insales_product.provider_price = provider_product.price.to_f.round
+
+        insales_product.visible = true if provider_product.quantity >= 3
+
+      end
+
+      insales_product.save
+    end
+  end
 end

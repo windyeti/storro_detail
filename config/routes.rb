@@ -1,19 +1,17 @@
 Rails.application.routes.draw do
 
-  resources :mbs
-
-  resources :providers do
+  resources :mbs do
     collection do
-      get :create_csv
-    end
-    member do
       get :import
       get :syncronaize
     end
   end
 
+  resources :providers
+
   resources :products do
     collection do
+      get :create_csv
       get :edit_multiple
       put :update_multiple
       post :delete_selected
