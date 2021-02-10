@@ -47,6 +47,7 @@
       <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
       <th>ID</th>
       <th>ID Поставщика</th>
+      <th>Актульность</th>
       <th>Остаток</th>
       <th>Available</th>
       <th>Ссылка</th>
@@ -71,6 +72,7 @@
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.id %></td>
         <td><%= product.fid %></td>
+        <td><%= product.check ? 'был' : 'не был' %></td>
         <td><%= product.quantity %></td>
         <td><%= product.available ? "true" : "false" %></td>
         <td><%= product.link %></td>

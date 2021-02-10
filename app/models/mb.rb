@@ -12,6 +12,13 @@ class Mb < ApplicationRecord
     response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
     data = Nokogiri::XML(response)
     mypr = data.xpath("//offer")
+
+    # перед накатыванием обновления товаров у поставщика
+    # все существующим ставим check = false
+    # чтобы не удалять товары поставщика, так как их id
+    # связан с товарами Product
+    Mb.all.find_each(batch_size: 1000) { |mb| mb.check = false }
+
     mypr.each do |pr|
 
       data = {
@@ -29,7 +36,8 @@ class Mb < ApplicationRecord
         barcode: pr.xpath("barcode").text,
         country: pr.xpath("country").text,
         brend: pr.xpath("brend").text,
-        param: pr.xpath("param").text
+        param: pr.xpath("param").text,
+        check: true
       }
 
       tov = Mb.find_by_fid(data[:fid])

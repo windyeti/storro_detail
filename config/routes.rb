@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
 
+  resources :visitors, only: [:index]
+  resources :providers
+
   resources :mbs do
     collection do
       get :import
       get :syncronaize
     end
   end
-
-  resources :providers
 
   resources :products do
     collection do
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
       get :csv_param
     end
   end
+
   root to: 'providers#index'
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users
