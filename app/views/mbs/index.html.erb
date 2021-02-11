@@ -11,10 +11,10 @@
         Действия
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <%= link_to '1 + 2 + 3 (ручной запуск автомата)', import_linking_syncronaize_mbs_path, class: 'dropdown-item'%>
-        <%= link_to '1 - Импортировать товары поставщика', import_mbs_path, class: 'dropdown-item'%>
-        <%= link_to '2 - Линковать Товары с Товарами поставщика', linking_mbs_path, class: 'dropdown-item'%>
-        <%= link_to '3 - Синхронизировать', syncronaize_mbs_path, class: 'dropdown-item'%>
+        <%#= link_to '1 + 2 + 3 (ручной запуск автомата)', import_linking_syncronaize_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Импортировать товары поставщика', import_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Линковать Товары с Товарами поставщика', linking_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Синхронизировать', syncronaize_mbs_path, class: 'dropdown-item'%>
         <div class="dropdown-divider"></div>
       </div>
     </div>
@@ -76,12 +76,12 @@
         <td><%= product.quantity %></td>
         <td><%= product.available ? "true" : "false" %></td>
         <td><%= product.link %></td>
-        <td><%= product.pict %></td>
+        <td class="row ml-0 mr-0"><% product.pict.split(' ').each do |pict| %><div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div><% end %></td>
         <td><%= product.price %></td>
         <td><%= product.currencyid %></td>
         <td><%= product.cat %></td>
         <td><%= product.title %></td>
-        <td><%= product.desc %></td>
+        <td><%= product.desc.truncate(25) if product.desc != nil %></td>
         <td><%= product.vendorcode %></td>
         <td><%= product.barcode %></td>
         <td><%= product.country %></td>
