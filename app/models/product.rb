@@ -9,9 +9,9 @@ class Product < ApplicationRecord
   scope :product_cat, -> { order('cat DESC').select(:cat).uniq }
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
-  def self.import_insales(file)
+  def self.import_insales(path_file, extend_file)
 
-    spreadsheets = open_spreadsheet(file)
+    spreadsheets = open_spreadsheet(path_file, extend_file)
     last_spreadsheet = spreadsheets.last_row.to_i
     # header = spreadsheets.row(1)
 
@@ -51,15 +51,15 @@ class Product < ApplicationRecord
     # ProductMailer.ins_file(new_file).deliver_now
   end
 
-  def self.open_spreadsheet(file)
-    case File.extname(file.original_filename)
-    when ".csv" then Roo::Spreadsheet.open(file.path, { csv_options: { encoding: 'bom|utf-8', col_sep: "\t" } })
+  def self.open_spreadsheet(path_file, extend_file)
+    case extend_file
+    when ".csv" then Roo::Spreadsheet.open(path_file, { csv_options: { encoding: 'bom|utf-8', col_sep: "\t" } })
       # when ".csv" then Roo::CSV.new(file.path)
       # when ".csv" then Roo::CSV.new(file.path, csv_options: {col_sep: "\t"})
-    when ".xls" then Roo::Excel.new(file.path)
-    when ".xlsx" then Roo::Excelx.new(file.path)
-    when ".XLS" then Roo::Excel.new(file.path)
-    else raise "Unknown file type: #{file.original_filename}"
+    when ".xls" then Roo::Excel.new(path_file)
+    when ".xlsx" then Roo::Excelx.new(path_file)
+    when ".XLS" then Roo::Excel.new(path_file)
+    else raise "Unknown file type"
     end
   end
 

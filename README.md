@@ -36,6 +36,10 @@ Documentation and Support
 
 перед накатыванием обновления товаров у поставщика все существующим ставим check = false чтобы не удалять товары поставщика, так как их id связан с товарами Product
 
+## Delayd_acvtive_job (localhost)
+You need run
+```$ bundle exec rake jobs:work```
+
 Issues
 -------------
 

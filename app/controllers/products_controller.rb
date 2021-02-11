@@ -120,12 +120,14 @@ class ProductsController < ApplicationController
   end
 
   def import
-    if Rails.env.development?
-      Product.delay.import_insales(params[:file])
-    else
-      Product.delay.import_insales(params[:file])
-      # Product.delay.import_insales(params[:file])
-    end
+    # if Rails.env.development?
+    #   Product.delay.import_insales(params[:file])
+    # else
+    #   Product.delay.import_insales(params[:file])
+    # end
+    path_file = params[:file].path
+    extend_file = File.extname(params[:file].original_filename)
+    ProductImportJob.perform_later(path_file, extend_file)
     flash[:notice] = 'Задача обновления каталога запущена'
     redirect_to products_path
   end
