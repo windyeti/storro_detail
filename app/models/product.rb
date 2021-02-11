@@ -47,6 +47,8 @@ class Product < ApplicationRecord
 
       product.present? ? product.update(data_update) : Product.create(data_create)
     end
+    # отправка почты
+    # ProductMailer.ins_file(new_file).deliver_now
   end
 
   def self.open_spreadsheet(file)

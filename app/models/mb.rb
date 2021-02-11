@@ -73,8 +73,8 @@ class Mb < ApplicationRecord
       insales_product.visible = false
 
       provider_product = Mb.find(insales_product.productid_provider) rescue nil
-
-      if provider_product.present?
+      # проверка что товар у поставщика есть и он был в последнем обновлении
+      if provider_product.present? && provider_product.check
         new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product.price.to_f
 
         # с округлением по целого по правилу 0.5
