@@ -121,9 +121,9 @@ class ProductsController < ApplicationController
 
   def import
     if Rails.env.development?
-      Product.import_insales(params[:file])
+      Product.delay.import_insales(params[:file])
     else
-      Product.import_insales(params[:file])
+      Product.delay.import_insales(params[:file])
       # Product.delay.import_insales(params[:file])
     end
     flash[:notice] = 'Задача обновления каталога запущена'
