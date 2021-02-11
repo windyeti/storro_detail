@@ -10,6 +10,10 @@ class MbsController < ApplicationController
     # end
   end
 
+  def show
+    @mb = Mb.find(params[:id])
+  end
+
   def import
     Mb.import
     redirect_to mbs_path

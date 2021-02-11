@@ -86,7 +86,7 @@
         <td><%= product.barcode %></td>
         <td><%= product.country %></td>
         <td><%= product.brend %></td>
-        <td><%= product.param %></td>
+        <td><%= product.param.truncate(25) if product.param != nil  %></td>
         <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
         <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
       </tr>

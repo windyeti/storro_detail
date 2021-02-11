@@ -62,7 +62,7 @@
 
   <tbody id="products_table">
     <% @products.each do |product| %>
-      <tr>
+      <tr class="<%= 'sync' if product.productid_provider.present? %>">
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.sku %></td>
         <td><%= product.productid_provider %></td>
