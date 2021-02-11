@@ -143,7 +143,7 @@ class ProductsController < ApplicationController
   # end
 
   def create_csv
-    Product.create_csv
+    Product.delay.create_csv
     redirect_to products_path
   end
 

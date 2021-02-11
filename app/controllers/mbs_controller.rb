@@ -15,22 +15,22 @@ class MbsController < ApplicationController
   end
 
   def import
-    Mb.import
+    Mb.delay.import
     redirect_to mbs_path
   end
 
   def linking
-    Mb.linking
+    Mb.delay.linking
     redirect_to mbs_path
   end
 
   def syncronaize
-    Mb.syncronaize
+    Mb.delay.syncronaize
     redirect_to mbs_path
   end
 
   def import_linking_syncronaize
-    Mb.import_linking_syncronaize
+    Mb.delay.import_linking_syncronaize
     redirect_to mbs_path
   end
 end
