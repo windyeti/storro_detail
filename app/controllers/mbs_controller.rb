@@ -24,4 +24,9 @@ class MbsController < ApplicationController
     Mb.syncronaize
     redirect_to mbs_path
   end
+
+  def import_linking_syncronaize
+    Mb.import_linking_syncronaize
+    redirect_to mbs_path
+  end
 end

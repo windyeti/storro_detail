@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get :import
       get :linking
       get :syncronaize
+      get :import_linking_syncronaize
     end
   end
 
