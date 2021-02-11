@@ -69,8 +69,8 @@ class Mb < ApplicationRecord
   def self.syncronaize
     Product.all.each do |insales_product|
 
-      # если товар есть у поставщика и его количество более 3, то visible поменяется ниже на true
-      insales_product.visible = false
+      # если товар, соотнесен с поставщиком, есть у поставщика и его количество более 3, то visible поменяется ниже на true
+      insales_product.visible = false if insales_product[:provider_id] == 1
 
       provider_product = Mb.find(insales_product.productid_provider) rescue nil
       # проверка что товар у поставщика есть и он был в последнем обновлении
@@ -93,5 +93,6 @@ class Mb < ApplicationRecord
     self.import
     self.linking
     self.syncronaize
+    Product.create_csv
   end
 end
