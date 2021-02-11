@@ -77,16 +77,14 @@ class Product < ApplicationRecord
 
       writer << headers
       @products.each do |pr|
-        if pr.title != nil
           productid_var_insales = pr.productid_var_insales
           title = pr.title
           sku = pr.sku
           price = pr.price
-          visible = pr.visible ? 'выставлен' : 'скрыт',
+          p visible = pr.visible ? 'выставлен' : 'скрыт'
           quantity = pr.quantity
 
           writer << [productid_var_insales, sku, title, price, visible, quantity]
-        end
       end
     end #CSV.open
   end
