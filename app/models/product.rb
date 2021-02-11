@@ -81,7 +81,7 @@ class Product < ApplicationRecord
           title = pr.title
           sku = pr.sku
           price = pr.price
-          p visible = pr.visible ? 'выставлен' : 'скрыт'
+          visible = pr.visible ? 'выставлен' : 'скрыт'
           quantity = pr.quantity
 
           writer << [productid_var_insales, sku, title, price, visible, quantity]
