@@ -4,38 +4,46 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs row">
-    <%= f.input :title, wrapper_html: { class: "col-md-5" }  %>
-
-    <span class="col-md-2">
-      Артикул Товара в InSales: <%= @product.sku %>
+    <span class="col-12">
+       Название: <strong><%= @product.title %></strong>
     </span>
 
-    <%#= f.input :oldprice,  wrapper_html: { class: "col-md-2" } %>
-    <%= f.input :price,  wrapper_html: { class: "col-md-2" } %>
-    <%= f.input :provider_price,  wrapper_html: { class: "col-md-2" } %>
-
     <span class="col-md-2">
-      ID Товара в InSales: <%= @product.productid_insales %>
+      Артикул Товара в InSales: <strong><%= @product.sku %></strong>
     </span>
     <span class="col-md-2">
-      ID Варианта Товара в InSales: <%= @product.productid_var_insales %>
+      Цена продажи: <strong><%= @product.price %></strong>
     </span>
-
-    <%= f.input :provider_id,:collection => Provider.all,:label_method => :name, :value_method => :id, :label => "Поставщики" , :include_blank => "Выберите" %>
-
-    <%= f.input :productid_provider, label: 'ID товара в таблице поставщика',  wrapper_html: { class: "col-md-2" } %>
+    <span class="col-md-2">
+      Закупочная цена: <strong><%= @product.provider_price %></strong>
+    </span>
 
     <span class="col-md-2">
-      Видимость: <%= @product.visible ? "выстален" : "скрыт" %>
+      ID Товара в InSales: <strong><%= @product.productid_insales %></strong>
+    </span>
+    <span class="col-md-2">
+      ID Варианта Товара в InSales: <strong><%= @product.productid_var_insales %></strong>
     </span>
 
-    <%= f.input :quantity,  wrapper_html: { class: "col-md-1" } %>
-    <%= f.input :desc, wrapper_html: { class: "col-md-12" } %>
+    <span class="col-md-2">
+      Видимость: <strong><%= @product.visible ? "выстален" : "скрыт" %></strong>
+    </span>
 
-    <%= f.input :cat, wrapper_html: { class: "col-md-12" } %>
+    <span class="col-md-2">
+      Остаток: <strong><%= @product.quantity %></strong>
+    </span>
 
-    <%#= f.input :charact, wrapper_html: { class: "col-md-3" } %>
-    <%#= f.input :charact_gab, wrapper_html: { class: "col-md-3" } %>
+    <span class="col-12 editable">
+      <%= f.input :provider_id,:collection => Provider.all,:label_method => :name, :value_method => :id, :label => "Поставщики" , :include_blank => "Выберите",  wrapper_html: { class: "col-md-4" } %>
+      <%= f.input :productid_provider, label: 'ID товара в таблице поставщика',  wrapper_html: { class: "col-md-4" } %>
+    </span>
+
+    <span class="col-12">
+      Описание: <%= @product.desc %>
+    </span>
+    <span class="col-12">
+      Категория: <strong><%= @product.cat %></strong>
+    </span>
 
     <% if @product.url.present? %>
       <div class="col-md-2">
