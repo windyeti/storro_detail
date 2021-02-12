@@ -16,21 +16,21 @@ class MbsController < ApplicationController
 
   def import
     Mb.delay.import
-    redirect_to mbs_path
+    redirect_to mbs_path, notice: "Запущен импорт товаров МБ поставщика"
   end
 
   def linking
     Mb.delay.linking
-    redirect_to mbs_path
+    redirect_to mbs_path, notice: "Запущена линкование товаров МБ поставщика"
   end
 
   def syncronaize
     Mb.delay.syncronaize
-    redirect_to mbs_path
+    redirect_to mbs_path, notice: "Запущена синхронизация товаров МБ поставщика"
   end
 
   def import_linking_syncronaize
     Mb.delay.import_linking_syncronaize
-    redirect_to mbs_path
+    redirect_to mbs_path, notice: "Запущен полный цикл обновления товаров МБ поставщика"
   end
 end

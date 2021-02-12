@@ -1,17 +1,23 @@
 <div class="row mb-1 mr-0 ml-0 align-items-center">
 
-  <div class="col-12">
+<!--  <div class="col-12">-->
+<!--    <div class="form-import">-->
+<!--      <h3>Обновить каталог</h3>-->
+      <%#= form_tag import_products_path, multipart: true do %>
+        <%#= file_field_tag :file %>
+        <%#= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
+      <%# end %>
+<!--    </div>-->
+<!--  </div>-->
+
+  <div class="col-3">
+    <h3>Товары</h3>
     <div class="form-import">
-      <h3>Обновить каталог</h3>
       <%= form_tag import_products_path, multipart: true do %>
         <%= file_field_tag :file %>
         <%= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
       <% end %>
     </div>
-  </div>
-
-  <div class="col-3">
-    <h3>Товары</h3>
     <span class="align-middle"><small>Всего: <%= Product.product_all_size %></small></span>
     <span class="align-middle"><small>Отфильтровано: <%=@products.count%></small></span>
     <span class="align-middle"><small>Больше 0: <%= Product.product_qt_not_null_size %></small></span>
@@ -35,7 +41,8 @@
   <div class="col- ">
     <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
         <%= f.search_field :sku_or_title_cont, placeholder: 'Артикул, Название', class: "form-control input-sm"%>
-        <%= f.collection_select :cat_cont, Product.product_cat, "cat", "cat", {include_blank: false, prompt: 'Категория'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+        <%= f.collection_select :provider_id_eq, Provider.all, :id, :name, {include_blank: false, prompt: 'Поставщики'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+        <%#= f.collection_select :cat_cont, Product.product_cat, "cat", "cat", {include_blank: false, prompt: 'Категория'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
         <%= f.search_field :quantity_eq, placeholder: 'Остаток: >=', class: "form-control input-sm" %>
         <%= f.search_field :productid_provider_eq, placeholder: 'ID продукта у поставщика', class: "form-control input-sm" %>
         <%#= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
@@ -58,7 +65,7 @@
       <th>ID продукта в таблице поставщика</th>
       <th style="width:250px;">Title</th>
       <th>Desc</th>
-      <th>Cat</th>
+<!--      <th>Cat</th>-->
       <th>Видимость</th>
       <th>Поставщик</th>
       <th>Артикул товара у поставщика</th>
@@ -80,7 +87,7 @@
         <td><%= product.productid_provider %></td>
         <td><%= link_to product.title, edit_product_path(product) %></td>
         <td><%= product.desc.truncate(25) if product.desc != nil%></td>
-        <td><%= product.cat %></td>
+<!--        <td><%#= product.cat %></td>-->
         <td><%= product.visible ? "выставлен" : "скрыт" %></td>
         <td><%= product.provider&.name %></td>
         <td><%= product.product_sku_provider %></td>
