@@ -1,6 +1,6 @@
 <div class="row mb-2 mr-0 ml-0 align-items-center">
   <div class="col-3">
-    <h1>Товары поставщика МБ</h1>
+    <h3>Товары поставщика МБ</h3>
     <span class="align-middle"><small>Всего: <%= Mb.product_all_size %></small></span>
     <span class="align-middle"><small>Отфильтровано: <%=@mbs.count%></small></span>
     <span class="align-middle"><small>Больше 0: <%= Mb.where("quantity > 0").size %></small></span>
@@ -11,10 +11,10 @@
         Действия
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <%= link_to '1 + 2 + 3 + create CSV (ручной запуск автомата)', import_linking_syncronaize_mbs_path, class: 'dropdown-item'%>
-        <%= link_to 'Импортировать товары поставщика', import_mbs_path, class: 'dropdown-item'%>
-        <%= link_to 'Линковать Товары с Товарами поставщика', linking_mbs_path, class: 'dropdown-item'%>
-        <%= link_to 'Синхронизировать', syncronaize_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Полный цикл (1 + 2 + 3 + создание CSV)', import_linking_syncronaize_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Импортировать товары поставщика (1)', import_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Линковать Товары с Товарами поставщика (2)', linking_mbs_path, class: 'dropdown-item'%>
+        <%= link_to 'Синхронизировать остатки и цены (3)', syncronaize_mbs_path, class: 'dropdown-item'%>
         <div class="dropdown-divider"></div>
       </div>
     </div>

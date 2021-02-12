@@ -1,10 +1,22 @@
-<div class="row mb-2 mr-0 ml-0 align-items-center">
+<div class="row mb-1 mr-0 ml-0 align-items-center">
+
+  <div class="col-12">
+    <div class="form-import">
+      <h3>Обновить каталог</h3>
+      <%= form_tag import_products_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Import" , :class =>'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+  </div>
+
   <div class="col-3">
-    <h1>Товары</h1>
+    <h3>Товары</h3>
     <span class="align-middle"><small>Всего: <%= Product.product_all_size %></small></span>
     <span class="align-middle"><small>Отфильтровано: <%=@products.count%></small></span>
     <span class="align-middle"><small>Больше 0: <%= Product.product_qt_not_null_size %></small></span>
   </div>
+
   <div class="col- mr-1">
     <div class="dropdown">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
