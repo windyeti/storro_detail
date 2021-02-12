@@ -39,6 +39,7 @@ Documentation and Support
 ## Delayd_acvtive_job (localhost)
 You need run
 ```$ bundle exec rake jobs:work```
+```$ bundle exec rake jobs:clear```
 
 Issues
 -------------

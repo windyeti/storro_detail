@@ -8,13 +8,15 @@ class Product < ApplicationRecord
   scope :product_qt_not_null_size, -> { where('quantity > 0').size }
   scope :product_cat, -> { order('cat DESC').select(:cat).uniq }
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
-
+# TODO Сделать валидацию перед Update:
+# TODO Что переданный Provider существует, а у него существует продукт с переданным id (productid_provider)
   def self.import_insales(path_file, extend_file)
 
     spreadsheets = open_spreadsheet(path_file, extend_file)
     last_spreadsheet = spreadsheets.last_row.to_i
     # header = spreadsheets.row(1)
-
+    #
+# TODO store_remote: spreadsheets.cell(i, 'AG') or store_remote: spreadsheets.cell(i, 'AH')
     (2..last_spreadsheet).each do |i|
 
       data_create = {
@@ -22,7 +24,7 @@ class Product < ApplicationRecord
         title: spreadsheets.cell(i, 'B'),
         url: spreadsheets.cell(i, 'D'),
         desc: spreadsheets.cell(i, 'F'),
-        quantity: spreadsheets.cell(i, 'AF').to_i,
+        # quantity: spreadsheets.cell(i, 'AF').to_i,
         cat: spreadsheets.cell(i, 'L'),
         # oldprice: spreadsheets.cell(i, 'AD'),
         price: spreadsheets.cell(i, 'AC').to_f,
@@ -70,21 +72,22 @@ class Product < ApplicationRecord
       File.delete(file)
     end
 
-    @products = Product.order(:id)
+    products = Product.where.not(provider: nil).where.not(productid_provider: nil).order(:id)
 
     CSV.open("#{Rails.root}/public/export_insales.csv", "wb") do |writer|
-      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Видимость', 'Остаток' ]
+      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Видимость', 'Остаток', 'Склад' ]
 
       writer << headers
-      @products.each do |pr|
+      products.each do |pr|
           productid_var_insales = pr.productid_var_insales
           title = pr.title
           sku = pr.sku
           price = pr.price
           visible = pr.visible ? 'выставлен' : 'скрыт'
           quantity = pr.quantity
+          store = pr.quantity
 
-          writer << [productid_var_insales, sku, title, price, visible, quantity]
+          writer << [productid_var_insales, sku, title, price, visible, quantity, store]
       end
     end #CSV.open
   end

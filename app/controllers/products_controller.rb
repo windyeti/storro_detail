@@ -144,7 +144,7 @@ class ProductsController < ApplicationController
 
   def create_csv
     Product.delay.create_csv
-    redirect_to products_path
+    redirect_to products_path, notice: 'Запущен процесс создания файла'
   end
 
   private
