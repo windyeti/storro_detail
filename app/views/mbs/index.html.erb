@@ -26,9 +26,9 @@
   <div class="col- ">
     <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
       <%= f.search_field :title_cont, placeholder: 'Название', class: "form-control input-sm"%>
-      <%= f.collection_select :cat_cont, Mb.product_cat, "cat", "cat", {include_blank: false, prompt: 'Категория'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+      <%= f.collection_select :brend_cont, Mb.all, "brend", "brend", {include_blank: false, prompt: 'Бренд'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
       <%= f.search_field :quantity_gt, placeholder: 'Остаток: >=', class: "form-control input-sm"%>
-      <%= f.search_field :vendorcode_eq, placeholder: 'VendorCode', class: "form-control input-sm"%>
+      <%= f.search_field :vendorcode_eq, placeholder: 'Код производителя', class: "form-control input-sm"%>
       <%#= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
       <div class="form-group ml-2">
         <% f.submit 'Поиск', class: 'btn btn-info' %>
@@ -46,22 +46,22 @@
     <tr>
       <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
       <th>ID</th>
-      <th>ID Поставщика</th>
+<!--      <th>ID Поставщика</th>-->
+      <th>Название</th>
       <th>Актульность</th>
       <th>Остаток</th>
-      <th>Available</th>
-      <th>Ссылка</th>
-      <th>Картинки</th>
       <th>Цена</th>
-      <th>Валюта</th>
-      <th>Категория</th>
-      <th>Название</th>
+<!--      <th>Available</th>-->
+<!--      <th>Ссылка</th>-->
+<!--      <th>Валюта</th>-->
+<!--      <th>Категория</th>-->
       <th>Описание</th>
       <th>Код производителя</th>
       <th>Barcode</th>
       <th>Страна</th>
       <th>Бренд</th>
       <th>Параметры</th>
+      <th>Картинки</th>
       <th colspan="2"></th>
     </tr>
     </thead>
@@ -71,22 +71,22 @@
       <tr>
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.id %></td>
-        <td><%= product.fid %></td>
+        <td><%= link_to product.title, product.link, target: '_blank' %></td>
+<!--        <td><%#= product.fid %></td>-->
         <td><%= product.check ? 'был' : 'не был' %></td>
         <td><%= product.quantity %></td>
-        <td><%= product.available ? "true" : "false" %></td>
-        <td><%= product.link %></td>
-        <td class="row ml-0 mr-0"><% product.pict.split(' ').each do |pict| %><div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div><% end %></td>
         <td><%= product.price %></td>
-        <td><%= product.currencyid %></td>
-        <td><%= product.cat %></td>
-        <td><%= product.title %></td>
+<!--        <td><%#= product.available ? "true" : "false" %></td>-->
+<!--        <td><%#= product.link %></td>-->
+<!--        <td><%#= product.currencyid %></td>-->
+<!--        <td><%#= product.cat %></td>-->
         <td><%= product.desc.truncate(25) if product.desc != nil %></td>
         <td><%= product.vendorcode %></td>
         <td><%= product.barcode %></td>
         <td><%= product.country %></td>
         <td><%= product.brend %></td>
         <td><%= product.param.truncate(25) if product.param != nil  %></td>
+        <td class="row ml-0 mr-0"><% product.pict.split(' ').each do |pict| %><div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div><% end %></td>
         <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
         <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
       </tr>
