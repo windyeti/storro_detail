@@ -77,9 +77,11 @@ class Mb < ApplicationRecord
       if provider_product.present? && provider_product.check
         new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product.price.to_f
 
-        # с округлением по целого по правилу 0.5
+        # с округлением до целого по правилу 0.5
         insales_product.price = new_insales_price.round
         insales_product.provider_price = provider_product.price.to_f
+
+        insales_product.quantity = provider_product.quantity
 
         insales_product.visible = true if provider_product.quantity >= 3
 

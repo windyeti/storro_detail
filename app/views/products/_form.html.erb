@@ -23,7 +23,6 @@
 
     <%= f.input :provider_id,:collection => Provider.all,:label_method => :name, :value_method => :id, :label => "Поставщики" , :include_blank => "Выберите" %>
 
-    <%#= f.label :productid_provider, 'ID товара в таблице поставщика' %>
     <%= f.input :productid_provider, label: 'ID товара в таблице поставщика',  wrapper_html: { class: "col-md-2" } %>
 
     <span class="col-md-2">
