@@ -1,8 +1,3 @@
-#products_table {
-  .sync {
-    background-color: #ffe5ae;
-  }
-}
 form {
   .editable {
     padding: 10px;
@@ -14,3 +9,13 @@ form {
   }
 }
 
+#products_table {
+  .sync {
+    background-color: #ffe5ae;
+  }
+}
+.form-group.ml-2.button_group {
+  span.oi {
+    padding: 0;
+  }
+}

@@ -9,9 +9,15 @@ class Product < ApplicationRecord
   scope :product_cat, -> { order('cat DESC').select(:cat).uniq }
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
+  before_update :change_provider_product
+
   # TODO еще бы хорошо сделать проверку уникальности: что нет другого Товара звязанного с этим Товаром Поставщика
   # validates :provider, provider_exist: true, on: :update
   # validates :productid_provider, product_provider_exist: true, on: :update
+  #
+  def change_provider_product
+
+  end
 
   def self.import_insales(path_file, extend_file)
 

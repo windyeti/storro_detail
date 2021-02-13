@@ -4,6 +4,7 @@
     <span class="align-middle"><small>Всего: <%= Mb.product_all_size %></small></span>
     <span class="align-middle"><small>Отфильтровано: <%=@mbs.count%></small></span>
     <span class="align-middle"><small>Больше 0: <%= Mb.where("quantity > 0").size %></small></span>
+    <span class="align-middle"><small>Синхронизируется: <%= Mb.where.not(productid_product: nil).size %></small></span>
   </div>
   <div class="col- mr-1">
     <div class="dropdown">
@@ -33,7 +34,7 @@
       <%= f.search_field :quantity_gt, placeholder: 'Остаток: >=', class: "form-control input-sm"%>
       <%= f.search_field :vendorcode_eq, placeholder: 'Код производителя', class: "form-control input-sm"%>
       <%#= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
-      <div class="form-group ml-2">
+      <div class="form-group ml-2 button_group">
         <% f.submit 'Поиск', class: 'btn btn-info' %>
         <%= button_tag(type: 'submit', :class => "btn btn-info") do %><span class="oi oi-magnifying-glass"></span><% end %>
         <%= link_to '<span class="oi oi-reload"></span>'.html_safe, mbs_path, class: 'btn btn-outline-dark' %>

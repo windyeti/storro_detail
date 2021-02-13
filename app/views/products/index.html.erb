@@ -46,7 +46,7 @@
         <%= f.search_field :quantity_eq, placeholder: 'Остаток: >=', class: "form-control input-sm" %>
         <%= f.search_field :productid_provider_eq, placeholder: 'ID продукта у поставщика', class: "form-control input-sm" %>
         <%#= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
-      <div class="form-group ml-2">
+      <div class="form-group ml-2 button_group">
         <%# f.submit 'Поиск', class: 'btn btn-info' %>
         <%= button_tag(type: 'submit', :class => "btn btn-info") do %><span class="oi oi-magnifying-glass"></span><% end %>
         <%= link_to '<span class="oi oi-reload"></span>'.html_safe, products_path, class: 'btn btn-outline-dark' %>

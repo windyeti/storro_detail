@@ -30,7 +30,8 @@
     </span>
 
     <span class="col-md-2">
-      Остаток: <strong><%= @product.quantity %></strong>
+<!--      Остаток: <strong><%#= @product.quantity %></strong>-->
+      <%= f.input :quantity, label: 'Остаток:' %>
     </span>
 
     <span class="col-12 editable">
