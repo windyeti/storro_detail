@@ -25,9 +25,11 @@
   </div>
   <div class="col- ">
     <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
+      <%= f.search_field :id_eq, placeholder: 'ID', class: "form-control input-sm"%>
       <%= f.search_field :title_cont, placeholder: 'Название', class: "form-control input-sm"%>
-      <%#= f.collection_select :brend_cont, Mb.where.not(brend: nil).uniq(&:brend), "brend", "brend", {include_blank: false, prompt: 'Бренд'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
-      <%= f.collection_select :brend_cont, Mb.all, "brend", "brend", {include_blank: false, prompt: 'Бренд'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+      <%= f.collection_select :brend_cont, Mb.all.select(:brend).uniq, :brend, :brend, {include_blank: 'Бренд'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+      <%#= f.collection_select :brend_cont, Mb.all, "brend", "brend", {include_blank: false, prompt: 'Бренд'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+      <%= f.search_field :quantity_eq, placeholder: 'Остаток: =', class: "form-control input-sm"%>
       <%= f.search_field :quantity_gt, placeholder: 'Остаток: >=', class: "form-control input-sm"%>
       <%= f.search_field :vendorcode_eq, placeholder: 'Код производителя', class: "form-control input-sm"%>
       <%#= f.select :quantity_in, [['= 0', 0],['> 0', 1]], { include_blank: false, prompt: 'Кол-во'}, class: "form-control input-sm"  %>
