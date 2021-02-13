@@ -8,15 +8,17 @@ class Product < ApplicationRecord
   scope :product_qt_not_null_size, -> { where('quantity > 0').size }
   scope :product_cat, -> { order('cat DESC').select(:cat).uniq }
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
-# TODO Сделать валидацию перед Update:
-# TODO Что переданный Provider существует, а у него существует продукт с переданным id (productid_provider)
+
+  # TODO еще бы хорошо сделать проверку уникальности: что нет другого Товара звязанного с этим Товаром Поставщика
+  validates :provider, provider_exist: true, on: :update
+  validates :productid_provider, product_provider_exist: true, on: :update
+
   def self.import_insales(path_file, extend_file)
 
     spreadsheets = open_spreadsheet(path_file, extend_file)
     last_spreadsheet = spreadsheets.last_row.to_i
     # header = spreadsheets.row(1)
     #
-# TODO store_remote: spreadsheets.cell(i, 'AG') or store_remote: spreadsheets.cell(i, 'AH')
     (2..last_spreadsheet).each do |i|
 
       data_create = {
