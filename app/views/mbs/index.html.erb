@@ -26,6 +26,7 @@
   <div class="col- ">
     <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
       <%= f.search_field :title_cont, placeholder: 'Название', class: "form-control input-sm"%>
+      <%#= f.collection_select :brend_cont, Mb.where.not(brend: nil).uniq(&:brend), "brend", "brend", {include_blank: false, prompt: 'Бренд'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
       <%= f.collection_select :brend_cont, Mb.all, "brend", "brend", {include_blank: false, prompt: 'Бренд'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
       <%= f.search_field :quantity_gt, placeholder: 'Остаток: >=', class: "form-control input-sm"%>
       <%= f.search_field :vendorcode_eq, placeholder: 'Код производителя', class: "form-control input-sm"%>
@@ -68,7 +69,7 @@
 
     <tbody id="products_table">
     <% @mbs.each do |product| %>
-      <tr>
+      <tr class="<%= 'sync' if product.productid_product.present? %>">
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.id %></td>
         <td><%= link_to product.title, product.link, target: '_blank' %></td>

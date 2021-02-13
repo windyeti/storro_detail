@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210212160853) do
+ActiveRecord::Schema.define(version: 20210213145304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,9 +46,10 @@ ActiveRecord::Schema.define(version: 20210212160853) do
     t.string   "country"
     t.string   "brend"
     t.string   "param"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "check",      default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "check",             default: false
+    t.bigint   "productid_product"
   end
 
   create_table "products", force: :cascade do |t|

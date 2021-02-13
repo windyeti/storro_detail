@@ -69,7 +69,8 @@ class Mb < ApplicationRecord
   def self.syncronaize
     Product.all.each do |insales_product|
 
-      # если товар, соотнесен с поставщиком, есть у поставщика и его количество более 3, то visible поменяется ниже на true
+      # если товар: соотнесен с поставщиком; есть у поставщика; и его количество более 3
+      # то visible поменяется ниже на true
       insales_product.visible = false if insales_product[:provider_id] == 1
 
       provider_product = Mb.find(insales_product.productid_provider) rescue nil
@@ -81,10 +82,13 @@ class Mb < ApplicationRecord
         insales_product.price = new_insales_price.round
         insales_product.provider_price = provider_product.price.to_f
 
-        insales_product.quantity = provider_product.quantity
+        insales_product.quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
 
         insales_product.visible = true if provider_product.quantity >= 3
 
+        # в Товар Поставщика записываем Id Товара с которым он синхронизирован
+        provider_product.productid_product = insales_product[:id]
+        provider_product.save
       end
 
       insales_product.save

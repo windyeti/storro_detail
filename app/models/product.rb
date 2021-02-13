@@ -10,8 +10,8 @@ class Product < ApplicationRecord
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
   # TODO еще бы хорошо сделать проверку уникальности: что нет другого Товара звязанного с этим Товаром Поставщика
-  validates :provider, provider_exist: true, on: :update
-  validates :productid_provider, product_provider_exist: true, on: :update
+  # validates :provider, provider_exist: true, on: :update
+  # validates :productid_provider, product_provider_exist: true, on: :update
 
   def self.import_insales(path_file, extend_file)
 
@@ -77,7 +77,7 @@ class Product < ApplicationRecord
     products = Product.where.not(provider: nil).where.not(productid_provider: nil).order(:id)
 
     CSV.open("#{Rails.root}/public/export_insales.csv", "wb") do |writer|
-      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Видимость', 'Остаток', 'Склад' ]
+      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Остаток', 'Склад' ]
 
       writer << headers
       products.each do |pr|
@@ -85,7 +85,6 @@ class Product < ApplicationRecord
           title = pr.title
           sku = pr.sku
           price = pr.price
-          visible = pr.visible ? 'выставлен' : 'скрыт'
           quantity = pr.quantity
           store = pr.quantity
 
