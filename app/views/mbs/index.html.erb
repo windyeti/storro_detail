@@ -75,7 +75,7 @@
       <tr class="<%= 'sync' if product.productid_product.present? %>">
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.id %></td>
-        <td><%= link_to product.productid_product, product_path(product.productid_product.to_i) %></td>
+        <td><%= link_to product.productid_product, product_path(product.productid_product.to_i) if product.productid_product %></td>
         <td><%= link_to product.title, product.link, target: '_blank' %></td>
 <!--        <td><%#= product.fid %></td>-->
         <td><%= product.check ? 'был' : 'не был' %></td>
