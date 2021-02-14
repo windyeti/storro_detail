@@ -51,6 +51,33 @@ class ProductsController < ApplicationController
   def update
     # TODO Придобавлении/удалении связи надо отслеживать связанный Товар Поставщика, тоже добавлять/удалять Id Товара
     respond_to do |format|
+
+      if product_params[:provider_id].present? && product_params[:productid_provider].present?
+        # Сначала удостоверимся что есть такой Товар Поставщика
+        begin
+          provider = Provider.find(product_params[:provider_id])
+          provider_klass = provider.permalink.constantize
+          provider_klass.find(product_params[:productid_provider])
+        rescue
+          redirect_to @product, alert: 'Нет такого Товара у Поставщика'
+          return
+        end
+      end
+
+      # Обнуляем в Товар Постащика --> Товар
+      #
+      # Update заблокирован, если пусто в одном из полей: provider_id или productid_provider.
+      #
+      # Поиск Товара Поставщика с котрым связан Товар, чтобы разорвать связь.
+      # Новый Товар Поставщика будет связан с Товаром в after_update.
+      # before_update удаляет прежнюю связь, если есть, переданного Товара Поставщика с прежним Товаром
+      # но и еще надо удалить прежнюю связь в самом Товаре
+      product_provider = @product.provider.permalink.constantize.find(@product.productid_provider) rescue nil
+      unless product_provider.nil?
+        product_provider.productid_product = nil
+        product_provider.save
+      end
+
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }

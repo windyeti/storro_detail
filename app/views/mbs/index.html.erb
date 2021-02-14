@@ -50,7 +50,7 @@
     <tr>
       <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
       <th>ID</th>
-<!--      <th>ID Поставщика</th>-->
+      <th>ID в таблице Товаров</th>
       <th>Название</th>
       <th>Актульность</th>
       <th>Остаток</th>
@@ -75,6 +75,7 @@
       <tr class="<%= 'sync' if product.productid_product.present? %>">
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.id %></td>
+        <td><%= product.productid_product %></td>
         <td><%= link_to product.title, product.link, target: '_blank' %></td>
 <!--        <td><%#= product.fid %></td>-->
         <td><%= product.check ? 'был' : 'не был' %></td>

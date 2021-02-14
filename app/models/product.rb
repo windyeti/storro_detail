@@ -9,14 +9,27 @@ class Product < ApplicationRecord
   scope :product_cat, -> { order('cat DESC').select(:cat).uniq }
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
-  before_update :change_provider_product
-
   # TODO еще бы хорошо сделать проверку уникальности: что нет другого Товара звязанного с этим Товаром Поставщика
   # validates :provider, provider_exist: true, on: :update
   # validates :productid_provider, product_provider_exist: true, on: :update
-  #
-  def change_provider_product
 
+  # validates :provider, :productid_provider, presence: true
+
+  # before_update :before_update_product_provider
+  after_update :after_update_product_provider
+
+  # def before_update_product_provider
+  #   product_provider = provider.permalink.constantize.find(productid_provider) rescue return
+  #   product_provider.productid_product = nil
+  #   product_provider.save
+  # end
+
+  def after_update_product_provider
+    if provider_id.present? && productid_provider.present?
+      product_provider = provider.permalink.constantize.find(productid_provider) rescue return
+      product_provider.productid_product = id
+      product_provider.save
+    end
   end
 
   def self.import_insales(path_file, extend_file)

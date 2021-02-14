@@ -41,7 +41,7 @@
   <div class="col- ">
     <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
         <%= f.search_field :sku_or_title_cont, placeholder: 'Артикул, Название', class: "form-control input-sm"%>
-        <%= f.collection_select :provider_id_eq, Provider.all, :id, :name, {include_blank: false, prompt: 'Поставщики'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+        <%= f.collection_select :provider_id_eq, Provider.all, :id, :name, {include_blank: 'Поставщики'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
         <%#= f.collection_select :cat_cont, Product.product_cat, "cat", "cat", {include_blank: false, prompt: 'Категория'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
         <%= f.search_field :quantity_eq, placeholder: 'Остаток: >=', class: "form-control input-sm" %>
         <%= f.search_field :productid_provider_eq, placeholder: 'ID продукта у поставщика', class: "form-control input-sm" %>
