@@ -85,8 +85,8 @@ class Mb < ApplicationRecord
         # store лишняя сущность, так как в приложении остаток храниться в quantity
         # store на входе записывается в quantity
         # а на выходе quantity в store
-        quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
-        insales_product.quantity = quantity
+
+        insales_product.quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
 
         insales_product.visible = true if provider_product.quantity >= 3
 
