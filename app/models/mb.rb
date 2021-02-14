@@ -74,8 +74,8 @@ class Mb < ApplicationRecord
       insales_product.visible = false if insales_product[:provider_id] == 1
 
       provider_product = Mb.find(insales_product.productid_provider) rescue nil
-      # проверка что товар у поставщика есть и он был в последнем обновлении
-      if provider_product.present? && provider_product.check
+      # проверка что товар у поставщика есть
+      if provider_product.present?
         new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product.price.to_f
 
         # с округлением до целого по правилу 0.5
@@ -89,7 +89,7 @@ class Mb < ApplicationRecord
         # количество Товара у Поставщика должнобыть 3 и более И Товар должен быть в последнем скачивании товарос Поставщика
         insales_product.quantity = provider_product.quantity >= 3 && provider_product.check ? provider_product.quantity : 0
 
-        insales_product.visible = true if provider_product.quantity >= 3
+        insales_product.visible = true if provider_product.quantity >= 3 && provider_product.check
 
         # в Товар Поставщика записываем Id Товара с которым он синхронизирован
         provider_product.productid_product = insales_product[:id]
