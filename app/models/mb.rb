@@ -86,7 +86,8 @@ class Mb < ApplicationRecord
         # store на входе записывается в quantity
         # а на выходе quantity в store
 
-        insales_product.quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
+        # количество Товара у Поставщика должнобыть 3 и более И Товар должен быть в последнем скачивании товарос Поставщика
+        insales_product.quantity = provider_product.quantity >= 3 && provider_product.check ? provider_product.quantity : 0
 
         insales_product.visible = true if provider_product.quantity >= 3
 
