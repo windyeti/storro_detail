@@ -63,19 +63,19 @@
       <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
       <th>Sku</th>
       <th>Поставщик</th>
-      <th>ID продукта в таблице поставщика</th>
+      <th>ID поставщика</th>
       <th style="width:250px;">Title</th>
       <th>Desc</th>
 <!--      <th>Cat</th>-->
       <th>Видимость</th>
 <!--      <th>Артикул товара у поставщика</th>-->
-      <th>Стоимость у поставщика</th>
+      <th>Цена поставщика</th>
 <!--      <th>Oldprice</th>-->
       <th>Price</th>
       <th>Quantity</th>
       <th style="width:250px;">Image</th>
-      <th>Url</th>
-      <th colspan="2"></th>
+      <th>Карточка товара</th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -104,8 +104,8 @@
             <% end %>
           <% end %>
         </td>
-        <td><% if product.url.present? %><%= link_to 'Товар в InSales', product.url , target: 'blank' %><%end%></td>
-        <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
+        <td><% if product.url.present? %><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product.url , target: 'blank' %><%end%></td>
+<!--        <td><%#= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>-->
         <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
       </tr>
     <% end %>

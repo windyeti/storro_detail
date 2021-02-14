@@ -1,6 +1,6 @@
 <div class="row mb-2 mr-0 ml-0 align-items-center">
   <div class="col-3">
-    <h3>Товары поставщика МБ</h3>
+    <h3>Поставщик МБ</h3>
     <span class="align-middle"><small>Всего: <%= Mb.product_all_size %></small></span>
     <span class="align-middle"><small>Отфильтровано: <%=@mbs.count%></small></span>
     <span class="align-middle"><small>Больше 0: <%= Mb.where("quantity > 0").size %></small></span>
@@ -75,7 +75,7 @@
       <tr class="<%= 'sync' if product.productid_product.present? %>">
         <td><%=check_box_tag "product_ids[]", product.id%></td>
         <td><%= product.id %></td>
-        <td><%= product.productid_product %></td>
+        <td><%= link_to product.productid_product, product_path(product.productid_product.to_i) %></td>
         <td><%= link_to product.title, product.link, target: '_blank' %></td>
 <!--        <td><%#= product.fid %></td>-->
         <td><%= product.check ? 'был' : 'не был' %></td>

@@ -82,7 +82,7 @@ class Mb < ApplicationRecord
         insales_product.price = new_insales_price.round
         insales_product.provider_price = provider_product.price.to_f
 
-        insales_product.quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
+        insales_product.store = provider_product.quantity >= 3 ? provider_product.quantity : 0
 
         insales_product.visible = true if provider_product.quantity >= 3
 
