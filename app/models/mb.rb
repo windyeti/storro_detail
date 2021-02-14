@@ -82,7 +82,11 @@ class Mb < ApplicationRecord
         insales_product.price = new_insales_price.round
         insales_product.provider_price = provider_product.price.to_f
 
-        insales_product.store = provider_product.quantity >= 3 ? provider_product.quantity : 0
+        # store лишняя сущность, так как в приложении остаток храниться в quantity
+        # store на входе записывается в quantity
+        # а на выходе quantity в store
+        quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
+        insales_product.quantity = quantity
 
         insales_product.visible = true if provider_product.quantity >= 3
 

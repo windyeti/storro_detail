@@ -45,7 +45,7 @@ class Product < ApplicationRecord
         title: spreadsheets.cell(i, 'B'),
         url: spreadsheets.cell(i, 'D'),
         desc: spreadsheets.cell(i, 'F'),
-        # quantity: spreadsheets.cell(i, 'AF').to_i,
+        quantity: spreadsheets.cell(i, 'AH').to_i,
         cat: spreadsheets.cell(i, 'L'),
         # oldprice: spreadsheets.cell(i, 'AD'),
         price: spreadsheets.cell(i, 'AC').to_f,
@@ -104,7 +104,7 @@ class Product < ApplicationRecord
           title = pr.title
           sku = pr.sku
           price = pr.price
-          store = pr.store
+          store = pr.quantity
 
           writer << [productid_var_insales, sku, title, price, store]
       end
