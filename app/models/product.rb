@@ -107,7 +107,7 @@ class Product < ApplicationRecord
           quantity = pr.quantity
           store = pr.quantity
 
-          writer << [productid_var_insales, sku, title, price, visible, quantity, store]
+          writer << [productid_var_insales, sku, title, price, quantity, store]
       end
     end #CSV.open
   end
