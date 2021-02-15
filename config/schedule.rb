@@ -31,7 +31,7 @@
 # set :output, "#{path}/log/cron.log"
 # set :chronic_options, :hours24 => true
 #
-every 1.day, :at => '22:00' do
+every 1.day, :at => '03:00' do
   runner "Mb.import_linking_syncronaize"
 end
 #

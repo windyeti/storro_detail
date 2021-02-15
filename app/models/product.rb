@@ -19,7 +19,7 @@ class Product < ApplicationRecord
 
 
   def provider_productid_provider
-    unless (!provider.nil? && !productid_provider.nil?) || (provider.present? && productid_provider.present?)
+    unless (!provider.present? && !productid_provider.present?) || (provider.present? && productid_provider.present?)
       errors.add(:provider_id, "Оба поля должны быть заполнены или быть пустыми")
       errors.add(:productid_provider, "Оба поля должны быть заполнены или быть пустыми")
     end
