@@ -7,17 +7,23 @@ class Mb < ApplicationRecord
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
   def self.import
-    puts 'СТАРТ YML '+Time.now.to_s
+    puts '=====>>>> СТАРТ YML '+Time.now.to_s
     uri = "http://export.mb-catalog.ru/users/export/yml_download_new.php?email=aichurkin@storro.ru"
     response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
     data = Nokogiri::XML(response)
     mypr = data.xpath("//offer")
 
-    # перед накатыванием обновления товаров у поставщика
+    # 1. перед накатыванием обновления товаров у поставщика
     # все существующим ставим check = false
     # чтобы не удалять товары поставщика, так как их id
     # связан с товарами Product
-    Mb.all.find_each(batch_size: 1000) { |mb| mb.check = false }
+    # 2. обнуляем остатки у всех -- те, что будут присутствовать
+    # в списке добавят себе цену
+    Mb.all.find_each(batch_size: 1000) do |mb|
+      mb.check = false
+      mb.quantity = 0
+      mb.save
+    end
 
     mypr.each do |pr|
 
@@ -48,6 +54,7 @@ class Mb < ApplicationRecord
         Mb.create(data)
       end
     end
+    puts '=====>>>> FINISH YML '+Time.now.to_s
   end
 
   def self.linking
@@ -86,10 +93,10 @@ class Mb < ApplicationRecord
         # store на входе записывается в quantity
         # а на выходе quantity в store
 
-        # количество Товара у Поставщика должнобыть 3 и более И Товар должен быть в последнем скачивании товарос Поставщика
-        insales_product.quantity = provider_product.quantity >= 3 && provider_product.check ? provider_product.quantity : 0
+        # количество Товара у Поставщика должнобыть 3 и более
+        insales_product.quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
 
-        insales_product.visible = true if provider_product.quantity >= 3 && provider_product.check
+        insales_product.visible = true if provider_product.quantity >= 3
 
         # в Товар Поставщика записываем Id Товара с которым он синхронизирован
         provider_product.productid_product = insales_product[:id]
