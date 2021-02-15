@@ -53,13 +53,15 @@ class ProductsController < ApplicationController
     respond_to do |format|
 
       if product_params[:provider_id].present? && product_params[:productid_provider].present?
-        # Сначала удостоверимся что есть такой Товар Поставщика
+        # Сначала удостоверимся что есть такой Товар Поставщика И он уже не связан с другим Товаром
         begin
           provider = Provider.find(product_params[:provider_id])
           provider_klass = provider.permalink.constantize
-          provider_klass.find(product_params[:productid_provider])
+          product_provider = provider_klass.find(product_params[:productid_provider])
+          raise if product_provider.productid_product.present?
         rescue
-          redirect_to @product, alert: 'Нет такого Товара у Поставщика'
+          flash.now[:alert] = 'Нет такого Товара у Поставщика или выбранный Товар Поставщика уже связанна с каким-либо Товаром'
+          render :edit
           return
         end
       end
