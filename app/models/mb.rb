@@ -69,22 +69,6 @@ class Mb < ApplicationRecord
         mb.save
       end
     end
-
-    # Product.all.find_each(batch_size: 1000) do |product|
-    #   if product.sku =~ /^МБ/
-    #     vendorcode = product.sku.sub(/^МБ/, '').sub(/-/, 'N')
-    #     Mb.all.find_each(batch_size: 1000) do |mb|
-    #       if mb.vendorcode == vendorcode
-    #         product.productid_provider = mb.id
-    #         product.provider_id = 1
-    #         product.save
-    #         mb.productid_product = product.id
-    #         mb.save
-    #         break
-    #       end
-    #     end
-    #   end
-    # end
   end
 
   def self.syncronaize
@@ -117,41 +101,6 @@ class Mb < ApplicationRecord
         insales_product.save
       end
     end
-
-
-
-
-    # Product.all.each do |insales_product|
-    #
-    #   # если товар: соотнесен с поставщиком; есть у поставщика; и его количество более 3
-    #   # то visible поменяется ниже на true
-    #   insales_product.visible = false if insales_product[:provider_id] == 1
-    #
-    #   provider_product = Mb.find(insales_product.productid_provider) rescue nil
-    #   # проверка что товар у поставщика есть
-    #   if provider_product.present?
-    #     new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product.price.to_f
-    #
-    #     # с округлением до целого по правилу 0.5
-    #     insales_product.price = new_insales_price.round
-    #     insales_product.provider_price = provider_product.price.to_f
-    #
-    #     # store лишняя сущность, так как в приложении остаток храниться в quantity
-    #     # store на входе записывается в quantity
-    #     # а на выходе quantity в store
-    #
-    #     # количество Товара у Поставщика должнобыть 3 и более
-    #     insales_product.quantity = provider_product.quantity >= 3 ? provider_product.quantity : 0
-    #
-    #     insales_product.visible = true if provider_product.quantity >= 3
-    #
-    #     # в Товар Поставщика записываем Id Товара с которым он синхронизирован
-    #     # provider_product.productid_product = insales_product[:id]
-    #     # provider_product.save
-    #   end
-    #
-    #   insales_product.save
-    # end
   end
 
   def self.import_linking_syncronaize
@@ -162,7 +111,7 @@ class Mb < ApplicationRecord
   end
 
   def self.unlinking_to_csv
-    file = "#{Rails.root}/mbs/mbs_unlinking.csv"
+    file = "#{Rails.root}/public/mbs/mbs_unlinking.csv"
     check = File.file?(file)
     if check.present?
       File.delete(file)
@@ -170,19 +119,67 @@ class Mb < ApplicationRecord
 
     products = Mb.where(productid_product: nil).order(:id)
 
-    CSV.open("#{Rails.root}/mbs/mbs_unlinking.csv", "wb") do |writer|
-      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Склад Удаленный' ]
+    CSV.open("#{Rails.root}/public/mbs/mbs_unlinking.csv", "wb") do |writer|
+      headers = [ "ID", "Available", "Остаток", "Ссылка", "Фото", "Цена", "Валюта", "Категория", "Название", "Описание", "Код произв.", "Бар-код", "Страна", "Бренд", "Параметры", "Актуальность", "ID в табл. Товаров" ]
 
       writer << headers
       products.each do |pr|
-        productid_var_insales = pr.productid_var_insales
-        title = pr.title
-        sku = pr.sku
-        price = pr.price
-        store = pr.quantity
+        fid = pr[:fid]
+        available = pr[:available]
+        quantity = pr[:quantity]
+        link = pr[:link]
+        pict = pr[:pict]
+        price = pr[:price]
+        currencyid = pr[:currencyid]
+        cat = pr[:cat]
+        title = pr[:title]
+        desc = pr[:desc]
+        vendorcode = pr[:vendorcode]
+        barcode = pr[:barcode]
+        country = pr[:country]
+        brend = pr[:brend]
+        param = pr[:param]
+        check = pr[:check]
+        productid_product = pr[:productid_product]
 
-        writer << [productid_var_insales, sku, title, price, store]
+        writer << [
+          fid,
+          available,
+          quantity,
+          link,
+          pict,
+          price,
+          currencyid,
+          cat,
+          title,
+          desc,
+          vendorcode,
+          barcode,
+          country,
+          brend,
+          param,
+          check,
+          productid_product
+        ]
       end
     end #CSV.open
   end
 end
+
+"fid"
+"available"
+"quantity"
+"link"
+"pict"
+"price"
+"currencyid"
+"cat"
+"title"
+"desc"
+"vendorcode"
+"barcode"
+"country"
+"brend"
+"param"
+"check"
+"productid_product"

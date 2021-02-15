@@ -35,8 +35,8 @@ class Product < ApplicationRecord
         return
       end
       if product_provider.productid_product.present?
-        errors.add(:provider_id, "Выбранный Товар Поставщика уже связанна с каким-либо Товаром")
-        errors.add(:productid_provider, "Выбранный Товар Поставщика уже связанна с каким-либо Товаром")
+        errors.add(:provider_id, "Выбранный Товар Поставщика уже связанна с другми Товаром")
+        errors.add(:productid_provider, "Выбранный Товар Поставщика уже связанна с другми Товаром")
       end
     end
   end

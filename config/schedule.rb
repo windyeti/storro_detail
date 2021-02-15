@@ -34,6 +34,10 @@
 every 1.day, :at => '03:00' do
   runner "Mb.import_linking_syncronaize"
 end
+
+every 1.day, :at => '04:00' do
+  runner "Mb.unlinking_to_csv"
+end
 #
 # every 1.day, :at => '16:00' do
 #   runner "Product.import"
