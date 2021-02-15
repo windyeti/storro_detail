@@ -33,4 +33,9 @@ class MbsController < ApplicationController
     Mb.delay.import_linking_syncronaize
     redirect_to mbs_path, notice: "Запущен полный цикл обновления товаров МБ поставщика"
   end
+
+  def unlinking_to_csv
+    Mb.delay.unlinking_to_csv
+    redirect_to mbs_path, notice: "Запущено создание файла из не залинкованных товаров поставщика"
+  end
 end

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get :linking
       get :syncronaize
       get :import_linking_syncronaize
+      get :unlinking_to_csv
     end
   end
 

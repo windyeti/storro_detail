@@ -49,38 +49,28 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
-    # TODO Придобавлении/удалении связи надо отслеживать связанный Товар Поставщика, тоже добавлять/удалять Id Товара
+
+    provider_klass = @product.provider.permalink.constantize if @product.provider
+    id_product_provider = @product.productid_provider if @product.productid_provider
+
     respond_to do |format|
 
-      if product_params[:provider_id].present? && product_params[:productid_provider].present?
-        # Сначала удостоверимся что есть такой Товар Поставщика И он уже не связан с другим Товаром
-        begin
-          provider = Provider.find(product_params[:provider_id])
-          provider_klass = provider.permalink.constantize
-          product_provider = provider_klass.find(product_params[:productid_provider])
-          raise if product_provider.productid_product.present?
-        rescue
-          flash.now[:alert] = 'Нет такого Товара у Поставщика или выбранный Товар Поставщика уже связанна с каким-либо Товаром'
-          render :edit
-          return
-        end
-      end
-
-      # Обнуляем в Товар Постащика --> Товар
-      #
-      # Update заблокирован, если пусто в одном из полей: provider_id или productid_provider.
-      #
-      # Поиск Товара Поставщика с котрым связан Товар, чтобы разорвать связь.
-      # Новый Товар Поставщика будет связан с Товаром в after_update.
-      # before_update удаляет прежнюю связь, если есть, переданного Товара Поставщика с прежним Товаром
-      # но и еще надо удалить прежнюю связь в самом Товаре
-      product_provider = @product.provider.permalink.constantize.find(@product.productid_provider) rescue nil
-      unless product_provider.nil?
-        product_provider.productid_product = nil
-        product_provider.save
-      end
-
       if @product.update(product_params)
+        # Обнуляем в Товар Постащика --> Товар
+        #
+        # Поиск Товара Поставщика с котрым связан Товар, чтобы разорвать связь.
+        # Новый Товар Поставщика будет связан с Товаром в after_update.
+        # Это надо делать внутри update (после прохождения валидаций)
+        # так как если валидация не пройдет == новая связь не установлена, а старая
+        # связь с Товаром Поставщика будет разорвана (ТоварПоставщика.productid_product == nil)
+        if provider_klass
+          product_provider = provider_klass.find(id_product_provider) rescue nil
+          if product_provider.present?
+            product_provider.productid_product = nil
+            product_provider.save
+          end
+        end
+
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
       else

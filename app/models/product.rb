@@ -10,29 +10,36 @@ class Product < ApplicationRecord
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
   validate :provider_productid_provider
+  # validate :provider_exist
+  validate :product_provider_exist_free
 
-  # TODO еще бы хорошо сделать проверку уникальности: что нет другого Товара звязанного с этим Товаром Поставщика
-  # validates :provider, provider_exist: true, on: :update
-  # validates :productid_provider, product_provider_exist: true, on: :update
-
-  # validates :provider, :productid_provider, presence: true
-
+  after_update :after_update_product_provider
 
   def provider_productid_provider
-    unless (!provider.present? && !productid_provider.present?) || (provider.present? && productid_provider.present?)
+    unless (!provider_id.present? && !productid_provider.present?) || (provider_id.present? && productid_provider.present?)
       errors.add(:provider_id, "Оба поля должны быть заполнены или быть пустыми")
       errors.add(:productid_provider, "Оба поля должны быть заполнены или быть пустыми")
     end
   end
 
-  # before_update :before_update_product_provider
-  after_update :after_update_product_provider
-
-  # def before_update_product_provider
-  #   product_provider = provider.permalink.constantize.find(productid_provider) rescue return
-  #   product_provider.productid_product = nil
-  #   product_provider.save
-  # end
+  def product_provider_exist_free
+    if provider_id.present? && productid_provider.present?
+      # Сначала удостоверимся что есть такой Товар Поставщика И он уже не связан с другим Товаром
+      begin
+        provider = Provider.find(provider_id)
+        provider_klass = provider.permalink.constantize
+        product_provider = provider_klass.find(productid_provider)
+      rescue
+        errors.add(:provider_id, "Нет такого Товара у Поставщика или Поставщика")
+        errors.add(:productid_provider, "Нет такого Товара у Поставщика или Поставщика")
+        return
+      end
+      if product_provider.productid_product.present?
+        errors.add(:provider_id, "Выбранный Товар Поставщика уже связанна с каким-либо Товаром")
+        errors.add(:productid_provider, "Выбранный Товар Поставщика уже связанна с каким-либо Товаром")
+      end
+    end
+  end
 
   def after_update_product_provider
     if provider_id.present? && productid_provider.present?
