@@ -112,7 +112,7 @@ class Mb < ApplicationRecord
   end
 
   def self.unlinking_to_csv
-    file = "#{Rails.root}/public/mbs/mbs_unlinking.csv"
+    file = "#{Rails.root}/public/mbs_unlinking.csv"
     check = File.file?(file)
     if check.present?
       File.delete(file)
@@ -120,7 +120,7 @@ class Mb < ApplicationRecord
 
     products = Mb.where(productid_product: nil).order(:id)
 
-    CSV.open("#{Rails.root}/public/mbs/mbs_unlinking.csv", "wb") do |writer|
+    CSV.open("#{Rails.root}/public/mbs_unlinking.csv", "wb") do |writer|
       headers = [ "ID", "Available", "Остаток", "Ссылка", "Фото", "Цена", "Валюта", "Категория", "Название", "Описание", "Код произв.", "Бар-код", "Страна", "Бренд", "Параметры", "Актуальность", "ID в табл. Товаров" ]
 
       writer << headers
