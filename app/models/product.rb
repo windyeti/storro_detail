@@ -49,6 +49,57 @@ class Product < ApplicationRecord
     end
   end
 
+  def self.import_insales_xml
+    #
+    # puts '=====>>>> СТАРТ InSales YML '+Time.now.to_s
+    uri = "https://www.storro.ru/marketplace/75518.xml"
+    response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
+    data = Nokogiri::XML(response)
+    mypr = data.xpath("//offer")
+
+    categories = {}
+    doc_category = data.xpath("category")
+
+    doc_category.each do |c|
+      categories[c.xpath("parentId")] = c.text
+    end
+
+    mypr.each do |pr|
+
+      data_create = {
+        sku: pr.xpath("sku").text,
+        title: pr.xpath("model").text,
+        url: pr.xpath("url").text,
+        desc: pr.xpath("description").text,
+        image: pr.xpath("picture").map(&:text).join(' '),
+        # quantity: pr.xpath("quantity").text.to_i,
+        cat: categories[pr.xpath("categoryId").text],
+        price: pr.xpath("price").text.to_f,
+        provider_price: pr.xpath("cost_price").text.to_f,
+        productid_insales: pr["id"],
+        productid_var_insales: pr["var_id"]
+      }
+
+      data_update = {
+        sku: pr.xpath("sku").text,
+        title: pr.xpath("model").text,
+        url: pr.xpath("url").text,
+        desc: pr.xpath("description").text,
+        cat: categories[pr.xpath("categoryId").text],
+        image: pr.xpath("picture").map(&:text).join(' '),
+        price: pr.xpath("price").text.to_f,
+        provider_price: pr.xpath("cost_price").text.to_f
+        # quantity: pr.xpath("quantity").text.to_i
+      }
+
+      product = Product
+                  .where(productid_var_insales: data_create[:productid_var_insales])
+
+      product.present? ? product.update(data_update) : Product.create(data_create)
+    end
+    # puts '=====>>>> FINISH InSales YML '+Time.now.to_s
+  end
+
   def self.import_insales(path_file, extend_file)
 
     spreadsheets = open_spreadsheet(path_file, extend_file)
@@ -62,8 +113,9 @@ class Product < ApplicationRecord
         title: spreadsheets.cell(i, 'B'),
         url: spreadsheets.cell(i, 'D'),
         desc: spreadsheets.cell(i, 'F'),
-        quantity: spreadsheets.cell(i, 'AH').to_i,
+        # quantity: spreadsheets.cell(i, 'AH').to_i,
         cat: spreadsheets.cell(i, 'L'),
+        image: spreadsheets.cell(i, 'R'),
         # oldprice: spreadsheets.cell(i, 'AD'),
         price: spreadsheets.cell(i, 'AC').to_f,
         provider_price: spreadsheets.cell(i, 'AE').to_f,
@@ -78,11 +130,14 @@ class Product < ApplicationRecord
         title: spreadsheets.cell(i, 'B'),
         url: spreadsheets.cell(i, 'D'),
         desc: spreadsheets.cell(i, 'F'),
-        cat: spreadsheets.cell(i, 'L')
+        cat: spreadsheets.cell(i, 'L'),
+        image: spreadsheets.cell(i, 'R'),
+        price: spreadsheets.cell(i, 'AC').to_f,
+        provider_price: spreadsheets.cell(i, 'AE').to_f
+        # quantity: spreadsheets.cell(i, 'AH').to_i
       }
 
       product = Product
-                  .where(productid_insales: data_create[:productid_insales])
                   .where(productid_var_insales: data_create[:productid_var_insales])
 
       product.present? ? product.update(data_update) : Product.create(data_create)
@@ -113,7 +168,7 @@ class Product < ApplicationRecord
     products = Product.where.not(provider: nil).where.not(productid_provider: nil).order(:id)
 
     CSV.open("#{Rails.root}/public/export_insales.csv", "wb") do |writer|
-      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Склад Удаленный' ]
+      headers = [ 'ID варианта товара', 'Артикул', 'Название товара', 'Цена продажи', 'Цена закупки', 'Склад Удаленный' ]
 
       writer << headers
       products.each do |pr|
@@ -121,9 +176,10 @@ class Product < ApplicationRecord
           title = pr.title
           sku = pr.sku
           price = pr.price
+          provider_price = pr.provider_price
           store = pr.quantity
 
-          writer << [productid_var_insales, sku, title, price, store]
+          writer << [productid_var_insales, sku, title, price, provider_price, store]
       end
     end #CSV.open
   end

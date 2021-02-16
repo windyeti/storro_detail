@@ -139,6 +139,12 @@ class ProductsController < ApplicationController
 		end
   end
 
+  def import_insales_xml
+    Product.delay.import_insales_xml
+    flash[:notice] = 'Задача обновления каталога запущена'
+    redirect_to products_path
+  end
+
   def import
     # if Rails.env.development?
     #   Product.delay.import_insales(params[:file])

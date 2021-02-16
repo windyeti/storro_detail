@@ -104,6 +104,7 @@ class Mb < ApplicationRecord
   end
 
   def self.import_linking_syncronaize
+    Product.import_insales_xml
     self.import
     self.linking
     self.syncronaize
@@ -165,21 +166,3 @@ class Mb < ApplicationRecord
     end #CSV.open
   end
 end
-
-"fid"
-"available"
-"quantity"
-"link"
-"pict"
-"price"
-"currencyid"
-"cat"
-"title"
-"desc"
-"vendorcode"
-"barcode"
-"country"
-"brend"
-"param"
-"check"
-"productid_product"

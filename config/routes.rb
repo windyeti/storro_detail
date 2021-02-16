@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       put :update_multiple
       post :delete_selected
       post :import
+      get :import_insales_xml
       get :csv_param
     end
   end

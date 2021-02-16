@@ -31,6 +31,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <%= link_to 'Сформировать файл', create_csv_products_path, class: 'dropdown-item'%>
       <%= link_to 'Скачать файл', "/export_insales.csv", download: "export_insales_#{Time.now}.csv", class: 'dropdown-item' %>
+      <%= link_to 'Обновить каталог', import_insales_xml_products_path, class: 'dropdown-item'%>
     </div>
     </div>
   </div>
@@ -75,7 +76,7 @@
       <th>Остаток</th>
       <th style="width:250px;">Image</th>
       <th>Карточка товара</th>
-      <th colspan="1"></th>
+<!--      <th colspan="1"></th>-->
     </tr>
   </thead>
 
@@ -106,7 +107,7 @@
         </td>
         <td><% if product.url.present? %><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product.url , target: 'blank' %><%end%></td>
 <!--        <td><%#= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>-->
-        <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
+<!--        <td><%#= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>-->
       </tr>
     <% end %>
   </tbody>

@@ -68,7 +68,7 @@
       <th>Бренд</th>
       <th>Параметры</th>
       <th>Картинки</th>
-      <th colspan="2"></th>
+      <th colspan="1"></th>
     </tr>
     </thead>
 
@@ -95,7 +95,7 @@
         <td><%= product.param.truncate(25) if product.param != nil  %></td>
         <td class="row ml-0 mr-0"><% product.pict.split(' ').each do |pict| %><div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div><% end %></td>
         <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
-        <td><%= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>
+<!--        <td><%#= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>-->
       </tr>
     <% end %>
     </tbody>
