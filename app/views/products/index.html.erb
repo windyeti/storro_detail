@@ -68,7 +68,7 @@
       <th style="width:250px;">Title</th>
       <th>Desc</th>
 <!--      <th>Cat</th>-->
-      <th>Видимость</th>
+<!--      <th>Видимость</th>-->
 <!--      <th>Артикул товара у поставщика</th>-->
       <th>Цена поставщика</th>
 <!--      <th>Oldprice</th>-->
@@ -90,7 +90,7 @@
         <td><%= link_to product.title, edit_product_path(product) %></td>
         <td><%= product.desc.truncate(25) if product.desc != nil%></td>
 <!--        <td><%#= product.cat %></td>-->
-        <td><%= product.visible ? "выставлен" : "скрыт" %></td>
+<!--        <td><%#= product.visible ? "выставлен" : "скрыт" %></td>-->
 <!--        <td><%#= product.product_sku_provider %></td>-->
         <td><%= product.provider_price %></td>
 <!--        <td><%#= product.oldprice %></td>-->
