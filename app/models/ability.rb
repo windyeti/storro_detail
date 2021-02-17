@@ -19,8 +19,8 @@ class Ability
 
   def auth_user
     guest
-    can [:read, :import, :create_csv, :syncronaize], Provider
-    can [:read, :create, :update, :import], Product
+    can :manage, Provider
+    can :manage, Product
     can :manage, Mb
   end
 

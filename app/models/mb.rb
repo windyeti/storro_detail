@@ -59,7 +59,7 @@ class Mb < ApplicationRecord
 
   def self.linking
     Mb.find_each(batch_size: 1000) do |mb|
-      product_sku = "МБ#{mb.vendorcode.sub(/N/, '-')}"
+      product_sku = "МБ#{mb.vendorcode.gsub(/N/, '-')}"
       product = Product.find_by(sku: product_sku)
       if product
         product.productid_provider = mb.id

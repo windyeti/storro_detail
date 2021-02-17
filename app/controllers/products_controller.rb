@@ -54,7 +54,6 @@ class ProductsController < ApplicationController
     id_product_provider = @product.productid_provider if @product.productid_provider
 
     respond_to do |format|
-
       if @product.update(product_params)
         # Обнуляем в Товар Постащика --> Товар
         #
@@ -138,7 +137,6 @@ class ProductsController < ApplicationController
 		  format.json { render json: {:status => "ok", :message => "Товары удалёны"} }
 		end
   end
-
   def import_insales_xml
     Product.delay.import_insales_xml
     flash[:notice] = 'Задача обновления каталога запущена'

@@ -10,7 +10,6 @@ class Product < ApplicationRecord
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
   validate :provider_productid_provider
-  # validate :provider_exist
   validate :product_provider_exist_free
 
   after_update :after_update_product_provider
@@ -34,9 +33,10 @@ class Product < ApplicationRecord
         errors.add(:productid_provider, "Нет такого Товара у Поставщика или Поставщика")
         return
       end
-      if product_provider.productid_product.present?
-        errors.add(:provider_id, "Выбранный Товар Поставщика уже связанна с другми Товаром")
-        errors.add(:productid_provider, "Выбранный Товар Поставщика уже связанна с другми Товаром")
+      # Связываемый Товар Поставщика: не связан с каким-либо Товаром, или наш Товар и есть Товар связанный с Товаром Поставщика
+      if product_provider.productid_product.present? && product_provider.productid_product != id
+        errors.add(:provider_id, "Выбранный Товар Поставщика уже связанна с другим Товаром")
+        errors.add(:productid_provider, "Выбранный Товар Поставщика уже связанна с другим Товаром")
       end
     end
   end
@@ -65,7 +65,6 @@ class Product < ApplicationRecord
     end
 
     mypr.each do |pr|
-
       data_create = {
         sku: pr.xpath("sku").text,
         title: pr.xpath("model").text,
@@ -89,13 +88,12 @@ class Product < ApplicationRecord
         image: pr.xpath("picture").map(&:text).join(' '),
         price: pr.xpath("price").text.to_f,
         provider_price: pr.xpath("cost_price").text.to_f
-        # quantity: pr.xpath("quantity").text.to_i
       }
 
       product = Product
-                  .where(productid_var_insales: data_create[:productid_var_insales])
+                  .find_by(productid_var_insales: data_create[:productid_var_insales])
 
-      product.present? ? product.update(data_update) : Product.create(data_create)
+      product.present? ? product.update_attributes(data_update) : Product.create(data_create)
     end
     # puts '=====>>>> FINISH InSales YML '+Time.now.to_s
   end
@@ -138,7 +136,7 @@ class Product < ApplicationRecord
       }
 
       product = Product
-                  .where(productid_var_insales: data_create[:productid_var_insales])
+                  .find_by(productid_var_insales: data_create[:productid_var_insales])
 
       product.present? ? product.update(data_update) : Product.create(data_create)
     end
