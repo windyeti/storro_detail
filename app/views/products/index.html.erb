@@ -29,10 +29,11 @@
       Действия
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <%= link_to 'Обновить Цены и Остатки всех Товаров', update_price_quantity_all_providers_products_path, class: 'dropdown-item text-success'%>
+      <%= link_to 'Обновить Цены и Остатки Товаров', update_price_quantity_all_providers_products_path, class: 'dropdown-item text-success'%>
+      <%= link_to 'Обновить каталог Товаров', import_insales_xml_products_path, class: 'dropdown-item'%>
       <%= link_to 'Сформировать файл', create_csv_products_path, class: 'dropdown-item'%>
-      <%= link_to 'Скачать файл', "/export_insales.csv", download: "export_insales_#{Time.now}.csv", class: 'dropdown-item' %>
-      <%= link_to 'Обновить каталог товарами из InSales', import_insales_xml_products_path, class: 'dropdown-item'%>
+      <div class="dropdown-divider"></div>
+      <%= link_to '(Скачать файл)', "/export_insales.csv", download: "export_insales_#{Time.now}.csv", class: 'dropdown-item' %>
     </div>
     </div>
   </div>
