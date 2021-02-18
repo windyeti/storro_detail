@@ -32,7 +32,7 @@
 # set :chronic_options, :hours24 => true
 #
 every 1.day, :at => '03:00' do
-  runner "Mb.import_linking_syncronaize"
+  runner "Product.update_price_quantity_all_providers"
 end
 
 every 1.day, :at => '04:00' do

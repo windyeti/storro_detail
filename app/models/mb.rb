@@ -104,11 +104,9 @@ class Mb < ApplicationRecord
   end
 
   def self.import_linking_syncronaize
-    Product.import_insales_xml
     self.import
     self.linking
     self.syncronaize
-    Product.create_csv
   end
 
   def self.unlinking_to_csv

@@ -49,9 +49,16 @@ class Product < ApplicationRecord
     end
   end
 
+  def self.update_price_quantity_all_providers
+    Product.import_insales_xml
+    # Здесь будут синхронизации всех поставщиков
+    Mb.import_linking_syncronaize
+    Product.create_csv
+  end
+
   def self.import_insales_xml
     #
-    # puts '=====>>>> СТАРТ InSales YML '+Time.now.to_s
+    puts '=====>>>> СТАРТ InSales YML '+Time.now.to_s
     uri = "https://www.storro.ru/marketplace/75518.xml"
     response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
     data = Nokogiri::XML(response)
@@ -95,7 +102,7 @@ class Product < ApplicationRecord
 
       product.present? ? product.update_attributes(data_update) : Product.create(data_create)
     end
-    # puts '=====>>>> FINISH InSales YML '+Time.now.to_s
+    puts '=====>>>> FINISH InSales YML '+Time.now.to_s
   end
 
   def self.import_insales(path_file, extend_file)
