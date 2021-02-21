@@ -34,6 +34,7 @@
       <%= link_to 'Сформировать файл', create_csv_products_path, class: 'dropdown-item'%>
       <div class="dropdown-divider"></div>
       <%= link_to '(Скачать файл)', "/export_insales.csv", download: "export_insales_#{Time.now}.csv", class: 'dropdown-item' %>
+      <%= link_to '(Error Update)', "/errors_update.txt", download: "errors_update.txt", class: 'dropdown-item' %>
     </div>
     </div>
   </div>

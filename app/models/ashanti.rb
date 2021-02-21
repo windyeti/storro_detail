@@ -1,6 +1,4 @@
-# require 'axslx'
-
-class Mb < ApplicationRecord
+class Ashanti < ApplicationRecord
 
   scope :product_all_size, -> { order(:id).size }
   scope :product_qt_not_null, -> { where('quantity > 0') }
@@ -9,72 +7,78 @@ class Mb < ApplicationRecord
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
   def self.import
-    puts '=====>>>> СТАРТ YML '+Time.now.to_s
-    uri = "http://export.mb-catalog.ru/users/export/yml_download_new.php?email=aichurkin@storro.ru"
-    response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
-    data = Nokogiri::XML(response)
-    mypr = data.xpath("//offer")
 
-    # 1. перед накатыванием обновления товаров у поставщика
-    # все существующим ставим check = false
-    # чтобы не удалять товары поставщика, так как их id
-    # связан с товарами Product
-    # 2. обнуляем остатки у всех -- те, что будут присутствовать
-    # в списке добавят себе цену
-    Mb.all.find_each(batch_size: 1000) do |mb|
+    uri = "https://ashaindia.ru/price/Прайс-лист_Ashanti_без_отсутствующих.xlsx"
+    ascii_uri = URI.encode(uri)
+    response = RestClient.get(ascii_uri)
+
+    file_path = "#{Rails.root}/public/ashanti_import.xlsx"
+
+    if response.code == 200
+      check = File.file?(file_path)
+      if check.present?
+        File.delete(file_path)
+      end
+
+      f = File.new(file_path, "wb")
+      f << response.body
+      puts "XSLS Complited"
+      f.close
+    end
+
+    file = File.open(file_path)
+    xlsx = open_spreadsheet(file)
+
+    Ashanti.all.find_each(batch_size: 1000) do |mb|
       mb.check = false
       mb.quantity = 0
       mb.save
     end
 
-    mypr.each do |pr|
+    xlsx.sheets.each do |sheet_name|
+      sheet = xlsx.sheet(sheet_name)
 
-      data = {
-        fid: pr["id"],
-        available: pr["available"] == 'true' ? true : false,
-        quantity: pr["ostatok"],
-        link: pr.xpath("url").text,
-        pict: pr.xpath("picture").map(&:text).join(''),
-        price: pr.xpath("price").text,
-        currencyid: pr.xpath("currencyId").text,
-        cat: pr.xpath("categoryId").text,
-        title: pr.xpath("name").text,
-        desc: pr.xpath("description").text,
-        vendorcode: pr.xpath("vendorCode").text,
-        barcode: pr.xpath("barcode").text,
-        country: pr.xpath("country").text,
-        brend: pr.xpath("brend").text,
-        param: pr.xpath("param").text,
-        check: true
-      }
+      last_row = sheet.last_row.to_i
+      (1..last_row).each do |i|
+        first_cell = sheet.cell(i, 'A')
+        next unless first_cell.to_i.to_s == first_cell
 
-      tov = Mb.find_by_fid(data[:fid])
+        data = {
+          barcode: sheet.cell(i, 'A'),
+          vendorcode: sheet.cell(i, 'B'),
+          title: sheet.cell(i, 'D'),
+          weight: sheet.cell(i, 'E'),
+          quantity: sheet.cell(i, 'F') == 'В наличии' ? 2000 : 0,
+          use_until: sheet.cell(i, 'G'),
+          price: sheet.cell(i, 'I').to_f,
+          desc: sheet.cell(i, 'N'),
+          check: true
+        }
 
-      if tov.present?
-        tov.update(data)
-      else
-        Mb.create(data)
+        ashanti = Ashanti
+                    .find_by(barcode: data[:barcode])
+
+        ashanti.present? ? ashanti.update(data) : Ashanti.create(data)
       end
     end
-    puts '=====>>>> FINISH YML '+Time.now.to_s
   end
 
   def self.linking
-    Mb.find_each(batch_size: 1000) do |mb|
-      product_sku = "МБ#{mb.vendorcode.gsub(/N/, '-')}"
+    Ashanti.find_each(batch_size: 1000) do |ashanti|
+      product_sku = "AAY#{ashanti.barcode}"
       product = Product.find_by(sku: product_sku)
       if product
-        product.productid_provider = mb.id
-        product.provider_id = 1
+        product.productid_provider = ashanti.id
+        product.provider_id = 2
         product.save
-        mb.productid_product = product.id
-        mb.save
+        ashanti.productid_product = product.id
+        ashanti.save
       end
     end
   end
 
   def self.syncronaize
-    Mb.find_each(batch_size: 1000) do |provider_product|
+    Ashanti.find_each(batch_size: 1000) do |provider_product|
 
       insales_product = Product.find(provider_product.productid_product) rescue nil
 
@@ -112,16 +116,16 @@ class Mb < ApplicationRecord
   end
 
   def self.unlinking_to_csv
-    file = "#{Rails.root}/public/mbs_unlinking.csv"
+    file = "#{Rails.root}/public/ashanti_unlinking.csv"
     check = File.file?(file)
     if check.present?
       File.delete(file)
     end
 
-    products = Mb.where(productid_product: nil).order(:id)
+    products = Ashanti.where(productid_product: nil).order(:id)
 
-    CSV.open("#{Rails.root}/public/mbs_unlinking.csv", "wb") do |writer|
-      headers = [ "ID", "ID в таблице Товаров", "Название", "Актуальность", "Остаток", "Цена", "Описание", "Код производителя", "Barcode", "Страна", "Бренд", "Параметры", "Картинки" ]
+    CSV.open("#{Rails.root}/public/ashanti_unlinking.csv", "wb") do |writer|
+      headers = [ "ID", "ID в таблице Товаров", "Название", "Актуальность", "Остаток", "Цена", "Описание", "Код производителя", "Barcode" ]
 
       writer << headers
       products.each do |pr|
@@ -134,10 +138,6 @@ class Mb < ApplicationRecord
         desc = pr[:desc]
         vendorcode = pr[:vendorcode]
         barcode = pr[:barcode]
-        country = pr[:country]
-        brend = pr[:brend]
-        param = pr[:param]
-        pict = pr[:pict]
 
         writer << [
           id,
@@ -148,13 +148,21 @@ class Mb < ApplicationRecord
           price,
           desc,
           vendorcode,
-          barcode,
-          country,
-          param,
-          brend,
-          pict
+          barcode
         ]
       end
     end #CSV.open
   end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file)
+    when ".csv" then Roo::CSV.new(file.path) #csv_options: {col_sep: ";",encoding: "windows-1251:utf-8"})
+    when ".xls" then Roo::Excel.new(file.path)
+    when ".xlsx" then Roo::Spreadsheet.open(file.path, extension: :xlsx)
+    # when ".xlsx" then Roo::Excelx.new(file.path, extension: :xlsx)
+    when ".XLS" then Roo::Excel.new(file.path)
+    else raise "Unknown file type: #{File.extname(file)}"
+    end
+  end
+
 end

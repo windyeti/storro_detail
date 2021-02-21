@@ -1,4 +1,5 @@
 class MbsController < ApplicationController
+  # TODO authorize_resources
   def index
     @search = Mb.ransack(params[:q])
     @search.sorts = 'id desc' if @search.sorts.empty?
@@ -36,6 +37,6 @@ class MbsController < ApplicationController
 
   def unlinking_to_csv
     Mb.delay.unlinking_to_csv
-    redirect_to mbs_path, notice: "Запущено создание файла из не залинкованных товаров поставщика"
+    redirect_to mbs_path, notice: "Запущено создание файла из незалинкованных товаров поставщика"
   end
 end

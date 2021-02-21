@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210213145304) do
+ActiveRecord::Schema.define(version: 20210219105105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ashantis", force: :cascade do |t|
+    t.string   "barcode"
+    t.string   "vendorcode"
+    t.string   "images"
+    t.string   "title"
+    t.string   "weight"
+    t.string   "use_until"
+    t.string   "price"
+    t.integer  "quantity"
+    t.string   "desc"
+    t.bigint   "productid_product"
+    t.boolean  "check"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false

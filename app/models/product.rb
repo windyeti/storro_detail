@@ -31,12 +31,18 @@ class Product < ApplicationRecord
       rescue
         errors.add(:provider_id, "Нет такого Товара у Поставщика или Поставщика")
         errors.add(:productid_provider, "Нет такого Товара у Поставщика или Поставщика")
+        File.open("#{Rails.root}/public/errors_update.txt", 'a') do |f|
+          f.write "[#{Time.now}] - Артикул Товара: #{sku} -- Поставщик: #{Provider.find(provider_id).name} -- ID Товара Поставщика:#{productid_provider} -- Ошибка: Нет такого Товара у Поставщика или Поставщика\n"
+        end
         return
       end
       # Связываемый Товар Поставщика: не связан с каким-либо Товаром, или наш Товар и есть Товар связанный с Товаром Поставщика
       if product_provider.productid_product.present? && product_provider.productid_product != id
         errors.add(:provider_id, "Выбранный Товар Поставщика уже связанна с другим Товаром")
         errors.add(:productid_provider, "Выбранный Товар Поставщика уже связанна с другим Товаром")
+        File.open("#{Rails.root}/public/errors_update.txt", 'a') do |f|
+          f.write "[#{Time.now}] - Артикул Товара: #{sku} -- Поставщик: #{Provider.find(provider_id).name} -- ID Товара Поставщика:#{productid_provider} -- Ошибка: Выбранный Товар Поставщика уже связанна с другим Товаром\n"
+        end
       end
     end
   end
@@ -53,6 +59,7 @@ class Product < ApplicationRecord
     Product.import_insales_xml
     # Здесь будут синхронизации всех поставщиков
     Mb.import_linking_syncronaize
+    Ashanti.import_linking_syncronaize
     Product.create_csv
   end
 
