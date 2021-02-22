@@ -1,5 +1,6 @@
 class AshantisController < ApplicationController
-  def index
+  # TODO authorize_resources
+def index
     @search = Ashanti.ransack(params[:q])
     @search.sorts = 'id desc' if @search.sorts.empty?
     @ashantis = @search.result.paginate(page: params[:page], per_page: 100)
