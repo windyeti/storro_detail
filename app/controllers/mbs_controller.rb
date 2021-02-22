@@ -1,5 +1,7 @@
 class MbsController < ApplicationController
-  # TODO authorize_resources
+
+  authorize_resource
+
   def index
     @search = Mb.ransack(params[:q])
     @search.sorts = 'id desc' if @search.sorts.empty?

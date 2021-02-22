@@ -22,6 +22,7 @@ class Ability
     can :manage, Provider
     can :manage, Product
     can :manage, Mb
+    can :manage, Ashanti
   end
 
   def admin

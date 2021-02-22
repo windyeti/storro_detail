@@ -70,6 +70,13 @@ class ProductsController < ApplicationController
           end
         end
 
+        # Устанавливаем в Товар Постащика --> Товар
+        if @product.provider.present? && @product.productid_provider.present?
+          product_provider = @product.provider.permalink.constantize.find(@product.productid_provider) rescue return
+          product_provider.productid_product = @product.id
+          product_provider.save
+        end
+
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
       else

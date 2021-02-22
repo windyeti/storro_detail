@@ -12,7 +12,7 @@ class Product < ApplicationRecord
   validate :provider_productid_provider
   validate :product_provider_exist_free
 
-  after_update :after_update_product_provider
+  # after_update :after_update_product_provider
 
   def provider_productid_provider
     unless (!provider_id.present? && !productid_provider.present?) || (provider_id.present? && productid_provider.present?)
@@ -47,13 +47,14 @@ class Product < ApplicationRecord
     end
   end
 
-  def after_update_product_provider
-    if provider_id.present? && productid_provider.present?
-      product_provider = provider.permalink.constantize.find(productid_provider) rescue return
-      product_provider.productid_product = id
-      product_provider.save
-    end
-  end
+  # def after_update_product_provider
+  #   if provider_id.present? && productid_provider.present?
+  #     p product_provider = provider.permalink.constantize.find(productid_provider) rescue return
+  #     p product_provider.productid_product = id
+  #     product_provider.save
+  #     p product_provider
+  #   end
+  # end
 
   def self.update_price_quantity_all_providers
     Product.import_insales_xml
