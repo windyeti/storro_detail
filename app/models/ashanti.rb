@@ -65,7 +65,7 @@ class Ashanti < ApplicationRecord
 
   def self.linking
     Ashanti.find_each(batch_size: 1000) do |ashanti|
-      product_sku = "AAY#{ashanti.barcode}"
+      product_sku = "ACY#{ashanti.vendorcode}"
       product = Product.find_by(sku: product_sku)
       if product
         product.productid_provider = ashanti.id
