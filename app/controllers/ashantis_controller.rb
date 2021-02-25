@@ -1,6 +1,6 @@
 class AshantisController < ApplicationController
 
-  authorize_resource
+  # authorize_resource
 
   def index
     @search = Ashanti.ransack(params[:q])
