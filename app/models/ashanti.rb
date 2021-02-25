@@ -50,13 +50,13 @@ class Ashanti < ApplicationRecord
           weight: sheet.cell(i, 'E'),
           quantity: sheet.cell(i, 'F') == 'В наличии' ? 2000 : 0,
           use_until: sheet.cell(i, 'G'),
-          price: sheet.cell(i, 'I').to_f,
+          price: sheet.cell(i, 'I') ? sheet.cell(i, 'I').gsub(' ', '').to_f : nil,
           desc: sheet.cell(i, 'N'),
           check: true
         }
 
         ashanti = Ashanti
-                    .find_by(barcode: data[:barcode])
+                    .find_by(vendorcode: data[:vendorcode])
 
         ashanti.present? ? ashanti.update(data) : Ashanti.create(data)
       end

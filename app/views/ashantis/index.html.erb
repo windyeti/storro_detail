@@ -27,7 +27,7 @@
       <%= f.search_field :title_cont, placeholder: 'Название', class: "form-control input-sm"%>
       <%= f.search_field :quantity_eq, placeholder: 'Остаток: =', class: "form-control input-sm"%>
       <%= f.search_field :quantity_gt, placeholder: 'Остаток: >=', class: "form-control input-sm"%>
-      <%= f.search_field :barcode_eq, placeholder: 'Штрих-код', class: "form-control input-sm"%>
+      <%= f.search_field :vendorcode_eq, placeholder: 'Код производителя', class: "form-control input-sm"%>
       <div class="form-group ml-2 button_group">
         <% f.submit 'Поиск', class: 'btn btn-info' %>
         <%= button_tag(type: 'submit', :class => "btn btn-info") do %><span class="oi oi-magnifying-glass"></span><% end %>

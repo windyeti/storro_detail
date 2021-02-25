@@ -16,7 +16,11 @@
 <p>Файл инсалес:
 <p>размер - <%= number_to_human_size(size)%>; дата - <%=File.ctime(file).in_time_zone('Moscow').strftime("%d/%m/%Y %H:%M" ) %></p>
 <p><%= link_to 'Скачать файл', "/export_insales.csv", download: "export_insales_#{Time.now}.csv", class: 'dropdown-item' %></p>
-<!--<p><a href="/export_insales.csv">Скачать файл</a> </p>-->
+<p>
+  <%= link_to 'Ошибки Update', "/errors_update.txt", download: "errors_update.txt", class: 'dropdown-item' %>
+</p>
+
+    <!--<p><a href="/export_insales.csv">Скачать файл</a> </p>-->
 <%end%>
 
 <%# if Rails.cache.read('file_qt_update') != nil %>
