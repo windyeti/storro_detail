@@ -32,13 +32,21 @@
 set :output, "/log/cron.log"
 set :chronic_options, :hours24 => true
 
-every 1.day, :at => '23:35' do
-  runner "Product.update_price_quantity_all_providers"
+every 1.day, :at => '23:59' do
+  runner "Product.delay.update_price_quantity_all_providers"
 end
 
 every 1.day, :at => '04:00' do
   runner "Mb.unlinking_to_csv"
 end
+
+# every 1.day, :at => '23:35' do
+#   runner "Product.update_price_quantity_all_providers"
+# end
+#
+# every 1.day, :at => '04:00' do
+#   runner "Mb.unlinking_to_csv"
+# end
 #
 # every 1.day, :at => '16:00' do
 #   runner "Product.import"
