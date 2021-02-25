@@ -83,22 +83,40 @@ class Mb < ApplicationRecord
         # то visible поменяется ниже на true
         insales_product.visible = false
 
-        new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product.price.to_f
+        if insales_product.komplekt.present?
+          provider_product_price = provider_product.price.to_f * insales_product.komplekt
+          provider_product_quantity = (provider_product.quantity / insales_product.komplekt).floor
+        else
+          provider_product_price = provider_product.price.to_f
+          provider_product_quantity = provider_product.quantity
+        end
+
+        min_quantity_for_yandex = 3
+
+        new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product_price
 
         # с округлением до целого по правилу 0.5
         insales_product.price = new_insales_price.round
-        insales_product.provider_price = provider_product.price.to_f
+        insales_product.provider_price = provider_product_price
 
         # store лишняя сущность, так как в приложении остаток храниться в quantity
         # store на входе записывается в quantity
         # а на выходе quantity в store
 
         # количество Товара у Поставщика должнобыть 3 и более
-        provider_product_quantity = provider_product.quantity
 
-        insales_product.quantity = provider_product_quantity >= 3 ? provider_product.quantity : 0
+        if insales_product.komplekt.present?
+          if insales_product.komplekt * provider_product_quantity == 2000
+            insales_product.quantity = 2000
+          else
+            insales_product.quantity = provider_product_quantity >= min_quantity_for_yandex ? provider_product_quantity : 0
+          end
+        else
+          insales_product.quantity = provider_product_quantity >= min_quantity_for_yandex ? provider_product_quantity : 0
+        end
 
-        insales_product.visible = true if provider_product_quantity >= 3
+
+        insales_product.visible = true if provider_product_quantity >= min_quantity_for_yandex
 
         insales_product.save
       end

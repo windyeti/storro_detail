@@ -80,18 +80,19 @@ class Product < ApplicationRecord
     end
 
     mypr.each do |pr|
+
       data_create = {
         sku: pr.xpath("sku").text,
         title: pr.xpath("model").text,
         url: pr.xpath("url").text,
         desc: pr.xpath("description").text,
         image: pr.xpath("picture").map(&:text).join(' '),
-        # quantity: pr.xpath("quantity").text.to_i,
         cat: categories[pr.xpath("categoryId").text],
         price: pr.xpath("price").text.to_f,
         provider_price: pr.xpath("cost_price").text.to_f,
         productid_insales: pr["id"],
-        productid_var_insales: pr["var_id"]
+        productid_var_insales: pr["var_id"],
+        komplekt: pr.xpath("komplekt").text.present? ? pr.xpath("komplekt").text.to_f : nil
       }
 
       data_update = {
@@ -102,7 +103,8 @@ class Product < ApplicationRecord
         cat: categories[pr.xpath("categoryId").text],
         image: pr.xpath("picture").map(&:text).join(' '),
         price: pr.xpath("price").text.to_f,
-        provider_price: pr.xpath("cost_price").text.to_f
+        provider_price: pr.xpath("cost_price").text.to_f,
+        komplekt: pr.xpath("komplekt").text.present? ? pr.xpath("komplekt").text.to_f : nil
       }
 
       product = Product
