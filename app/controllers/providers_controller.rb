@@ -1,7 +1,7 @@
 class ProvidersController < ApplicationController
   before_action :load_provider, only: [:show, :edit, :update, :destroy, :import, :syncronaize]
 
-  # authorize_resource
+  authorize_resource
 
   def index
     @providers = Provider.all
