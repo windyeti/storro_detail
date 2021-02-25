@@ -55,6 +55,8 @@ class Mb < ApplicationRecord
       else
         Mb.create(data)
       end
+
+
     end
     puts '=====>>>> FINISH YML '+Time.now.to_s
   end
