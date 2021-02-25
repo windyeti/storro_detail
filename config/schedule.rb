@@ -32,7 +32,7 @@
 set :output, "/log/cron.log"
 set :chronic_options, :hours24 => true
 
-every 1.day, :at => '21:53' do
+every 1.day, :at => '22:10' do
   runner "Product.update_price_quantity_all_providers"
 end
 
