@@ -26,12 +26,13 @@
 # очистить cron - bundle exec whenever --clear-crontab
 # сервер минус 3 часов (лето) и минус 4 (зима)
 
-env :PATH, ENV['PATH']
-env "GEM_HOME", ENV["GEM_HOME"]
-set :output, "#{path}/log/cron.log"
+# env :PATH, ENV['PATH']
+# env "GEM_HOME", ENV["GEM_HOME"]
+# set :output, "#{path}/log/cron.log"
+set :output, "/log/cron.log"
 set :chronic_options, :hours24 => true
 
-every 1.day, :at => '21:45' do
+every 1.day, :at => '21:53' do
   runner "Product.update_price_quantity_all_providers"
 end
 
