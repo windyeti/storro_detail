@@ -85,9 +85,7 @@ class Mb < ApplicationRecord
   def self.syncronaize
     Mb.find_each(batch_size: 1000) do |provider_product|
 
-      insales_product = Product.find(provider_product.productid_product) rescue nil
-
-      if insales_product
+       Product.where(productid_provider: provider_product.id).where(provider_id: 1).each do |insales_product|
         # если товар: соотнесен с поставщиком; есть у поставщика; и его количество более 3
         # то visible поменяется ниже на true
         insales_product.visible = false
@@ -124,11 +122,14 @@ class Mb < ApplicationRecord
           insales_product.quantity = provider_product_quantity >= min_quantity_for_yandex ? provider_product_quantity : 0
         end
 
-
         insales_product.visible = true if provider_product_quantity >= min_quantity_for_yandex
 
         insales_product.save
+
+        puts insales_product if provider_product.id == 15767
+
       end
+
     end
   end
 
