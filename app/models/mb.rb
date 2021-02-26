@@ -64,8 +64,8 @@ class Mb < ApplicationRecord
   def self.linking
     Mb.find_each(batch_size: 1000) do |mb|
       product_sku = "МБ#{mb.vendorcode.gsub(/N/, '-')}"
-      product = Product.find_by(sku: product_sku)
-      if product
+      products = Product.where(sku: product_sku)
+      products.each do |product|
         product.productid_provider = mb.id
         product.provider_id = 1
         product.save

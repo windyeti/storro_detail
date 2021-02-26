@@ -10,7 +10,7 @@ class Product < ApplicationRecord
   scope :product_image_nil, -> { where(image: [nil, '']).order(:id) }
 
   validate :provider_productid_provider
-  validate :product_provider_exist_free
+  # validate :product_provider_exist_free
 
   # after_update :after_update_product_provider
 
