@@ -1,6 +1,6 @@
 class MbsController < ApplicationController
 
-  # authorize_resource
+  authorize_resource
 
   def index
     @search = Mb.ransack(params[:q])

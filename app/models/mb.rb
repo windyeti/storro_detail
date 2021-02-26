@@ -15,6 +15,13 @@ class Mb < ApplicationRecord
     data = Nokogiri::XML(response)
     mypr = data.xpath("//offer")
 
+    if mypr.size == 0
+      File.open("#{Rails.root}/public/errors_update.txt", 'a') do |f|
+        f.write "!!! [#{Time.now}] Цены и Остатки не обновились у поставщика МБ\n"
+      end
+      return
+    end
+
     # 1. перед накатыванием обновления товаров у поставщика
     # все существующим ставим check = false
     # чтобы не удалять товары поставщика, так как их id

@@ -12,6 +12,13 @@ class Ashanti < ApplicationRecord
     ascii_uri = URI.encode(uri)
     response = RestClient.get(ascii_uri)
 
+    if response.code != 200
+      File.open("#{Rails.root}/public/errors_update.txt", 'a') do |f|
+        f.write "!!! [#{Time.now}] Цены и Остатки не обновились у поставщика Ashanti\n"
+      end
+      return
+    end
+
     file_path = "#{Rails.root}/public/ashanti_import.xlsx"
 
     if response.code == 200
@@ -28,6 +35,28 @@ class Ashanti < ApplicationRecord
 
     file = File.open(file_path)
     xlsx = open_spreadsheet(file)
+
+    # ПРОВЕРКА НА НАЛИЧИЕ ТОВАРОВ В ФАЙЛЕ
+    count_rows = 0
+
+    xlsx.sheets.each do |sheet_name|
+      sheet = xlsx.sheet(sheet_name)
+
+      last_row = sheet.last_row.to_i
+      (1..last_row).each do |i|
+        first_cell = sheet.cell(i, 'A')
+        next unless first_cell.to_i.to_s == first_cell
+        count_rows += 1
+      end
+    end
+
+    if count_rows == 0
+      File.open("#{Rails.root}/public/errors_update.txt", 'a') do |f|
+        f.write "!!! [#{Time.now}] Цены и Остатки не обновились у поставщика Ashanti\n"
+      end
+      return
+    end
+    # ПРОВЕРКА НА НАЛИЧИЕ ТОВАРОВ В ФАЙЛЕ -- END
 
     Ashanti.all.find_each(batch_size: 1000) do |mb|
       mb.check = false
