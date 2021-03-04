@@ -146,6 +146,8 @@ class ProductsController < ApplicationController
   end
 
   def update_price_quantity_all_providers
+    ActionCable.server.broadcast 'start_process', {process_name: "Обновление Цен и Остатков Товаров"}
+
     HardJob.perform_later
     # Product.delay.update_price_quantity_all_providers
     # redirect_to products_path, notice: 'Запущена задача обновления Цен и Остатков'

@@ -1,0 +1,21 @@
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 100%;
+    margin: 1.75rem auto;
+  }
+}
+.modal-dialog {
+  height: 100%;
+}
+.modal-content {
+  padding-top: 30px;
+  text-align: center;
+  min-height: 100%;
+  font-size: 200%;
+}
+.modal {
+  //top: 10px;
+  .close {
+    margin-top: -1px;
+  }
+}

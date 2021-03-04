@@ -27,12 +27,9 @@ $(document).ready(function() {
     $(this).alert('close');
   });
 
-  $('#edit_multiple').click(function() {
-    //console.log('click');
-    $('.modal').modal('hide');
-    $('#modal-edit').modal('show');
-  });
-
-
-
+  // $('#edit_multiple').click(function() {
+  //   //console.log('click');
+  //   $('.modal').modal('hide');
+  //   $('#modal-edit').modal('show');
+  // });
 });
