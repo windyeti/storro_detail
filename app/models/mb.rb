@@ -125,9 +125,6 @@ class Mb < ApplicationRecord
         insales_product.visible = true if provider_product_quantity >= min_quantity_for_yandex
 
         insales_product.save
-
-        puts insales_product if provider_product.id == 15767
-
       end
 
     end

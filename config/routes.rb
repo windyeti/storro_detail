@@ -39,4 +39,6 @@ Rails.application.routes.draw do
   root to: 'providers#index'
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users
+
+  mount ActionCable.server => '/cable'
 end

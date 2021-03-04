@@ -14,9 +14,12 @@
 // = require jquery_ujs
 // = require popper
 // = require bootstrap
+//= require action_cable
+//= require_self
 //= require_tree .
 
-
+var App = App || {};
+App.cable = ActionCable.createConsumer();
 
 $(document).ready(function() {
 
