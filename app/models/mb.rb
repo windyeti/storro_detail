@@ -1,5 +1,3 @@
-# require 'axslx'
-
 class Mb < ApplicationRecord
 
   scope :product_all_size, -> { order(:id).size }
@@ -136,50 +134,52 @@ class Mb < ApplicationRecord
     self.syncronaize
   end
 
-  def self.unlinking_to_csv
-    file = "#{Rails.root}/public/mbs_unlinking.csv"
+  def self.unlinking_to_xls
+    file = "#{Rails.root}/public/mbs_unlinking.xls"
+
     check = File.file?(file)
     if check.present?
       File.delete(file)
     end
 
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet(name: 'МБ незалинкованные')
+    sheet.row(0).push("ID", "ID в таблице Товаров", "Название", "Актуальность", "Остаток", "Цена", "Описание", "Код производителя", "Barcode", "Страна", "Бренд", "Параметры", "Картинки")
+
     products = Mb.where(productid_product: nil).order(:id)
 
-    CSV.open("#{Rails.root}/public/mbs_unlinking.csv", "wb") do |writer|
-      headers = [ "ID", "ID в таблице Товаров", "Название", "Актуальность", "Остаток", "Цена", "Описание", "Код производителя", "Barcode", "Страна", "Бренд", "Параметры", "Картинки" ]
+    products.each_with_index do |pr, index|
+      id = pr[:id]
+      productid_product = pr[:productid_product]
+      title = pr[:title]
+      check = pr[:check]
+      quantity = pr[:quantity]
+      price = pr[:price]
+      desc = pr[:desc]
+      vendorcode = pr[:vendorcode]
+      barcode = pr[:barcode]
+      country = pr[:country]
+      brend = pr[:brend]
+      param = pr[:param]
+      pict = pr[:pict]
 
-      writer << headers
-      products.each do |pr|
-        id = pr[:id]
-        productid_product = pr[:productid_product]
-        title = pr[:title]
-        check = pr[:check]
-        quantity = pr[:quantity]
-        price = pr[:price]
-        desc = pr[:desc]
-        vendorcode = pr[:vendorcode]
-        barcode = pr[:barcode]
-        country = pr[:country]
-        brend = pr[:brend]
-        param = pr[:param]
-        pict = pr[:pict]
+      sheet.row(index + 1).push(
+        id,
+        productid_product,
+        title,
+        check ? 'был' : 'не был',
+        quantity,
+        price,
+        desc,
+        vendorcode,
+        barcode,
+        country,
+        param,
+        brend,
+        pict
+      )
+    end
 
-        writer << [
-          id,
-          productid_product,
-          title,
-          check ? 'был' : 'не был',
-          quantity,
-          price,
-          desc,
-          vendorcode,
-          barcode,
-          country,
-          param,
-          brend,
-          pict
-        ]
-      end
-    end #CSV.open
+    book.write file
   end
 end

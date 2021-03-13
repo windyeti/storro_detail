@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       get :linking
       get :syncronaize
       get :import_linking_syncronaize
-      get :unlinking_to_csv
+      get :unlinking_to_xls
     end
   end
 
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       get :linking
       get :syncronaize
       get :import_linking_syncronaize
-      get :unlinking_to_csv
+      get :unlinking_to_xls
     end
   end
 

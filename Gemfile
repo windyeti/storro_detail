@@ -30,7 +30,7 @@ gem 'daemons'
 gem 'bcrypt_pbkdf', '< 2.0', :require => false
 gem 'ed25519', '~> 1.2', '>= 1.2.4'
 gem 'cancancan'
-# gem 'axlsx'
+gem 'spreadsheet'
 
 group :development, :test do
   gem 'byebug', platform: :mri

@@ -37,8 +37,8 @@ class AshantisController < ApplicationController
     redirect_to ashantis_path, notice: "Запущен полный цикл обновления товаров Ashanti поставщика"
   end
 
-  def unlinking_to_csv
-    Ashanti.delay.unlinking_to_csv
+  def unlinking_to_xls
+    Ashanti.delay.unlinking_to_xls
     redirect_to ashantis_path, notice: "Запущено создание файла из незалинкованных товаров поставщика"
   end
 

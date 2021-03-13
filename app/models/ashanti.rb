@@ -156,43 +156,45 @@ class Ashanti < ApplicationRecord
     self.syncronaize
   end
 
-  def self.unlinking_to_csv
-    file = "#{Rails.root}/public/ashanti_unlinking.csv"
+  def self.unlinking_to_xls
+    file = "#{Rails.root}/public/ashanti_unlinking.xls"
+
     check = File.file?(file)
     if check.present?
       File.delete(file)
     end
 
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet(name: 'Ashanti незалинкованные')
+    sheet.row(0).push("ID", "ID в таблице Товаров", "Название", "Актуальность", "Остаток", "Цена", "Описание", "Код производителя", "Barcode")
+
     products = Ashanti.where(productid_product: nil).order(:id)
 
-    CSV.open("#{Rails.root}/public/ashanti_unlinking.csv", "wb") do |writer|
-      headers = [ "ID", "ID в таблице Товаров", "Название", "Актуальность", "Остаток", "Цена", "Описание", "Код производителя", "Barcode" ]
+    products.each_with_index do |pr, index|
+      id = pr[:id]
+      productid_product = pr[:productid_product]
+      title = pr[:title]
+      check = pr[:check]
+      quantity = pr[:quantity]
+      price = pr[:price]
+      desc = pr[:desc]
+      vendorcode = pr[:vendorcode]
+      barcode = pr[:barcode]
 
-      writer << headers
-      products.each do |pr|
-        id = pr[:id]
-        productid_product = pr[:productid_product]
-        title = pr[:title]
-        check = pr[:check]
-        quantity = pr[:quantity]
-        price = pr[:price]
-        desc = pr[:desc]
-        vendorcode = pr[:vendorcode]
-        barcode = pr[:barcode]
+      sheet.row(index + 1).push(
+        id,
+        productid_product,
+        title,
+        check ? 'был' : 'не был',
+        quantity,
+        price,
+        desc,
+        vendorcode,
+        barcode
+      )
+    end
 
-        writer << [
-          id,
-          productid_product,
-          title,
-          check ? 'был' : 'не был',
-          quantity,
-          price,
-          desc,
-          vendorcode,
-          barcode
-        ]
-      end
-    end #CSV.open
+    book.write file
   end
 
   def self.open_spreadsheet(file)

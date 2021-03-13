@@ -37,8 +37,8 @@ class MbsController < ApplicationController
     redirect_to mbs_path, notice: "Запущен полный цикл обновления товаров МБ поставщика"
   end
 
-  def unlinking_to_csv
-    Mb.delay.unlinking_to_csv
+  def unlinking_to_xls
+    Mb.delay.unlinking_to_xls
     redirect_to mbs_path, notice: "Запущено создание файла из незалинкованных товаров поставщика"
   end
 end
