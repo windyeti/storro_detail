@@ -61,6 +61,7 @@ class Product < ApplicationRecord
     # Здесь будут синхронизации всех поставщиков
     Mb.import_linking_syncronaize
     Ashanti.import_linking_syncronaize
+    Vl.import_linking_syncronaize
     Product.create_csv
   end
 
@@ -73,10 +74,10 @@ class Product < ApplicationRecord
     mypr = data.xpath("//offer")
 
     categories = {}
-    doc_category = data.xpath("category")
+    doc_category = data.xpath("//category")
 
     doc_category.each do |c|
-      categories[c.xpath("parentId")] = c.text
+      categories[c["id"]] = c.text
     end
 
     mypr.each do |pr|

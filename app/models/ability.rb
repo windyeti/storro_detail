@@ -23,6 +23,7 @@ class Ability
     can :manage, Product
     can :manage, Mb
     can :manage, Ashanti
+    can :manage, Vl
   end
 
   def admin

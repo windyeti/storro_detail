@@ -1,0 +1,86 @@
+<div class="row mb-2 mr-0 ml-0 align-items-center">
+  <div class="col-3">
+    <h3>Поставщик ВЛ</h3>
+    <span class="align-middle"><small>Всего: <%= Vl.product_all_size %></small></span>
+    <span class="align-middle"><small>Отфильтровано: <%=@vls.count%></small></span>
+    <span class="align-middle"><small>Больше 0: <%= Vl.where("quantity > 0").size %></small></span>
+    <span class="align-middle"><small>Синхронизируется: <%= Vl.where.not(productid_product: nil).size %></small></span>
+  </div>
+  <div class="col- mr-1">
+    <div class="dropdown">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Действия
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <%= link_to 'Импортировать', import_vls_path, class: 'dropdown-item'%>
+        <%= link_to 'Линковать', linking_vls_path, class: 'dropdown-item'%>
+        <%= link_to 'Синхронизировать', syncronaize_vls_path, class: 'dropdown-item'%>
+        <%= link_to 'Создать файл с незалинкованными Товарами Поставщика', unlinking_to_xls_vls_path, class: 'dropdown-item'%>
+        <div class="dropdown-divider"></div>
+        <%= link_to '(Скачать файл XLS)', "/mbs_unlinking.xls", download: "mbs_unlinking.xls", class: 'dropdown-item' %>
+      </div>
+    </div>
+  </div>
+  <div class="col- ">
+    <%= search_form_for @search, html: {class: 'form-inline'}  do |f|%>
+      <%= f.search_field :id_eq, placeholder: 'ID', class: "form-control input-sm"%>
+      <%= f.search_field :title_cont, placeholder: 'Название', class: "form-control input-sm"%>
+      <%= f.collection_select :vendor_cont, Vl.all.select(:vendor).uniq, :vendor, :vendor, {include_blank: 'Производитель'} , class: "form-control input-sm" , style: "max-width: 150px;" %>
+      <%= f.search_field :code_eq, placeholder: 'Код производителя', class: "form-control input-sm"%>
+      <%= f.search_field :quantity_eq, placeholder: 'Остаток: =', class: "form-control input-sm"%>
+      <%= f.search_field :quantity_gt, placeholder: 'Остаток: >=', class: "form-control input-sm"%>
+      <div class="form-group ml-2 button_group">
+        <% f.submit 'Поиск', class: 'btn btn-info' %>
+        <%= button_tag(type: 'submit', :class => "btn btn-info") do %><span class="oi oi-magnifying-glass"></span><% end %>
+        <%= link_to '<span class="oi oi-reload"></span>'.html_safe, mbs_path, class: 'btn btn-outline-dark' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover table-condensed table-sm">
+    <thead class="thead-light">
+    <tr>
+      <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
+      <th>ID</th>
+      <th>ID в Товарах</th>
+      <th>Название</th>
+      <th>Актуальность</th>
+      <th>Остаток</th>
+      <th>Цена</th>
+      <th>Производитель</th>
+      <th>Код производителя</th>
+      <th>Barcode</th>
+      <th>Картинки</th>
+      <th colspan="1"></th>
+    </tr>
+    </thead>
+
+    <tbody id="products_table">
+    <% @vls.each do |product| %>
+      <tr class="<%= 'sync' if product.productid_product.present? %>">
+        <td><%=check_box_tag "product_ids[]", product.id%></td>
+        <td><%= product.id %></td>
+        <td><%= link_to product.productid_product, product_path(product.productid_product.to_i) if product.productid_product %></td>
+        <td><%= product.title %></td>
+        <td><%= product.check ? 'был' : 'не был' %></td>
+        <td><%= product.quantity %></td>
+        <td><%= product.price %></td>
+        <td><%= product.vendor %></td>
+        <td><%= product.code %></td>
+        <td><%= product.barcode %></td>
+        <td class="row ml-0 mr-0"><% product.image.split(', ').each do |pict| %><div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div><% end %></td>
+        <td><%= link_to '<span class="oi oi-eye"></span>'.html_safe, product %></td>
+        <!--        <td><%#= link_to '<span class="oi oi-trash"></span>'.html_safe, product, method: :delete, data: { confirm: 'Вы уверенны?' } %></td>-->
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="digg_pagination mt-4 mb-4">
+  <%= will_paginate @vls %>
+</div>
+
+

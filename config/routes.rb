@@ -3,6 +3,16 @@ Rails.application.routes.draw do
   resources :visitors, only: [:index]
   resources :providers
 
+  resources :vls do
+    collection do
+      get :import
+      get :linking
+      get :syncronaize
+      get :import_linking_syncronaize
+      get :unlinking_to_xls
+    end
+  end
+
   resources :ashantis do
     collection do
       get :import
