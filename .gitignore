@@ -16,6 +16,7 @@ logfile
 /public/*.xls
 /public/*.xlsx
 /public/errors_update.txt
+/public/vl_import.xml
 
 # bundler state
 /.bundle
