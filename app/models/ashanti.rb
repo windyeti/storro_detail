@@ -107,6 +107,12 @@ class Ashanti < ApplicationRecord
   end
 
   def self.syncronaize
+    Product.find_each(batch_size: 1000) do |product|
+      if product.sku&.match(/^ACY/)
+        product.update(quantity: 0)
+      end
+    end
+
     Ashanti.find_each(batch_size: 1000) do |provider_product|
 
       Product.where(productid_provider: provider_product.id).where(provider_id: 2).each do |insales_product|

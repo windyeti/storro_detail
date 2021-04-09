@@ -80,6 +80,12 @@ class Vl < ApplicationRecord
   end
 
   def self.syncronaize
+    Product.find_each(batch_size: 1000) do |product|
+      if product.sku&.match(/^ВЛY/)
+        product.update(quantity: 0)
+      end
+    end
+
     Vl.find_each(batch_size: 1000) do |provider_product|
 
       Product.where(productid_provider: provider_product.id).where(provider_id: 3).each do |insales_product|
