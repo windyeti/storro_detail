@@ -181,7 +181,8 @@ class Product < ApplicationRecord
       File.delete(file)
     end
 
-    products = Product.order(:id)
+    products = Product.where("sku ~* ?", 'МБ|ACY|ВЛY').order(:id)
+    # products = Product.order(:id)
     # products = Product.where.not(provider: nil).where.not(productid_provider: nil).order(:id)
 
     CSV.open("#{Rails.root}/public/export_insales.csv", "wb") do |writer|
