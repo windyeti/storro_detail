@@ -156,7 +156,7 @@ class Vl < ApplicationRecord
       quantity = pr[:quantity]
       price = pr[:price]
       vendor = pr[:vendor]
-      vendorcode = pr[:vendorcode]
+      vendorcode = pr[:code]
       barcode = pr[:barcode]
       image = pr[:image]
 
