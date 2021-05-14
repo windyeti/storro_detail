@@ -76,11 +76,11 @@ class Ashanti < ApplicationRecord
           barcode: sheet.cell(i, 'A'),
           vendorcode: sheet.cell(i, 'B'),
           title: sheet.cell(i, 'D'),
-          weight: sheet.cell(i, 'E'),
-          quantity: sheet.cell(i, 'F') == 'В наличии' ? 2000 : 0,
-          use_until: sheet.cell(i, 'G'),
-          price: sheet.cell(i, 'I') ? sheet.cell(i, 'I').gsub(' ', '').to_f : nil,
-          desc: sheet.cell(i, 'N'),
+          weight: sheet.cell(i, 'F'),
+          quantity: sheet.cell(i, 'G') == 'В наличии' ? 2000 : 0,
+          use_until: sheet.cell(i, 'H'),
+          price: sheet.cell(i, 'J') ? sheet.cell(i, 'J').to_s.gsub(' ', '').to_f : nil,
+          desc: sheet.cell(i, 'O'),
           check: true
         }
 
