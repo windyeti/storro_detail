@@ -107,7 +107,8 @@ class Mb < ApplicationRecord
         new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product_price
 
         # с округлением до целого по правилу 0.5
-        insales_product.price = new_insales_price.round
+        # и только если new_insales_price это число (не число возникает если insales_product.price == 0)
+        insales_product.price = new_insales_price.round unless new_insales_price.nan?
         insales_product.provider_price = provider_product_price
 
         # store лишняя сущность, так как в приложении остаток храниться в quantity

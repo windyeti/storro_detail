@@ -89,10 +89,12 @@ class Ashanti < ApplicationRecord
 
         ashanti.present? ? ashanti.update(data) : Ashanti.create(data)
       end
+      p "====>>> Ашанти все продукты импортировались"
     end
   end
 
   def self.linking
+    p "====>>> Ашанти START LINKING"
     Ashanti.find_each(batch_size: 1000) do |ashanti|
       product_sku = "ACY#{ashanti.vendorcode}"
       products = Product.where(sku: product_sku)
@@ -104,6 +106,7 @@ class Ashanti < ApplicationRecord
         ashanti.save
       end
     end
+    p "Ашанти FINISH LINKING <<<===="
   end
 
   def self.syncronaize
@@ -133,7 +136,8 @@ class Ashanti < ApplicationRecord
         new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product_price
 
         # с округлением до целого по правилу 0.5
-        insales_product.price = new_insales_price.round
+        # и только если new_insales_price это число (не число возникает если insales_product.price == 0)
+        insales_product.price = new_insales_price.round unless new_insales_price.nan?
         insales_product.provider_price = provider_product_price
 
         # Komplekt сколько ед-ц входить в ед-цу продажи

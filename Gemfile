@@ -51,6 +51,7 @@ group :development do
   gem 'capistrano3-delayed-job', '~> 1.0'
   gem 'hub', :require=>nil
   gem 'rails_layout'
+  gem 'letter_opener'
 end
 group :production do
   gem 'unicorn'
