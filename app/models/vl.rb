@@ -102,8 +102,8 @@ class Vl < ApplicationRecord
         new_insales_price = (insales_product.price / insales_product.provider_price) * provider_product_price
 
         # с округлением до целого по правилу 0.5
-        # и только если new_insales_price это число (не число возникает если insales_product.price == 0)
-        insales_product.price = new_insales_price.round unless new_insales_price.nan?
+        # меняем цену продажи только если цена провайдера не ноль
+        insales_product.price = new_insales_price.round if insales_product.provider_price != 0 && !insales_product.provider_price.nil?
         insales_product.provider_price = provider_product_price
 
         # store лишняя сущность, так как в приложении остаток храниться в quantity
