@@ -57,20 +57,20 @@ class Product < ApplicationRecord
   # end
 
   def self.update_price_quantity_all_providers
-    begin
+    # begin
       Product.import_insales_xml
       # Здесь будут синхронизации всех поставщиков
       Mb.import_linking_syncronaize
       Ashanti.import_linking_syncronaize
       Vl.import_linking_syncronaize
       Product.create_csv
-    rescue
-      data_email = {
-        subject: 'Оповещение: Проблема с Приложением',
-        message: 'Оповещение: Проблема с Приложением'
-      }
-      NotificationMailer.send_notify(data_email).deliver_later
-    end
+    # rescue
+    #   data_email = {
+    #     subject: 'Оповещение: Проблема с Приложением',
+    #     message: 'Оповещение: Проблема с Приложением'
+    #   }
+    #   NotificationMailer.send_notify(data_email).deliver_later
+    # end
   end
 
   def self.import_insales_xml
