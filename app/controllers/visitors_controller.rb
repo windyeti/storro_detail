@@ -1,2 +1,10 @@
 class VisitorsController < ApplicationController
+  def mail_test
+    data_email = {
+      subject: 'Проба письма',
+      body: '<strong>Здесь будет текст</strong>'.html_safe
+    }
+    NotificationMailer.notify(data_email).deliver_later
+    redirect_to visitors_path
+  end
 end

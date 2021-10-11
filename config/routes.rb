@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :visitors, only: [:index]
+  resources :visitors, only: [:index] do
+    get :mail_test, on: :collection
+  end
   resources :providers
 
   resources :vls do
