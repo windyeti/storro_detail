@@ -72,12 +72,12 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
     tls: true,
-    address: "smtp.yandex.com",
+    address: "smtp.mail.ru",
     port: 465,
-    domain: "yandex.ru",
+    domain: "storro.ru",
     authentication: "login",
     user_name: Rails.application.secrets.email_provider_username,
-    password:  Rails.application.secrets.email_provider_password ,
+    password:  Rails.application.secrets.email_provider_password,
     enable_starttls_auto: true
   }
   # ActionMailer Config
