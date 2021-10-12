@@ -67,7 +67,8 @@ class Product < ApplicationRecord
     rescue
       data_email = {
         subject: 'Оповещение: Проблема с Приложением',
-        message: 'Оповещение: Проблема с Приложением'
+        message: 'Оповещение: Проблема с Приложением',
+        body: 'Оповещение: Проблема с Приложением'
       }
       NotificationMailer.send_notify(data_email).deliver_later
     end
