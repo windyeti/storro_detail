@@ -1,6 +1,7 @@
 class VisitorsController < ApplicationController
   def mail_test
     data_email = {
+      message: 'Проба письма',
       subject: 'Проба письма',
       body: '<strong>Здесь будет текст</strong>'.html_safe
     }
