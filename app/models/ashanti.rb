@@ -71,13 +71,13 @@ class Ashanti < ApplicationRecord
       (1..last_row).each do |i|
         first_cell = sheet.cell(i, 'A')
         next unless first_cell.to_i.to_s == first_cell
-
+        quantity = get_quantity(sheet.cell(i, 'G'))
         data = {
           barcode: sheet.cell(i, 'A'),
           vendorcode: sheet.cell(i, 'B'),
           title: sheet.cell(i, 'D'),
           weight: sheet.cell(i, 'F'),
-          quantity: sheet.cell(i, 'G') == 'В наличии' ? 2000 : 0,
+          quantity: quantity,
           use_until: sheet.cell(i, 'H'),
           price: sheet.cell(i, 'J') ? sheet.cell(i, 'J').to_s.gsub(' ', '').to_f : nil,
           desc: sheet.cell(i, 'O'),
@@ -91,6 +91,15 @@ class Ashanti < ApplicationRecord
       end
       p "====>>> Ашанти все продукты импортировались"
     end
+  end
+
+  def self.get_quantity(str)
+    result = if str == 'В наличии'
+               2000
+             else
+               str
+             end
+    result
   end
 
   def self.linking
