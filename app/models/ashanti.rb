@@ -79,8 +79,8 @@ class Ashanti < ApplicationRecord
           weight: sheet.cell(i, 'F'),
           quantity: quantity,
           use_until: sheet.cell(i, 'H'),
-          price: sheet.cell(i, 'J') ? sheet.cell(i, 'J').to_s.gsub(' ', '').to_f : nil,
-          desc: sheet.cell(i, 'O'),
+          price: sheet.cell(i, 'K') ? sheet.cell(i, 'K').to_s.gsub(' ', '').to_f : nil,
+          desc: sheet.cell(i, 'P'),
           check: true
         }
 
