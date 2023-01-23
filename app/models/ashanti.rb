@@ -99,7 +99,7 @@ class Ashanti < ApplicationRecord
              else
                str
              end
-    result
+    result.remove(/ |> | |>/)
   end
 
   def self.linking
