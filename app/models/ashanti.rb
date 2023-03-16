@@ -44,7 +44,7 @@ class Ashanti < ApplicationRecord
 
       last_row = sheet.last_row.to_i
       (1..last_row).each do |i|
-        first_cell = sheet.cell(i, 'A')
+        first_cell = sheet.cell(i, 'B')
         next unless first_cell.to_i.to_s == first_cell
         count_rows += 1
       end
@@ -69,18 +69,18 @@ class Ashanti < ApplicationRecord
 
       last_row = sheet.last_row.to_i
       (1..last_row).each do |i|
-        first_cell = sheet.cell(i, 'A')
+        first_cell = sheet.cell(i, 'B')
         next unless first_cell.to_i.to_s == first_cell
-        quantity = get_quantity(sheet.cell(i, 'G'))
+        quantity = get_quantity(sheet.cell(i, 'I'))
         data = {
-          barcode: sheet.cell(i, 'A'),
-          vendorcode: sheet.cell(i, 'B'),
-          title: sheet.cell(i, 'D'),
-          weight: sheet.cell(i, 'F'),
+          barcode: sheet.cell(i, 'B'),
+          vendorcode: sheet.cell(i, 'C'),
+          title: sheet.cell(i, 'E'),
+          weight: sheet.cell(i, 'H'),
           quantity: quantity,
-          use_until: sheet.cell(i, 'H'),
-          price: sheet.cell(i, 'K') ? sheet.cell(i, 'K').to_s.gsub(' ', '').to_f : nil,
-          desc: sheet.cell(i, 'P'),
+          use_until: sheet.cell(i, 'K'),
+          price: sheet.cell(i, 'M') ? sheet.cell(i, 'M').to_s.gsub(' ', '').to_f : nil,
+          desc: sheet.cell(i, 'R'),
           check: true
         }
 
