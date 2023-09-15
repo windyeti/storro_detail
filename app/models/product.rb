@@ -190,7 +190,8 @@ class Product < ApplicationRecord
       File.delete(file)
     end
 
-    products = Product.where("sku ~* ?", 'МБ|ACY|ВЛY').order(:id)
+    products = Product.where("sku ~* ?", 'МБ|ВЛY').order(:id)
+    # products = Product.where("sku ~* ?", 'МБ|ACY|ВЛY').order(:id)
     # products = Product.order(:id)
     # products = Product.where.not(provider: nil).where.not(productid_provider: nil).order(:id)
 
