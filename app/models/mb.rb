@@ -45,7 +45,7 @@ class Mb < ApplicationRecord
         cat: pr.xpath("categoryId").text,
         title: pr.xpath("name").text,
         desc: pr.xpath("description").text,
-        vendorcode: pr.xpath("vendorCode").text,
+        vendorcode: pr.xpath("vendorCode").text.strip,
         barcode: pr.xpath("barcode").text,
         country: pr.xpath("country").text,
         brend: pr.xpath("brend").text,
